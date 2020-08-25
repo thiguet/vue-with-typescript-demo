@@ -1,3 +1,3 @@
 export interface LoginView {
-    clickLogin(): void,
+    clickLogin(): void;
 }

@@ -1,20 +1,21 @@
 import { shallowMount } from '@vue/test-utils';
 import Input from '@/components/Input.vue';
+import faker from 'faker';
 
 interface InputData {
-  id: string,
-  label: string,
-  type: string,
-  value: string,
-  setValue: Function,
-};
+  id: string;
+  label: string;
+  type: string;
+  value: string;
+  setValue: Function;
+}
 
 const props: InputData = {
-  id: 'id',
+  id: faker.random.alphaNumeric(),
   type: 'text',
-  value: 'some value',
+  value: faker.random.word(),
   setValue: jest.fn(),
-  label: 'some label',
+  label: faker.random.word(),
 };
 
 describe('Input.vue', () => {
@@ -31,13 +32,17 @@ describe('Input.vue', () => {
   };
 
   it('renders component', () => {
+    props.id = 'someFixedValidId';
+    props.value = 'someFixedValidValue';
+    props.label = 'someFixedValidLabel';
+
     const { wrapper } = build();
     expect(wrapper).toMatchSnapshot();
   });
-  
+
   it('renders main child components', () => {
     const {
-      input, 
+      input,
       labelEl,
     } = build();
 
@@ -47,7 +52,7 @@ describe('Input.vue', () => {
 
   it('passes props to the component', () => {
     const { wrapper } = build();
-    
+
     const {
       type,
       value,

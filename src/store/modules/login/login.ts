@@ -2,9 +2,8 @@ import {
   VuexModule,
   Module,
   Mutation,
-  Action,
 } from 'vuex-module-decorators';
-import { LoginState } from './models';
+import { LoginState } from '@/store/modules/login/models.d';
 
 @Module({
   namespaced: true,
@@ -12,6 +11,7 @@ import { LoginState } from './models';
 })
 export default class Login extends VuexModule implements LoginState {
   username!: string;
+
   password!: string;
 
   @Mutation

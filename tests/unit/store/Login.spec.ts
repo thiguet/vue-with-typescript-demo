@@ -18,8 +18,8 @@ describe('Login Vuex Module', () => {
 
   it('sets the username to the state.', () => {
     const newUsername = faker.internet.userName();
-    
-    store.commit(`${namespace}setUsername`, newUsername);    
+
+    store.commit(`${namespace}setUsername`, newUsername);
 
     expect(state).toEqual({
       ...state,
@@ -30,7 +30,7 @@ describe('Login Vuex Module', () => {
   it('sets the password to the state.', () => {
     const newPassword = faker.internet.password();
 
-    store.commit(`${namespace}setPassword`, newPassword);    
+    store.commit(`${namespace}setPassword`, newPassword);
 
     expect(state).toEqual({
       ...state,

@@ -1,6 +1,8 @@
-import { shallowMount, mount, createLocalVue, Wrapper } from '@vue/test-utils';
+import {
+  shallowMount, mount, createLocalVue, Wrapper,
+} from '@vue/test-utils';
 
-import Vuex from 'vuex';
+import Vuex, { Store } from 'vuex';
 
 import Login from '@/views/Login.vue';
 
@@ -14,122 +16,124 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe('Login', () => {
-    let state: LoginState,
-        mutations: any,
-        actions: any,
-        store: any;
+  let state: LoginState;
+  let mutations: any;
+  let actions: any;
+  let store: Store<LoginState>;
 
-    const build = () => {
-        // Now we can change state, before a running test.
-        store = new Vuex.Store({
-            modules: {
-                login: {
-                    namespaced: true,           
-                    state,
-                    mutations,
-                    actions,
-                },
-            },
-        });
+  const build = () => {
+    // Now we can change state, before a running test.
+    store = new Vuex.Store({
+      modules: {
+        login: {
+          namespaced: true,
+          state,
+          mutations,
+          actions,
+        },
+      },
+    });
 
-        const wrapper: Wrapper<Login & { [key: string]: any }> = shallowMount(Login, {
-            localVue,
-            store,
-        });
+    type VueComponentKey = any;
 
-        const mountedWrapper: Wrapper<Login & { [key: string]: any }> = mount(Login, {
-            localVue,
-            store,
-        });
+    const wrapper: Wrapper<Login & { [key: string]: VueComponentKey }> = shallowMount(Login, {
+      localVue,
+      store,
+    });
 
-        return {
-            wrapper,
-            mountedWrapper,
-            name: () => mountedWrapper.findAllComponents(Input).at(0),
-            pass: () => mountedWrapper.findAllComponents(Input).at(1),
-            btn: () => mountedWrapper.findComponent(Button),
-        };
+    const mountedWrapper: Wrapper<Login & { [key: string]: VueComponentKey }> = mount(Login, {
+      localVue,
+      store,
+    });
+
+    return {
+      wrapper,
+      mountedWrapper,
+      name: () => mountedWrapper.findAllComponents(Input).at(0),
+      pass: () => mountedWrapper.findAllComponents(Input).at(1),
+      btn: () => mountedWrapper.findComponent(Button),
     };
-    
-    beforeEach(() => {
-        state = {
-            username: faker.internet.userName(),
-            password: faker.internet.password(),
-        };
+  };
 
-        mutations = {
-            setUsername: jest.fn(),
-            setPassword: jest.fn(),
-        };
+  beforeEach(() => {
+    state = {
+      username: faker.internet.userName(),
+      password: faker.internet.password(),
+    };
 
-        actions = {
-            loginAction: jest.fn(),
-        };
-    });
+    mutations = {
+      setUsername: jest.fn(),
+      setPassword: jest.fn(),
+    };
 
-    it('renders component', () => {
-        state = {
-            username: 'testing_username',
-            password: '$@3sometest',
-        };
-        const { wrapper } = build();
-        expect(wrapper).toMatchSnapshot();
-    });
-    
-    it('renders main child components', () => {
-        const {
-            name,
-            pass,
-            btn,
-        } = build();
+    actions = {
+      loginAction: jest.fn(),
+    };
+  });
 
-        expect(name().exists()).toBe(true);
-        expect(pass().exists()).toBe(true);
-        expect(btn().exists()).toBe(true);
-    });
+  it('renders component', () => {
+    state = {
+      username: 'testing_username',
+      password: '$@3sometest',
+    };
+    const { wrapper } = build();
+    expect(wrapper).toMatchSnapshot();
+  });
 
-    it('passes vuex props to child components', () => {
-        const {
-            name,
-            pass,
-            btn,
-        } = build();
+  it('renders main child components', () => {
+    const {
+      name,
+      pass,
+      btn,
+    } = build();
 
-        expect(name().props().value).toBe(state.username);
-        expect(name().props().setValue).toBeInstanceOf(Function);
-        
-        expect(pass().props().value).toBe(state.password);
-        expect(pass().props().setValue).toBeInstanceOf(Function);
-    
-        expect(btn().props().onclick).toBeInstanceOf(Function);
-    });
+    expect(name().exists()).toBe(true);
+    expect(pass().exists()).toBe(true);
+    expect(btn().exists()).toBe(true);
+  });
 
-    it('submit invalid login', async () => {
-        state.username = '$#@¨&*(guyadshj';
-        const {
-            btn, 
-        } = build();
-        const { loginAction } = actions;
+  it('passes vuex props to child components', () => {
+    const {
+      name,
+      pass,
+      btn,
+    } = build();
 
-        await btn().trigger('click'); 
-        expect(loginAction).not.toHaveBeenCalled();
-    });
+    expect(name().props().value).toBe(state.username);
+    expect(name().props().setValue).toBeInstanceOf(Function);
 
-    it('submit valid login', async () => {
-        const {
-            btn,
-        } = build();
-        const { loginAction } = actions;
-        await btn().trigger('click');
-        // Used to force the waiting for the desired methods.
-        setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
-    });
+    expect(pass().props().value).toBe(state.password);
+    expect(pass().props().setValue).toBeInstanceOf(Function);
 
-    it('calling clickLogin from vm', async () => {
-        const { wrapper } = build();
-        const { loginAction } = actions;
-        await wrapper.vm.clickLogin();
-        // Used to force the waiting for the desired methods.
-        setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
-    });
+    expect(btn().props().onclick).toBeInstanceOf(Function);
+  });
+
+  it('submit invalid login', async () => {
+    state.username = '$#@¨&*(guyadshj';
+    const {
+      btn,
+    } = build();
+    const { loginAction } = actions;
+
+    await btn().trigger('click');
+    expect(loginAction).not.toHaveBeenCalled();
+  });
+
+  it('submit valid login', async () => {
+    const {
+      btn,
+    } = build();
+    const { loginAction } = actions;
+    await btn().trigger('click');
+    // Used to force the waiting for the desired methods.
+    setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
+  });
+
+  it('calling clickLogin from vm', async () => {
+    const { wrapper } = build();
+    const { loginAction } = actions;
+    await wrapper.vm.clickLogin();
+    // Used to force the waiting for the desired methods.
+    setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
+  });
 });

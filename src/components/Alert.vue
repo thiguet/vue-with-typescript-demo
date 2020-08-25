@@ -12,12 +12,14 @@ import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 @Component({
-    name: 'Message',
+  name: 'Message',
 })
 export default class Message extends Vue {
-    @Prop({required: true}) private readonly isVisible!: boolean;
-    @Prop({required: true}) private readonly message!: string;
-    @Prop({required: true}) private readonly closeFn!: string;
+    @Prop({ required: true }) private readonly isVisible!: boolean;
+
+    @Prop({ required: true }) private readonly message!: string;
+
+    @Prop({ required: true }) private readonly closeFn!: string;
 }
 </script>
 

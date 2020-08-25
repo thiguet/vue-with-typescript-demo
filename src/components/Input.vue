@@ -15,14 +15,18 @@ import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 @Component({
-    name: 'Input',
+  name: 'Input',
 })
 export default class Input extends Vue {
-    @Prop({required: true}) readonly id!: string;
-    @Prop({required: true}) readonly label!: string;    
-    @Prop({required: true}) readonly type!: string;
-    @Prop({required: true}) readonly value!: string;    
-    @Prop({required: true}) readonly setValue!: Function;    
+    @Prop({ required: true }) readonly id!: string;
+
+    @Prop({ required: true }) readonly label!: string;
+
+    @Prop({ required: true }) readonly type!: string;
+
+    @Prop({ required: true }) readonly value!: string;
+
+    @Prop({ required: true }) readonly setValue!: Function;
 }
 </script>
 

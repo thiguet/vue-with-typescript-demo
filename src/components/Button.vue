@@ -14,7 +14,8 @@ import { Prop } from 'vue-property-decorator';
 
 @Component
 export default class Button extends Vue {
-    @Prop({required: true}) readonly label!: string;
-    @Prop({required: true}) readonly onclick!: Function;
+    @Prop({ required: true }) readonly label!: string;
+
+    @Prop({ required: true }) readonly onclick!: Function;
 }
 </script>

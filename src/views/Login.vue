@@ -20,18 +20,17 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
-import Input from "@/components/Input.vue";
-import Button from "@/components/Button.vue";
+import Input from '@/components/Input.vue';
+import Button from '@/components/Button.vue';
 
 import { namespace } from 'vuex-class';
-import { UserSubmit } from '@/store/datatypes/models.d';
 import { LoginView } from '@/views/models.d';
 
 const login = namespace('login');
 
 @Component({
   name: 'Login',
-  components: { 
+  components: {
     Input,
     Button,
   },
@@ -48,12 +47,12 @@ export default class Login extends Vue implements LoginView {
 
   @login.Mutation
   private setPassword!: (password: string) => void;
- 
-  @login.Action
-  public loginAction!: () => Promise<any>;
 
-  public async clickLogin(): Promise<any> {
-    return await this.loginAction();
+  @login.Action
+  public loginAction!: () => Promise<unknown>;
+
+  public clickLogin(): Promise<unknown> {
+    return this.loginAction();
   }
 }
 </script>
