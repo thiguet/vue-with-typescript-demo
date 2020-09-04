@@ -65,8 +65,8 @@ export default class Login extends Vue implements LoginView {
 
 .form {
   display: flex;
-  flex-direction: column;
   flex-flow: column;
+  flex-direction: column;
   width: 100px;
 }
 </style>

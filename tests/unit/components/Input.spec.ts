@@ -8,6 +8,7 @@ interface InputData {
   type: string;
   value: string;
   setValue: Function;
+  legend?: string;
 }
 
 const props: InputData = {
@@ -16,6 +17,7 @@ const props: InputData = {
   value: faker.random.word(),
   setValue: jest.fn(),
   label: faker.random.word(),
+  legend: faker.random.word(),
 };
 
 describe('Input.vue', () => {
@@ -59,6 +61,7 @@ describe('Input.vue', () => {
       label,
       id,
       setValue,
+      legend,
     } = wrapper.props();
 
     expect(id).toBe(props.id);
@@ -66,6 +69,7 @@ describe('Input.vue', () => {
     expect(value).toBe(props.value);
     expect(label).toBe(props.label);
     expect(setValue).toBe(props.setValue);
+    expect(legend).toBe(props.legend);
   });
 
   it('sets label propety to label element', () => {

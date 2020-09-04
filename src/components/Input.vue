@@ -1,5 +1,6 @@
 <template>
     <fieldset>
+        <legend>{{legend}}</legend>
         <label class="label">{{ label }}</label>
         <input :id="id"
                 class="input"
@@ -27,6 +28,8 @@ export default class Input extends Vue {
     @Prop({ required: true }) readonly value!: string;
 
     @Prop({ required: true }) readonly setValue!: Function;
+
+    @Prop() readonly legend!: string;
 }
 </script>
 
