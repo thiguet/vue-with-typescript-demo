@@ -10,4 +10,12 @@ describe('Store', () => {
   it('has login module in its instance', () => {
     expect(store.hasModule('login')).toBe(true);
   });
+
+  it('has products module in its instance', () => {
+    expect(store.hasModule('products')).toBe(true);
+  });
+
+  it('has alert module in its instance', () => {
+    expect(store.hasModule('alert')).toBe(true);
+  });
 });

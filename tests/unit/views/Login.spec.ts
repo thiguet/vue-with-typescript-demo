@@ -10,7 +10,7 @@ import Button from '@/components/Button.vue';
 import Input from '@/components/Input.vue';
 
 import faker from 'faker';
-import { LoginState } from '@/store/modules/login/models.d';
+import { LoginState } from '@/store/modules/login';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);

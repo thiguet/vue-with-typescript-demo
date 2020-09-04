@@ -1,11 +1,24 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import Login from '@/store/modules/login/login';
+import { createStore, Module } from 'vuex-smart-module'
+
+import LoginModule from '@/store/modules/login';
+import ProductsModule from '@/store/modules/products';
+import AlertModule from '@/store/modules/alert';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const root = new Module({
   modules: {
-    login: Login,
+    products: ProductsModule,
+    login: LoginModule,
+    alert: AlertModule,
   },
 });
+
+export default createStore(
+  root,
+  {
+    strict: process.env.NODE_ENV !== 'production',
+  }
+);
