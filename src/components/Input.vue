@@ -32,6 +32,3 @@ export default class Input extends Vue {
     @Prop() readonly legend!: string;
 }
 </script>
-
-<style scoped>
-</style>

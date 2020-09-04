@@ -2,6 +2,6 @@
 
 exports[`Input.vue renders component 1`] = `
 <fieldset>
-  <legend>Gorgeous</legend> <label class="label">someFixedValidLabel</label> <input id="someFixedValidId" class="input">
+  <legend>payment</legend> <label class="label">someFixedValidLabel</label> <input id="someFixedValidId" class="input">
 </fieldset>
 `;
