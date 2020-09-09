@@ -1,7 +1,9 @@
 <template>
     <fieldset>
+        <legend>{{ legend  }}</legend>
         <label class="label">{{ label }}</label>
-        <input :id="id"
+        <input  :id="id"
+                :type="type"
                 class="input"
                 v-bind:value="value"
                 v-on:input="setValue" />
@@ -27,6 +29,8 @@ export default class Input extends Vue {
     @Prop({ required: true }) readonly value!: string;
 
     @Prop({ required: true }) readonly setValue!: Function;
+
+    @Prop() readonly legend!: string;
 }
 </script>
 

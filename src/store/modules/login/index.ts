@@ -14,6 +14,7 @@ export class LoginMutations extends Mutations<LoginState> {
   [MutationTypes.setPassword](payload: string) {
     this.state.password = payload;
   };
+  
   [MutationTypes.setUsername](payload: string) {
     this.state.username = payload;
   };

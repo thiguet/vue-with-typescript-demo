@@ -5,10 +5,11 @@ import faker from 'faker';
 interface InputData {
   id: string;
   label: string;
-  type: string;
+  type: "text" | "number" | undefined;
   value: string;
   setValue: Function;
-}
+  legend?: string;
+};
 
 const props: InputData = {
   id: faker.random.alphaNumeric(),
@@ -16,6 +17,7 @@ const props: InputData = {
   value: faker.random.word(),
   setValue: jest.fn(),
   label: faker.random.word(),
+  legend: "This is an Input",
 };
 
 describe('Input.vue', () => {
@@ -28,6 +30,7 @@ describe('Input.vue', () => {
       wrapper,
       input: () => wrapper.find('.input'),
       labelEl: () => wrapper.find('.label'),
+      legend: () => wrapper.find('legend'),
     };
   };
 
@@ -59,6 +62,7 @@ describe('Input.vue', () => {
       label,
       id,
       setValue,
+      legend,
     } = wrapper.props();
 
     expect(id).toBe(props.id);
@@ -66,6 +70,7 @@ describe('Input.vue', () => {
     expect(value).toBe(props.value);
     expect(label).toBe(props.label);
     expect(setValue).toBe(props.setValue);
+    expect(legend).toBe(props.legend);
   });
 
   it('sets label propety to label element', () => {
@@ -77,5 +82,25 @@ describe('Input.vue', () => {
     const { label } = wrapper.props();
 
     expect(labelEl().text()).toBe(label);
+  });
+
+  it('sets input\'s type propety to element by props', () => {
+    const {
+      wrapper,
+      input,
+    } = build();
+
+    const { type } = wrapper.props();
+
+    expect(input().attributes().type).toBe(type);
+  });
+
+  it('has legend element', () => {
+    const {
+      wrapper,
+      legend,
+    } = build();
+
+    expect(legend().text()).toBe(wrapper.props().legend);
   });
 });
