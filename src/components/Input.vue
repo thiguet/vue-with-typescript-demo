@@ -1,9 +1,12 @@
 <template>
     <fieldset>
-        <legend>{{ legend  }}</legend>
-        <label class="label">{{ label }}</label>
+        <legend>
+            <span class="accessibility">{{ legend  }}</span>
+        </legend>
+        <label :for="id" class="label">{{ label }}</label>
         <input  :id="id"
                 :type="type"
+                :name="id"
                 class="input"
                 v-bind:value="value"
                 v-on:input="setValue" />
@@ -35,4 +38,35 @@ export default class Input extends Vue {
 </script>
 
 <style scoped>
+fieldset {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    border: none;
+    width: 100%;
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--font-input-size);
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+label:after {
+    content: ':';
+}
+
+legend span.accessibility {
+    position:absolute;
+    left:-9999px;
+    width:100px;
+    height:auto;
+    overflow:hidden;
+}
 </style>

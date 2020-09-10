@@ -8,7 +8,7 @@ interface InputData {
   value: string;
   setValue: Function;
   legend?: string;
-  type?: "text" | "number" | undefined;
+  type?: "text" | "number" | "password" | undefined;
 };
 
 describe('Input.vue', () => {
@@ -114,5 +114,16 @@ describe('Input.vue', () => {
     } = build();
 
     expect(legend().text()).toBe(wrapper.props().legend);
+  });
+
+  it('must have label for input element', () => {
+    const {
+      wrapper,
+      labelEl,
+      input,
+    } = build();
+
+    expect(labelEl().attributes().for).toBe(props.id);
+    expect(labelEl().attributes().for).toBe(input().attributes().name);
   });
 });

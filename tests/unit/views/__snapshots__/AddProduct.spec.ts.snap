@@ -1,11 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AddProduct.vue renders the component 1`] = `
-<div>
-  <div class="img-container"><img id="img"></div>
+<div class="add-product">
+  <div class="img-wrapper">
+    <div class="img-container"><span>Img:</span> <img id="img"></div>
+    <button-stub label="Escolha uma imagem" onclick="function () {}" id="img-btn"></button-stub>
+  </div>
   <div class="form">
     <form action="#">
-      <button-stub label="Escolha uma imagem" onclick="function () {}" id="img-btn"></button-stub>
       <input-stub id="name" label="Nome" value="" type="text" legend="Product Name"></input-stub>
       <input-stub id="qtd" label="Quantidade" value="" type="text" legend="Product Quantity"></input-stub>
       <input-stub id="minQtd" label="Quantidade (Min)" value="" type="text" legend="Product Minimun Quantity"></input-stub>

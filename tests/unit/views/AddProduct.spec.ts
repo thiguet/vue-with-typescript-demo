@@ -72,10 +72,4 @@ describe('AddProduct.vue', () => {
         expect(imgBtn().exists()).toBe(true);
         expect(imgContainer().exists()).toBe(true);
     });
-
-    it('passes props properly to elements', () => {
-        const { wrapper } = build();
-
-        
-    });
 });

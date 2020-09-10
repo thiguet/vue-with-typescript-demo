@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Login renders component 1`] = `
-<div class="about">
+<div class="login">
   <form class="form">
     <input-stub id="email" label="Login" value="testing_username" setvalue="function () { [native code] }" type="text"></input-stub>
-    <input-stub id="pass" label="Senha" value="$@3sometest" setvalue="function () { [native code] }" type="text"></input-stub>
+    <input-stub id="pass" label="Senha" value="$@3sometest" setvalue="function () { [native code] }" type="password"></input-stub>
     <button-stub label="Login" onclick="function () { [native code] }"></button-stub>
   </form>
 </div>

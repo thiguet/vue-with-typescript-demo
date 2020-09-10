@@ -136,4 +136,9 @@ describe('Login', () => {
     // Used to force the waiting for the desired methods.
     setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
   });
+
+  it('must have a password input typed', async () => {
+    const { pass } = build();
+    expect(pass().props().type).toBe('password');
+  });
 });
