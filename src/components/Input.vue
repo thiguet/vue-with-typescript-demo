@@ -24,11 +24,11 @@ export default class Input extends Vue {
 
     @Prop({ required: true }) readonly label!: string;
 
-    @Prop({ required: true }) readonly type!: string;
-
     @Prop({ required: true }) readonly value!: string;
 
     @Prop({ required: true }) readonly setValue!: Function;
+
+    @Prop({ default: 'text' }) readonly type!: string;
 
     @Prop() readonly legend!: string;
 }

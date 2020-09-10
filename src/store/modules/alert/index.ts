@@ -1,21 +1,16 @@
-import { Mutations, Module } from 'vuex-smart-module';
+import { Module } from 'vuex-smart-module';
+import Mutations, { MutationTypes as MTypes } from './mutations';
+
+export const MutationTypes = MTypes;
+export const AlertMutations = Mutations;
 
 export class AlertState {
   message!: string;
-  display!: boolean;
-};
 
-export enum MutationTypes {
-    setMessage = 'setMessage',
+  display!: boolean;
 }
 
-export class AlertMutations extends Mutations<AlertState> {
-  [MutationTypes.setMessage](payload: string) {
-    this.state.message = payload;
-  };
-};
-
-export default new Module ({
+export default new Module({
   state: AlertState,
   mutations: AlertMutations,
 });

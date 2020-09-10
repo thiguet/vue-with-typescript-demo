@@ -1,4 +1,4 @@
-import { Mutations } from 'vuex-smart-module';
+import { Mutations as VMutations } from 'vuex-smart-module';
 import State from './state';
 
 export enum MutationTypes {
@@ -6,7 +6,7 @@ export enum MutationTypes {
   setUsername = 'setUsername',
 }
 
-export default class LoginMutations extends Mutations<State> {
+export default class Mutation extends VMutations<State> {
   [MutationTypes.setPassword](payload: string) {
     this.state.password = payload;
   }

@@ -5,22 +5,15 @@ import faker from 'faker';
 interface InputData {
   id: string;
   label: string;
-  type: "text" | "number" | undefined;
   value: string;
   setValue: Function;
   legend?: string;
-};
-
-const props: InputData = {
-  id: faker.random.alphaNumeric(),
-  type: 'text',
-  value: faker.random.word(),
-  setValue: jest.fn(),
-  label: faker.random.word(),
-  legend: "This is an Input",
+  type?: "text" | "number" | undefined;
 };
 
 describe('Input.vue', () => {
+  let props: InputData;
+  
   const build = () => {
     const wrapper = shallowMount(Input, {
       propsData: { ...props },
@@ -33,6 +26,17 @@ describe('Input.vue', () => {
       legend: () => wrapper.find('legend'),
     };
   };
+
+  beforeEach(() => {
+    props = {
+      id: faker.random.alphaNumeric(),
+      type: 'text',
+      value: faker.random.word(),
+      setValue: jest.fn(),
+      label: faker.random.word(),
+      legend: "This is an Input",
+    };
+  });
 
   it('renders component', () => {
     props.id = 'someFixedValidId';
@@ -93,6 +97,14 @@ describe('Input.vue', () => {
     const { type } = wrapper.props();
 
     expect(input().attributes().type).toBe(type);
+  });
+
+  it('sets type to text using default value', () => {
+    delete props.type;
+
+    const { wrapper } = build();
+
+    expect(wrapper.props().type).toBe("text");
   });
 
   it('has legend element', () => {

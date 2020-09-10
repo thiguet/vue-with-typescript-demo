@@ -1,17 +1,15 @@
-import { Mutations, Module } from 'vuex-smart-module';
-import { Product } from '@/store/datatypes/models.d';
+import { Module } from 'vuex-smart-module';
+import State from "./state";
+import ProductsMutations, { MutationTypes as MTypes } from "./mutations";
+import ProductsActions, { ActionTypes as ATypes } from './actions';
 
-export class ProductsState {
-  selectedProduct!: Product;
-};
+export type ProductsState = State;
+export const MutationTypes = MTypes;
+export const ActionTypes = ATypes;
 
-export class ProductsMutations extends Mutations<ProductsState> {
-  setProduct(payload: Product) {
-    this.state.selectedProduct = payload
-  };
-};
 
 export default new Module ({
-  state: ProductsState,
+  state: State,
   mutations: ProductsMutations,
+  actions: ProductsActions,
 });

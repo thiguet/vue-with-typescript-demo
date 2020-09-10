@@ -22,6 +22,14 @@ describe('AddProduct.vue', () => {
         
         return {
             wrapper,
+            imgContainer: () => wrapper.find('.img-container'),
+            imgBtn: () => wrapper.find('#img-btn'),
+            img: () => wrapper.find('#img'),
+            name: () => wrapper.find('#name'),
+            measure: () => wrapper.find('#measure'),
+            qtd: () => wrapper.find('#qtd'),
+            minQtd: () => wrapper.find('#minQtd'),
+            submit: () => wrapper.find('#submit'),
         };
     };
 
@@ -35,6 +43,7 @@ describe('AddProduct.vue', () => {
                 qtd: faker.random.number(),
                 minQtd: faker.random.number(),
             },
+            products: [],
         };
     });
 
@@ -43,7 +52,30 @@ describe('AddProduct.vue', () => {
         expect(wrapper).toMatchSnapshot();         
     });
 
-    it('passes vuex bindings properly', () => {
+    it('renders main components', () => {
+        const { 
+            wrapper,
+            imgBtn,
+            name,
+            qtd,
+            minQtd,
+            measure,
+            submit,
+            imgContainer,
+        } = build();
+    
+        expect(name().exists()).toBe(true);
+        expect(qtd().exists()).toBe(true);
+        expect(minQtd().exists()).toBe(true);
+        expect(measure().exists()).toBe(true);
+        expect(submit().exists()).toBe(true);
+        expect(imgBtn().exists()).toBe(true);
+        expect(imgContainer().exists()).toBe(true);
+    });
+
+    it('passes props properly to elements', () => {
         const { wrapper } = build();
+
+        
     });
 });

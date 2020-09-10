@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { createStore, Module } from 'vuex-smart-module'
+import { createStore, Module } from 'vuex-smart-module';
 
 import LoginModule from '@/store/modules/login';
 import ProductsModule from '@/store/modules/products';
@@ -20,5 +20,5 @@ export default createStore(
   root,
   {
     strict: process.env.NODE_ENV !== 'production',
-  }
+  },
 );

@@ -1,26 +1,11 @@
-import { Mutations, Module } from 'vuex-smart-module';
+import { Module } from 'vuex-smart-module';
+import LoginMutations, { MutationTypes as MTypes } from './mutations';
+import State from './state';
 
-export class LoginState {
-  username!: string;
-  password!: string;
-};
-
-export enum MutationTypes {
-  setPassword = 'setPassword',
-  setUsername = 'setUsername', 
-};
-
-export class LoginMutations extends Mutations<LoginState> {
-  [MutationTypes.setPassword](payload: string) {
-    this.state.password = payload;
-  };
-  
-  [MutationTypes.setUsername](payload: string) {
-    this.state.username = payload;
-  };
-};
+export const LoginState = State;
+export const MutationTypes = MTypes;
 
 export default new Module ({
-  state: LoginState,
+  state: State,
   mutations: LoginMutations,
 });
