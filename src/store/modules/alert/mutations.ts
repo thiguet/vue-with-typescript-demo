@@ -6,7 +6,7 @@ export enum MutationTypes {
 }
 
 export default class Mutations extends VMutations<State> {
-  [MutationTypes.setMessage](payload: string) {
-    this.state.message = payload;
-  }
+    [MutationTypes.setMessage](payload: string) {
+        this.state.message = payload;
+    }
 }

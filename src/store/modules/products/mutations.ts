@@ -1,5 +1,5 @@
 import { Mutations as VMutations } from 'vuex-smart-module';
-import { Product } from '@/store/datatypes/models.d';
+import { Product } from '@/store/datatypes/models';
 import State from './state';
 
 export enum MutationTypes {
@@ -8,11 +8,11 @@ export enum MutationTypes {
 }
 
 export default class Mutations extends VMutations<State> {
-  [MutationTypes.setProduct](payload: Product) {
-    this.state.selectedProduct = payload;
-  }
+    [MutationTypes.setProduct](payload: Product) {
+        this.state.selectedProduct = payload;
+    }
 
-  [MutationTypes.addProduct](payload: Product) {
-    this.state.products.push(payload);
-  }
+    [MutationTypes.addProduct](payload: Product) {
+        this.state.products.push(payload);
+    }
 }

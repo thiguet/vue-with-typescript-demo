@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Input.vue renders component 1`] = `
-<fieldset>
-  <legend><span class="accessibility">This is an Input</span></legend> <label for="someFixedValidId" class="label">someFixedValidLabel</label> <input id="someFixedValidId" type="text" name="someFixedValidId" class="input">
-</fieldset>
-`;

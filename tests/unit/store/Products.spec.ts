@@ -1,62 +1,98 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
 
-import store from '@/store';
+import Vuex from 'vuex';
 
 import faker from 'faker';
 
-import { ProductsState } from '@/store/modules/products';
+import {
+    ProductsState,
+    Mutations,
+    MutationTypes,
+    Actions,
+} from '@/store/modules/products';
 
-import { Product, Measures } from '@/store/datatypes/models.d';
-
-import { MutationTypes, ActionTypes } from '@/store/modules/products';
+import { Product, Measures } from '@/store/datatypes/models';
+import { inject } from 'vuex-smart-module';
 
 Vue.use(Vuex);
 
-const namespace = 'products/';
-
 describe('Products Vuex Module', () => {
-  let state: ProductsState,
-      product: Product;
+    let state: ProductsState;
 
-  const lastAddedProduct = (products: Product[]) => ({...products.slice(-1)[0]});
-  const getRandomMeasure = () => faker.random.arrayElement(Object.values(typeof Measures)) as keyof typeof Measures;
+    const lastAddedProduct = (products: Product[]) => ({
+        ...products.slice(-1)[0],
+    });
 
-  beforeEach(() => {
-    state = store.state.products;
-    product = {
+    const getRandomMeasure = () =>
+        faker.random.arrayElement(
+            Object.values(typeof Measures)
+        ) as keyof typeof Measures;
+
+    const getNewProduct = (): Product => ({
         name: faker.name.title(),
         measure: getRandomMeasure(),
         img: faker.image.image(),
         qtd: faker.random.number(),
         minQtd: faker.random.number(),
-    };
-  });
-
-  it('sets the product to the module state.', () => {
-    store.commit(namespace + MutationTypes.setProduct, product);
-
-    expect({...state}).toEqual({
-      ...state,
-      selectedProduct: product,
     });
-  }); 
 
-  it('add a product to the modules state in the end of the array.', () => {
-    store.commit(namespace + MutationTypes.addProduct, product);
+    const build = () => {
+        state = {
+            selectedProduct: getNewProduct(),
+            products: [],
+        };
 
-    const { products } = state;
+        const commit = jest.fn();
 
-    expect(lastAddedProduct(products)).toEqual({...product});
-  });
+        const mutations = inject(Mutations, {
+            state,
+        });
 
-  it('dispatches new product action: ', async () => {
-    const { products } = state;
-    const { length } = products;
+        return {
+            commit,
+            mutations,
+        };
+    };
 
-    await store.dispatch(namespace + ActionTypes.newProduct, product);
+    it('sets the product to the module state.', () => {
+        const { mutations } = build();
 
-    expect(products.length).toBe(length + 1);
-    expect(lastAddedProduct(products)).toEqual({...product});
-  });
+        const newProduct = getNewProduct();
+
+        mutations.setProduct(newProduct);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            selectedProduct: newProduct,
+        });
+    });
+
+    it('add a product to the modules state in the end of the array.', () => {
+        const { mutations } = build();
+
+        const newProduct = getNewProduct();
+
+        const { products } = state;
+
+        mutations.addProduct(newProduct);
+
+        expect(lastAddedProduct(products)).toEqual({ ...newProduct });
+    });
+
+    it('dispatches new product action: ', async () => {
+        const newProduct = getNewProduct();
+
+        const { commit } = build();
+
+        const actions = inject(Actions, {
+            commit,
+        });
+
+        await actions.newProduct(newProduct);
+
+        expect(commit).toHaveBeenCalledWith(
+            MutationTypes.addProduct,
+            newProduct
+        );
+    });
 });

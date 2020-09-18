@@ -1,25 +1,31 @@
-import { shallowMount, createLocalVue, } from "@vue/test-utils";
+import { shallowMount, createLocalVue, Wrapper } from '@vue/test-utils';
 import AddProduct from '@/views/AddProduct.vue';
 import Vuex from 'vuex';
 import faker from 'faker';
 import Store from '@/store';
+import { Measures } from '@/store/datatypes/models';
 import { ProductsState } from '@/store/modules/products';
-import { Measures } from '@/store/datatypes/models.d';
+import {
+    ButtonProps,
+    NumberInputProps,
+    TextInputProps,
+} from '../components/models';
+import { keys } from 'ts-transformer-keys';
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
 describe('AddProduct.vue', () => {
-    let store: typeof Store, 
-        state: ProductsState;
-    
+    let store: typeof Store;
+    let state: ProductsState;
+
     const build = () => {
         const wrapper = shallowMount(AddProduct, {
             localVue,
             store,
         });
-        
+
         return {
             wrapper,
             imgContainer: () => wrapper.find('.img-container'),
@@ -29,12 +35,13 @@ describe('AddProduct.vue', () => {
             measure: () => wrapper.find('#measure'),
             qtd: () => wrapper.find('#qtd'),
             minQtd: () => wrapper.find('#minQtd'),
-            submit: () => wrapper.find('#submit'),
+            submit: () => wrapper.find('#add-product'),
         };
     };
 
-    const getRandomMeasure = () => faker.random.arrayElement(Object.values(typeof Measures)) as keyof typeof Measures;
- 
+    const getRandomMeasure = () =>
+        faker.random.arrayElement(Object.values(Measures)) as Measures;
+
     beforeEach(() => {
         state = {
             selectedProduct: {
@@ -49,12 +56,11 @@ describe('AddProduct.vue', () => {
 
     it('renders the component', () => {
         const { wrapper } = build();
-        expect(wrapper).toMatchSnapshot();         
+        expect(wrapper).toMatchSnapshot();
     });
 
     it('renders main components', () => {
-        const { 
-            wrapper,
+        const {
             imgBtn,
             name,
             qtd,
@@ -63,7 +69,7 @@ describe('AddProduct.vue', () => {
             submit,
             imgContainer,
         } = build();
-    
+
         expect(name().exists()).toBe(true);
         expect(qtd().exists()).toBe(true);
         expect(minQtd().exists()).toBe(true);
@@ -71,5 +77,21 @@ describe('AddProduct.vue', () => {
         expect(submit().exists()).toBe(true);
         expect(imgBtn().exists()).toBe(true);
         expect(imgContainer().exists()).toBe(true);
+    });
+
+    it('check types for inputs', () => {
+        const { name, qtd, minQtd, submit, imgBtn } = build();
+
+        // const TextKeys = keys<TextInputProps>();
+        // const NumberKeys = keys<NumberInputProps>();
+        // const ButtonKeys = keys<ButtonProps>();
+
+        // const getPropsKeys = (comp: Wrapper<Vue>) => Object.keys(comp.props());
+
+        // expect(getPropsKeys(name())).toBe(TextKeys);
+        // expect(getPropsKeys(qtd())).toBe(NumberKeys);
+        // expect(getPropsKeys(minQtd())).toBe(NumberKeys);
+        // expect(getPropsKeys(imgBtn())).toBe(ButtonKeys);
+        // expect(getPropsKeys(submit())).toBe(ButtonKeys);
     });
 });

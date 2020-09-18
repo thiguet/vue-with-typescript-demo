@@ -11,6 +11,6 @@ export class AlertState {
 }
 
 export default new Module({
-  state: AlertState,
-  mutations: AlertMutations,
+    state: AlertState,
+    mutations: AlertMutations,
 });

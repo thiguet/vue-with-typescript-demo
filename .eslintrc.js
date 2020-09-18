@@ -15,16 +15,25 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'class-methods-use-this': 'off',
+    'indent': ['error', 4],
+    'import/extensions': [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
   },
-  overrides: [
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
-      ],
-      env: {
-        jest: true,
-      },
+  overrides: [{
+    files: [
+      '**/__tests__/*.{j,t}s?(x)',
+      '**/tests/unit/**/*.spec.{j,t}s?(x)',
+    ],
+    env: {
+      jest: true,
     },
-  ],
+  }],
 };

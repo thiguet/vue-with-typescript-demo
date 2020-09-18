@@ -1,21 +1,17 @@
 import Vuex from 'vuex';
 import store from '@/store';
+import { VuexAppModules } from '@/store/datatypes/models';
 
 describe('Store', () => {
-  it('has to get a store instance', async (done) => {
-    expect(store).toBeInstanceOf(Vuex.Store);
-    done();
-  });
+    it('has to get a store instance', () => {
+        expect(store).toBeInstanceOf(Vuex.Store);
+    });
 
-  it('has login module in its instance', () => {
-    expect(store.hasModule('login')).toBe(true);
-  });
+    it("has all VuexAppModule's in its instance", () => {
+        const modules = Object.values(VuexAppModules);
 
-  it('has products module in its instance', () => {
-    expect(store.hasModule('products')).toBe(true);
-  });
-
-  it('has alert module in its instance', () => {
-    expect(store.hasModule('alert')).toBe(true);
-  });
+        modules.forEach(module => {
+            expect(store.hasModule(module)).toBe(true);
+        });
+    });
 });

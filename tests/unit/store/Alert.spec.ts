@@ -9,20 +9,20 @@ Vue.use(Vuex);
 const namespace = 'alert/';
 
 describe('Alert Vuex Module', () => {
-  let state: AlertState;
+    let state: AlertState;
 
-  beforeEach(() => {
-    state = store.state.alert;
-  });
-
-  it('sets the message to the state.', () => {
-    const newMessage = faker.random.words();
-
-    store.commit(namespace + MutationTypes.setMessage, newMessage);
-
-    expect({...state}).toEqual({
-      ...state,
-      message: newMessage,
+    beforeEach(() => {
+        state = store.state.alert;
     });
-  });
+
+    it('sets the message to the state.', () => {
+        const newMessage = faker.random.words();
+
+        store.commit(namespace + MutationTypes.setMessage, newMessage);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            message: newMessage,
+        });
+    });
 });

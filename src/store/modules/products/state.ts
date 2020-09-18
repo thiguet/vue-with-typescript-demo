@@ -1,7 +1,7 @@
-import { Product } from '@/store/datatypes/models.d';
+import { Product } from '@/store/datatypes/models';
 
 export default class ProductsState {
-  selectedProduct!: Product;
+    selectedProduct!: Product;
 
-  products: Product[] = [];
+    products: Product[] = [];
 }

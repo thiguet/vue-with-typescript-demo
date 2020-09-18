@@ -4,11 +4,13 @@ import ProductsMutations, { MutationTypes as MTypes } from './mutations';
 import ProductsActions, { ActionTypes as ATypes } from './actions';
 
 export type ProductsState = State;
+export const Mutations = ProductsMutations;
 export const MutationTypes = MTypes;
+export const Actions = ProductsActions;
 export const ActionTypes = ATypes;
 
 export default new Module({
-  state: State,
-  mutations: ProductsMutations,
-  actions: ProductsActions,
+    state: State,
+    mutations: ProductsMutations,
+    actions: ProductsActions,
 });

@@ -2,81 +2,87 @@ import { shallowMount } from '@vue/test-utils';
 import Alert from '@/components/Alert.vue';
 import faker from 'faker';
 
-describe('Alert', () => {
-  const props: any = {
-    isVisible: true,
-    closeFn: jest.fn(),
-    message: faker.lorem.paragraph(),
-  };
+interface AlertProps {
+    isVisible: boolean;
+    closeFn: Function;
+    message: string;
+}
 
-  const build = () => {
-    const wrapper = shallowMount(Alert, {
-      propsData: { ...props },
+describe('Alert', () => {
+    const props: AlertProps = {
+        isVisible: true,
+        closeFn: jest.fn(),
+        message: faker.lorem.paragraph(),
+    };
+
+    const build = () => {
+        const wrapper = shallowMount(Alert, {
+            propsData: { ...props },
+        });
+
+        return {
+            wrapper,
+            message: () => wrapper.find('.message'),
+            closeBtn: () => wrapper.find('.close-btn'),
+        };
+    };
+
+    it('renders component', () => {
+        props.message = 'Some default text';
+        const { wrapper } = build();
+        expect(wrapper).toMatchSnapshot();
     });
 
-    return {
-      wrapper,
-      message: () => wrapper.find('.message'),
-      closeBtn: () => wrapper.find('.close-btn'),
-    };
-  };
+    it('renders main components', () => {
+        const {
+            closeBtn,
+            message,
+        } = build();
 
-  it('renders component', () => {
-    props.message = 'Some default text';
-    const { wrapper } = build();
-    expect(wrapper).toMatchSnapshot();
-  });
+        expect(closeBtn().exists()).toBe(true);
+        expect(message().exists()).toBe(true);
+    });
 
-  it('renders main components', () => {
-    const {
-      closeBtn,
-      message,
-    } = build();
+    it('message text must be the same as props', () => {
+        const {
+            closeBtn,
+            message,
+        } = build();
 
-    expect(closeBtn().exists()).toBe(true);
-    expect(message().exists()).toBe(true);
-  });
+        expect(closeBtn().exists()).toBe(true);
+        expect(message().exists()).toBe(true);
+    });
 
-  it('message text must be the same as props', () => {
-    const {
-      closeBtn,
-      message,
-    } = build();
+    it('calls close fn on click', async () => {
+        const { closeBtn } = build();
+        const { closeFn } = props;
 
-    expect(closeBtn().exists()).toBe(true);
-    expect(message().exists()).toBe(true);
-  });
+        await closeBtn().trigger('click');
 
-  it('calls close fn on click', async () => {
-    const { closeBtn } = build();
-    const { closeFn } = props;
+        expect(closeFn).toHaveBeenCalled();
+    });
 
-    await closeBtn().trigger('click');
+    it('hides component on isVisible false', () => {
+        props.isVisible = false;
+        const {
+            wrapper,
+            message,
+        } = build();
+        expect(wrapper.props().isVisible).toBe(false);
+        expect(message()).toBeTruthy();
+    });
 
-    expect(closeFn).toHaveBeenCalled();
-  });
+    it('receives required props', () => {
+        const { wrapper } = build();
 
-  it('hides component on isVisible false', () => {
-    props.isVisible = false;
-    const {
-      wrapper,
-      message,
-    } = build();
-    expect(wrapper.props().isVisible).toBe(false);
-    expect(message()).toBeTruthy();
-  });
+        const {
+            closeFn,
+            message,
+            isVisible,
+        } = wrapper.props();
 
-  it('receives required props', () => {
-    const { wrapper } = build();
-
-    const {
-      closeFn,
-      message,
-      isVisible,
-    } = wrapper.props();
-
-    expect(isVisible).toBe(props.isVisible);
-    expect(closeFn).toBe(props.closeFn);
-    expect(message).toBe(props.message);
-  });
+        expect(isVisible).toBe(props.isVisible);
+        expect(closeFn).toBe(props.closeFn);
+        expect(message).toBe(props.message);
+    });
 });
