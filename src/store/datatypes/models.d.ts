@@ -1,23 +1,15 @@
-export interface Profile {
-    username: string;
-    bio?: string;
-    image?: string;
-    following: boolean;
+
+export enum Measures {
+    'UN',
+    'L',
+    'KG',
+    'G',
 }
 
-export interface User {
-    email: string;
-    token: string;
-    username: string;
-    bio?: boolean;
-    image?: string;
-}
-
-export interface UserSubmit {
-    email: string;
-    password: string;
-}
-
-export interface UserResponse {
-    user: User;
+export interface Product {
+    name: string;
+    measure: keyof typeof Measures;
+    qtd: number;
+    minQtd: number;
+    img?: string;
 }

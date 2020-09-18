@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import store from '@/store';
-import { LoginState } from '@/store/modules/login/models.d';
+import { LoginState, MutationTypes } from '@/store/modules/login';
 
 import faker from 'faker';
 
@@ -19,9 +19,9 @@ describe('Login Vuex Module', () => {
   it('sets the username to the state.', () => {
     const newUsername = faker.internet.userName();
 
-    store.commit(`${namespace}setUsername`, newUsername);
+    store.commit(namespace + MutationTypes.setUsername, newUsername);
 
-    expect(state).toEqual({
+    expect({...state}).toEqual({
       ...state,
       username: newUsername,
     });
@@ -30,9 +30,9 @@ describe('Login Vuex Module', () => {
   it('sets the password to the state.', () => {
     const newPassword = faker.internet.password();
 
-    store.commit(`${namespace}setPassword`, newPassword);
+    store.commit(namespace + MutationTypes.setPassword, newPassword);
 
-    expect(state).toEqual({
+    expect({...store.state.login}).toEqual({
       ...state,
       password: newPassword,
     });

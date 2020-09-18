@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="login">
     <form class="form">
       <Input id="email"
              type="text"
@@ -7,7 +7,7 @@
              :value="username"
              :setValue="setUsername" />
       <Input id="pass"
-             type="text"
+             type="password"
              label="Senha"
              :value="password"
              :setValue="setPassword" />
@@ -58,12 +58,28 @@ export default class Login extends Vue implements LoginView {
 </script>
 
 <style scoped>
-.form-field {
-  border: none;
+.form {
   display: flex;
+  flex-flow: column;
 }
 
-.form {
+.about {
+  display: flex;
+  flex-flow: row;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+}
+
+.form > fieldset {
+  width: 400px;
+}
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
   display: flex;
   flex-flow: column;
   flex-direction: column;

@@ -48,4 +48,16 @@ describe('Button', () => {
 
     expect(props.onclick).toHaveBeenCalled();
   });
+
+  it('must call evt.preventDefault fn', async () => {
+    const { button } = build();
+    
+    const opts = {
+      preventDefault: jest.fn(),
+    };
+    
+    button().trigger('click', opts);
+    
+    expect(opts.preventDefault).toHaveBeenCalled();
+  });
 });

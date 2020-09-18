@@ -10,7 +10,7 @@ import Button from '@/components/Button.vue';
 import Input from '@/components/Input.vue';
 
 import faker from 'faker';
-import { LoginState } from '@/store/modules/login/models.d';
+import { LoginState } from '@/store/modules/login';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -135,5 +135,10 @@ describe('Login', () => {
     await wrapper.vm.clickLogin();
     // Used to force the waiting for the desired methods.
     setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
+  });
+
+  it('must have a password input typed', async () => {
+    const { pass } = build();
+    expect(pass().props().type).toBe('password');
   });
 });
