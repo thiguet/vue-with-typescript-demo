@@ -81,8 +81,8 @@ export default class Login extends Vue implements LoginView {
   left: 50%;
   transform: translate(-50%,-50%);
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: column;
   flex-direction: column;
-  align-items: center;
+  width: 100px;
 }
 </style>

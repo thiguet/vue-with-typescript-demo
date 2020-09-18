@@ -22,6 +22,3 @@ export default class Message extends Vue {
     @Prop({ required: true }) private readonly closeFn!: string;
 }
 </script>
-
-<style>
-</style>
