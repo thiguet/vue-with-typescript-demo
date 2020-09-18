@@ -1,18 +1,18 @@
 name: VWT
 on:
-  # Trigger analysis when pushing in master or pull requests, and when creating
-  # a pull request. 
-  push:
-    branches:
-      - master
-  pull_request:
-      types: [opened, synchronize, reopened]
+    # Trigger analysis when pushing in master or pull requests, and when creating
+    # a pull request.
+    push:
+        branches:
+            - master
+    pull_request:
+        types: [opened, synchronize, reopened]
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Install modules
-      run: npm i
-    - name: Run tests
-      run: npm run test:unit
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Install modules
+              run: npm i
+            - name: Run tests
+              run: npm run unit
