@@ -3,13 +3,6 @@ import Button from '@/components/Button.vue';
 import faker from 'faker';
 import { ButtonProps } from './models';
 
-const fixedProps: ButtonProps = {
-    id: 'someID',
-    name: 'someName',
-    label: 'someLabel',
-    onclick: jest.fn(),
-};
-
 describe('Button', () => {
     let props: ButtonProps;
 
@@ -35,13 +28,23 @@ describe('Button', () => {
     });
 
     it('renders component', () => {
-        props.id = faker.random.uuid();
-        props.name = faker.random.word();
-        props.label = faker.random.word();
+        const fixedProps: ButtonProps = {
+            id: 'someID',
+            name: 'someName',
+            label: 'someLabel',
+            onclick: jest.fn(),
+        };
+        props = fixedProps;
 
         const { wrapper } = build();
 
         expect(wrapper).toMatchSnapshot();
+    });
+
+    it('check if props have been passed', () => {
+        const { wrapper } = build();
+
+        expect({ ...props }).toEqual({ ...wrapper.vm.$props });
     });
 
     it('renders main child components', () => {
@@ -57,6 +60,12 @@ describe('Button', () => {
         await button().trigger('click');
 
         expect(props.onclick).toHaveBeenCalled();
+    });
+
+    it('sets buttons name.', async () => {
+        const { button } = build();
+
+        expect(props.name).toBe(button().attributes().name);
     });
 
     it('must call evt.preventDefault fn', async () => {

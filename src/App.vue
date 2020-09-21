@@ -1,13 +1,17 @@
 <template>
     <div id="app">
         <router-view />
+        <Alert />
     </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import Alert from '@/components/Alert.vue';
 
-export default Vue.extend({});
+export default Vue.extend({
+    components: { Alert },
+});
 </script>
 <style>
 :root {

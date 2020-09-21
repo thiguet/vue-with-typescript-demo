@@ -9,7 +9,7 @@ exports[`Login renders component 1`] = `
     <inputwrapper-stub label="Senha" legend="Password">
       <textinput-stub id="pass" type="password" value="$@3sometest" setvalue="function () { [native code] }"></textinput-stub>
     </inputwrapper-stub>
-    <button-stub label="Login" onclick="function () { [native code] }"></button-stub>
+    <button-stub id="login" name="login" label="Login" onclick="function () { [native code] }"></button-stub>
   </form>
 </div>
 `;

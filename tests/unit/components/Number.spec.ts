@@ -33,8 +33,11 @@ describe('Number.vue', () => {
     it('renders component', () => {
         props.id = 'someFixedValidId';
         props.value = 'someFixedValidValue';
+        props.min = 0;
+        props.max = 100;
 
         const { wrapper } = build();
+
         expect(wrapper).toMatchSnapshot();
     });
 

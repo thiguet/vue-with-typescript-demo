@@ -10,7 +10,7 @@ describe('Store', () => {
     it("has all VuexAppModule's in its instance", () => {
         const modules = Object.values(VuexAppModules);
 
-        modules.forEach(module => {
+        modules.forEach((module) => {
             expect(store.hasModule(module)).toBe(true);
         });
     });

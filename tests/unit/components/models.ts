@@ -26,3 +26,9 @@ export interface ButtonProps extends BaseProps {
     label: string;
     onclick: Function;
 }
+export type DNDImageProps = BaseInput;
+export interface AlertProps {
+    isVisible: boolean;
+    closeFn: Function;
+    message: string;
+}

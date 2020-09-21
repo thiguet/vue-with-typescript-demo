@@ -1,23 +1,23 @@
-import { shallowMount } from '@vue/test-utils';
+import Vuex, { ActionTree, ModuleTree, MutationTree, Store } from 'vuex';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Alert from '@/components/Alert.vue';
 import faker from 'faker';
+import { State, ActionTypes } from '@/store/modules/alert';
+import { AlertVuex } from '../store/models.d';
+import { VuexAppModules } from '@/store/datatypes/models';
 
-interface AlertProps {
-    isVisible: boolean;
-    closeFn: Function;
-    message: string;
-}
+const localVue = createLocalVue();
+
+localVue.use(Vuex);
 
 describe('Alert', () => {
-    const props: AlertProps = {
-        isVisible: true,
-        closeFn: jest.fn(),
-        message: faker.lorem.paragraph(),
-    };
+    let store: Store<State>;
+    let alert: AlertVuex;
 
     const build = () => {
         const wrapper = shallowMount(Alert, {
-            propsData: { ...props },
+            store,
+            localVue,
         });
 
         return {
@@ -27,62 +27,77 @@ describe('Alert', () => {
         };
     };
 
+    beforeEach(() => {
+        const state: State = {
+            display: faker.random.boolean(),
+            message: faker.lorem.text(),
+        };
+
+        const actions: ActionTree<MutationTree<State>, State> = {
+            [ActionTypes.openAlert]: jest.fn(),
+            [ActionTypes.closeAlert]: jest.fn(),
+        };
+
+        alert = {
+            namespaced: true,
+            state,
+            mutations: {},
+            actions,
+        };
+
+        const modules: ModuleTree<State> = {
+            [VuexAppModules.alert]: {
+                ...alert,
+            },
+        };
+
+        store = new Vuex.Store({
+            modules,
+        });
+    });
+
     it('renders component', () => {
-        props.message = 'Some default text';
+        const { state } = alert;
+        state.message = 'Some default text';
         const { wrapper } = build();
         expect(wrapper).toMatchSnapshot();
     });
 
     it('renders main components', () => {
-        const {
-            closeBtn,
-            message,
-        } = build();
+        const { closeBtn, message } = build();
 
         expect(closeBtn().exists()).toBe(true);
         expect(message().exists()).toBe(true);
     });
 
     it('message text must be the same as props', () => {
-        const {
-            closeBtn,
-            message,
-        } = build();
+        const { state } = alert;
+        const { closeBtn, message } = build();
+        state.display = true;
 
         expect(closeBtn().exists()).toBe(true);
         expect(message().exists()).toBe(true);
     });
 
     it('calls close fn on click', async () => {
+        const { state } = alert;
+        state.display = true;
+
         const { closeBtn } = build();
-        const { closeFn } = props;
+        const { closeAlert } = alert.actions;
 
         await closeBtn().trigger('click');
 
-        expect(closeFn).toHaveBeenCalled();
+        expect(closeAlert).toHaveBeenCalled();
     });
 
     it('hides component on isVisible false', () => {
-        props.isVisible = false;
-        const {
-            wrapper,
-            message,
-        } = build();
-        expect(wrapper.props().isVisible).toBe(false);
-        expect(message()).toBeTruthy();
-    });
+        const { state } = alert;
 
-    it('receives required props', () => {
-        const { wrapper } = build();
+        state.display = false;
 
-        const {
-            closeFn,
-            message,
-            isVisible,
-        } = wrapper.props();
+        const { message } = build();
 
-        expect(isVisible).toBe(props.isVisible);
-        expect(closeFn).toBe(props.closeFn);
-        expect(message).toBe(props.message);
+        expect(message().exists()).toBe(false);
     });
 });

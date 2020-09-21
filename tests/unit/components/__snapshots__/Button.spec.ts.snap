@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button renders component 1`] = `<div class="wrapper-btn" id="91939819-e797-469a-9439-5ae13d22dd52" name="web services"><button class="btn">Bedfordshire</button></div>`;
+exports[`Button renders component 1`] = `<div class="wrapper-btn"><button id="someID" name="someName" class="btn">someLabel</button></div>`;

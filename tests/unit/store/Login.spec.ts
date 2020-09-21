@@ -100,7 +100,7 @@ describe('Login Vuex Module', () => {
 
         expect(commit).toHaveBeenCalledWith(
             MutationTypes.setCurrentUser,
-            currentUser
+            currentUser,
         );
     });
 });

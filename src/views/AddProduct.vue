@@ -1,67 +1,48 @@
 <template>
     <div class="add-product">
         <div class="img-wrapper">
-            <div class="img-container">
-                <span>Img:</span>
-                <img id="img" />
-            </div>
-            <Button
-                id="img-btn"
-                name="img-btn"
-                label="Escolha uma imagem"
-                :onclick="() => {}"
-            />
+            <DNDImage id="img" :value="selectedProduct.image" :setValue="setProductImage" />
+            <Button id="img-btn" name="img-btn" label="Escolha uma imagem" :onclick="() => {}" />
         </div>
         <div class="form">
             <form action="#">
                 <InputWrapper label="Nome" legend="Product Name">
-                    <TextInput
-                        id="name"
-                        :value="ProductName"
-                        :setValue="ProductName"
-                    />
+                    <TextInput id="name" :value="selectedProduct.name" :setValue="setProductName" />
                 </InputWrapper>
                 <InputWrapper label="Quantidade" legend="Product Quantity">
-                    <TextInput
+                    <Number
                         id="qtd"
                         type="number"
-                        :value="ProductQtd"
-                        :setValue="ProductQtd"
+                        min="0"
+                        :value="selectedProduct.qtd"
+                        :setValue="setProductQtd"
                     />
                 </InputWrapper>
                 <InputWrapper label="Qtd (Min)" legend="Product Min Quantity">
-                    <TextInput
-                        id="minQtd"
+                    <Number
+                        id="min-qtd"
                         type="number"
-                        :value="ProductMinQtd"
-                        :setValue="ProductMinQtd"
+                        min="0"
+                        :value="selectedProduct.minQtd"
+                        :setValue="setProductMinQtd"
                     />
                 </InputWrapper>
-                <InputWrapper
-                    label="Product Measure"
-                    legend="Product Measure"
-                    for="measure"
-                >
+                <InputWrapper label="Product Measure" legend="Product Measure" for="measure">
                     <select
                         name="measure"
                         id="measure"
-                        @change="Measure($event.target.value)"
+                        :value="selectedProduct.measure"
+                        @change="setProductMeasure($event.target.value)"
                     >
-                        <option selected disabled>Escolha uma opção</option>
+                        <option disabled>Escolha uma opção</option>
                         <option
                             v-for="(measure, index) in measures"
                             :key="index"
-                        >
-                            {{ measure }}
-                        </option>
+                            :selected="index == 0"
+                        >{{ measure }}</option>
                     </select>
                 </InputWrapper>
-                <Button
-                    id="add-product"
-                    name="add-product"
-                    label="Enviar"
-                    :onclick="() => {}"
-                />
+                <Button id="add-product" name="add-product" label="Enviar" :onclick="submitForm" />
             </form>
         </div>
     </div>
@@ -72,7 +53,9 @@ import { Vue, Component } from 'vue-property-decorator';
 
 import InputWrapper from '@/components/InputWrapper.vue';
 import TextInput from '@/components/TextInput.vue';
+import Number from '@/components/Number.vue';
 import Button from '@/components/Button.vue';
+import DNDImage from '@/components/DNDImage.vue';
 
 import { namespace } from 'vuex-class';
 
@@ -80,59 +63,69 @@ import { AddProductView } from '@/views/models.d';
 
 import { Product, Measures, VuexAppModules } from '@/store/datatypes/models';
 
-import Mutations, { MutationTypes } from '@/store/modules/products/mutations';
+import {
+    Mutations,
+    MutationTypes,
+    Actions,
+    ActionTypes,
+} from '@/store/modules/products';
+import {
+    Actions as AlertActions,
+    ActionTypes as AlertActionTypes,
+} from '@/store/modules/alert';
+
+import { newProductError, newProductSuccess } from '@/assets/messages';
 
 const products = namespace(VuexAppModules.products);
+const alert = namespace(VuexAppModules.alert);
+
+const { Mutation, Action, State } = products;
 
 @Component({
     name: 'AddProduct',
     components: {
         InputWrapper,
+        Number,
         TextInput,
         Button,
+        DNDImage,
     },
     data: () => ({
         measures: Object.values(Measures),
     }),
 })
 export default class AddProduct extends Vue implements AddProductView {
-    @products.State
+    @State
     private selectedProduct!: Product;
 
-    @products.Mutation
-    setProduct!: Mutations[MutationTypes.setProduct];
+    @Mutation
+    private setProductName!: Mutations[MutationTypes.setProductName];
 
-    get ProductName() {
-        return ''; // this.selectedProduct.name;
-    }
+    @Mutation
+    private setProductQtd!: Mutations[MutationTypes.setProductQtd];
 
-    set ProductName(val: string) {
-        this.setProduct({
-            ...this.selectedProduct,
-            name: val,
-        });
-    }
+    @Mutation
+    private setProductMinQtd!: Mutations[MutationTypes.setProductMinQtd];
 
-    get Measure() {
-        return this.selectedProduct.measure;
-    }
+    @Mutation
+    private setProductMeasure!: Mutations[MutationTypes.setProductMeasure];
 
-    set Measure(val: keyof typeof Measures) {
-        this.setProduct({
-            ...this.selectedProduct,
-            measure: val,
-        });
-    }
+    @Mutation
+    private setProductImage!: Mutations[MutationTypes.setProductImage];
 
-    public newProduct() {
-        console.log('a');
-    }
+    @Action
+    private newProduct!: Actions[ActionTypes.newProduct];
 
-    public setMeasure() {
-        this.setProduct({
-            ...this.selectedProduct,
-            // measure: value,
-        });
+    @alert.Action
+    private openAlert!: AlertActions[AlertActionTypes.openAlert];
+
+    public submitForm() {
+        try {
+            this.newProduct(this.selectedProduct);
+            this.openAlert(newProductSuccess);
+        } catch (e) {
+            this.openAlert(newProductError);
+        }
     }
 }
 </script>
@@ -145,9 +138,9 @@ select#measure {
 
 .img-container {
     display: flex;
-    padding: 50px 30vw;
     margin-bottom: 5px;
     border: 1px solid var(--border-color);
+    overflow: hidden;
 }
 
 .form {
@@ -180,6 +173,8 @@ form > fieldset {
 }
 
 .img-wrapper {
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     width: 100%;
 }

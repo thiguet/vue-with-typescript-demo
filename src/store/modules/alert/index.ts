@@ -1,16 +1,12 @@
 import { Module } from 'vuex-smart-module';
-import Mutations, { MutationTypes as MTypes } from './mutations';
+import State from './state';
+import Mutations, { MutationTypes } from './mutations';
+import Actions, { ActionTypes } from './actions';
 
-export const MutationTypes = MTypes;
-export const AlertMutations = Mutations;
-
-export class AlertState {
-  message!: string;
-
-  display!: boolean;
-}
+export { State, Mutations, Actions, MutationTypes, ActionTypes };
 
 export default new Module({
-    state: AlertState,
-    mutations: AlertMutations,
+    state: State,
+    mutations: Mutations,
+    actions: Actions,
 });

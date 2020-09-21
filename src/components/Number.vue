@@ -3,6 +3,8 @@
         :id="id"
         type="number"
         :name="id"
+        :max="max"
+        :min="min"
         class="input"
         :value="value"
         @input="onInput"
@@ -35,4 +37,12 @@ export default class Number extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+input {
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--font-input-size);
+}
+</style>

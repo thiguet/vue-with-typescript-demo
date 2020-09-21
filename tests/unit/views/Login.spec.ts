@@ -18,7 +18,7 @@ localVue.use(Vuex);
 describe('Login', () => {
     let state: LoginState;
     let mutations: MutationTree<LoginState>;
-    let actions: ActionTree<typeof mutations, LoginState>;
+    let actions: ActionTree<MutationTree<LoginState>, LoginState>;
     let store: Store<LoginState>;
 
     const build = () => {

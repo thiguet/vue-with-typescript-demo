@@ -70,7 +70,7 @@ describe('InputWrapper.vue', () => {
     it('sets propeties to label element', () => {
         const { wrapper, labelEl } = build();
 
-        expect(labelEl().text()).toBe(wrapper.props().label + ':');
+        expect(labelEl().text()).toBe(`${wrapper.props().label}:`);
     });
 
     it('sets legends text', () => {

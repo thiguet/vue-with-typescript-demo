@@ -7,10 +7,10 @@ export enum Measures {
 
 export interface Product {
     name: string;
-    measure: keyof typeof Measures;
+    measure: Measures;
     qtd: number;
     minQtd: number;
-    img?: string;
+    image?: string;
 }
 
 export interface User {

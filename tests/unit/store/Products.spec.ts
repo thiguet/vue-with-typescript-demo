@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 import faker from 'faker';
 
 import {
-    ProductsState,
+    State,
     Mutations,
     MutationTypes,
     Actions,
@@ -17,21 +17,19 @@ import { inject } from 'vuex-smart-module';
 Vue.use(Vuex);
 
 describe('Products Vuex Module', () => {
-    let state: ProductsState;
+    let state: State;
 
     const lastAddedProduct = (products: Product[]) => ({
         ...products.slice(-1)[0],
     });
 
     const getRandomMeasure = () =>
-        faker.random.arrayElement(
-            Object.values(typeof Measures)
-        ) as keyof typeof Measures;
+        faker.random.arrayElement(Object.values(typeof Measures)) as Measures;
 
     const getNewProduct = (): Product => ({
         name: faker.name.title(),
         measure: getRandomMeasure(),
-        img: faker.image.image(),
+        image: faker.image.image(),
         qtd: faker.random.number(),
         minQtd: faker.random.number(),
     });
@@ -67,6 +65,118 @@ describe('Products Vuex Module', () => {
         });
     });
 
+    it('sets the product name to the state.', () => {
+        const { mutations } = build();
+
+        const { name } = getNewProduct();
+
+        mutations.setProductName(name);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            selectedProduct: {
+                ...state.selectedProduct,
+                name,
+            },
+        });
+    });
+
+    it('sets the product quantity to the state.', async () => {
+        const { mutations } = build();
+
+        const { qtd } = getNewProduct();
+
+        await mutations.setProductQtd(qtd);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            selectedProduct: {
+                ...state.selectedProduct,
+                qtd,
+            },
+        });
+    });
+
+    it('sets the product quantity to zero when negative.', () => {
+        const { mutations } = build();
+
+        const qtd = -1;
+
+        mutations.setProductQtd(qtd);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            selectedProduct: {
+                ...state.selectedProduct,
+                qtd: 0,
+            },
+        });
+    });
+
+    it('sets the product minimum quantity to the state.', () => {
+        const { mutations } = build();
+
+        const { minQtd } = getNewProduct();
+
+        mutations.setProductMinQtd(minQtd);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            selectedProduct: {
+                ...state.selectedProduct,
+                minQtd,
+            },
+        });
+    });
+
+    it('sets the product minimum quantity to zero when negative.', () => {
+        const { mutations } = build();
+
+        const minQtd = -1;
+
+        mutations.setProductMinQtd(minQtd);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            selectedProduct: {
+                ...state.selectedProduct,
+                minQtd: 0,
+            },
+        });
+    });
+
+    it('sets the product measure to the state.', () => {
+        const { mutations } = build();
+
+        const { measure } = getNewProduct();
+
+        mutations.setProductMeasure(measure);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            selectedProduct: {
+                ...state.selectedProduct,
+                measure,
+            },
+        });
+    });
+
+    it('sets the product image to the state.', () => {
+        const { mutations } = build();
+
+        const { image } = getNewProduct();
+
+        mutations.setProductImage(image as string);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            selectedProduct: {
+                ...state.selectedProduct,
+                image,
+            },
+        });
+    });
+
     it('add a product to the modules state in the end of the array.', () => {
         const { mutations } = build();
 
@@ -92,7 +202,7 @@ describe('Products Vuex Module', () => {
 
         expect(commit).toHaveBeenCalledWith(
             MutationTypes.addProduct,
-            newProduct
+            newProduct,
         );
     });
 });

@@ -2,21 +2,12 @@
     <div class="login">
         <form class="form">
             <InputWrapper label="Login" legend="Login">
-                <TextInput
-                    id="email"
-                    :value="username"
-                    :setValue="setUsername"
-                />
+                <TextInput id="email" :value="username" :setValue="setUsername" />
             </InputWrapper>
             <InputWrapper label="Senha" legend="Password">
-                <TextInput
-                    id="pass"
-                    type="password"
-                    :value="password"
-                    :setValue="setPassword"
-                />
+                <TextInput id="pass" type="password" :value="password" :setValue="setPassword" />
             </InputWrapper>
-            <Button label="Login" :onclick="clickLogin" />
+            <Button id="login" name="login" label="Login" :onclick="clickLogin" />
         </form>
     </div>
 </template>
@@ -31,9 +22,14 @@ import Button from '@/components/Button.vue';
 import { namespace } from 'vuex-class';
 import { LoginView } from '@/views/models.d';
 
-import { VuexAppModules } from '@/store/datatypes/models';
+import { LoginSubmit, VuexAppModules } from '@/store/datatypes/models';
+
+import Mutations, { MutationTypes } from '@/store/modules/login/mutations';
+import Actions, { ActionTypes } from '@/store/modules/login/actions';
 
 const login = namespace(VuexAppModules.login);
+
+const { State, Mutation, Action } = login;
 
 @Component({
     name: 'Login',
@@ -44,23 +40,28 @@ const login = namespace(VuexAppModules.login);
     },
 })
 export default class Login extends Vue implements LoginView {
-    @login.State
+    @State
     private username!: string;
 
-    @login.Mutation
-    private setUsername!: (username: string) => void;
-
-    @login.State
+    @State
     private password!: string;
 
-    @login.Mutation
-    private setPassword!: (password: string) => void;
+    @Mutation
+    private setUsername!: Mutations[MutationTypes.setUsername];
 
-    @login.Action
-    public loginAction!: () => Promise<unknown>;
+    @Mutation
+    private setPassword!: Mutations[MutationTypes.setPassword];
+
+    @Action
+    public loginAction!: Actions[ActionTypes.loginAction];
 
     public clickLogin(): Promise<unknown> {
-        return this.loginAction();
+        const loginData: LoginSubmit = {
+            name: this.username,
+            pass: this.password,
+        };
+
+        return this.loginAction(loginData);
     }
 }
 </script>
