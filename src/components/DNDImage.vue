@@ -113,4 +113,11 @@ img {
     padding: 10px;
     border-radius: 50%;
 }
+
+@media (max-width: 320px) {
+    .img-container{
+        width: 150px;
+        height: 150px;
+    }
+}
 </style>

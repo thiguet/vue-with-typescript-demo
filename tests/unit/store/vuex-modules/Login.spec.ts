@@ -9,7 +9,7 @@ import {
 } from '@/store/modules/login';
 import faker from 'faker';
 import { LoginSubmit, User } from '@/store/datatypes/models';
-import { login } from '@/store/api';
+import { login } from '@/services/Login';
 
 Vue.use(Vuex);
 
@@ -71,6 +71,22 @@ describe('Login Vuex Module', () => {
         expect({ ...state }).toEqual({
             ...state,
             password: newPassword,
+        });
+    });
+
+    it('sets the user to the state.', () => {
+        const newUser: User = {
+            name: faker.name.firstName(),
+            email: faker.internet.email(),
+        };
+
+        const { mutations } = build();
+
+        mutations.setCurrentUser(newUser);
+
+        expect({ ...state }).toEqual({
+            ...state,
+            currentUser: newUser,
         });
     });
 

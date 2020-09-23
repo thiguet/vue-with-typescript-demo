@@ -61,7 +61,7 @@ export default class Alert extends Vue {
     display: flex;
     position: relative;
     top: 20%;
-    left: 15%;
+    left: 15vw;
     width: 70vw;
     height: 40vh;
     flex-direction: column;
@@ -73,10 +73,15 @@ export default class Alert extends Vue {
     border-radius: 5px;
 }
 
+.alert-header {
+    align-self: center;
+}
+
 .alert-bottom {
     margin-top: 20px;
     display: flex;
     flex-direction: row-reverse;
+    align-self: center;
 }
 
 .alert-bottom > button {
@@ -94,6 +99,11 @@ button {
 }
 
 .alert-mid {
+    align-self: center;
     height: 35%;
+}
+.message {
+    align-self: center;
+    text-align: center;
 }
 </style>

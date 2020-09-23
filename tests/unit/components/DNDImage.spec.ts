@@ -1,18 +1,30 @@
-import { shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import DNDImage from '@/components/DNDImage.vue';
 import faker from 'faker';
-import axios from 'axios';
 import {
     DNDImageComponent,
     DNDImageData,
     DNDImageMethods,
 } from '@/views/models.d';
-import { DNDImageProps } from './models';
+import { DNDImageProps, ImageMimeTypes } from './models';
 
 describe('DNDImage.vue', () => {
     let data: DNDImageData;
     let props: DNDImageProps;
     let methods: DNDImageMethods;
+
+    const getFakeFile = (type: string) => {
+        const name = faker.system.fileName();
+        const file = new File(['(⌐□_□)'], name, {
+            type,
+        });
+
+        return {
+            name,
+            type,
+            file,
+        };
+    };
 
     const triggerEventFactory = async (
         eventName: string,
@@ -31,7 +43,7 @@ describe('DNDImage.vue', () => {
     };
 
     const build = () => {
-        const wrapper = shallowMount(DNDImage, {
+        const wrapper = mount(DNDImage, {
             propsData: { ...props },
         });
 
@@ -133,72 +145,127 @@ describe('DNDImage.vue', () => {
         expect(wrongFileHeader().exists()).toBe(false);
     });
 
-    it('simulate a dragOver  event.', async () => {
-        const { DNDImageComp } = build();
+    it('simulate a dragOver event.', async () => {
+        const { DNDImageComp, imgContainer } = build();
 
-        const options = await triggerEventFactory('dragover');
+        const options = { preventDefault: jest.fn() };
+        const event = new Event('dragover');
+        Object.assign(event, options);
+        await imgContainer().element.dispatchEvent(event);
 
         await setTimeout(() => {
             expect(options.preventDefault).toBeCalled();
             expect(DNDImageComp().isDragging).toBe(true);
-            expect(methods.dragOver).toBeCalled();
-        });
+        }, 0);
     });
 
-    it('simulate a dragLeave event.', async () => {
-        const { DNDImageComp } = build();
+    it('simulate a dragLeave event.', async done => {
+        const { DNDImageComp, imgContainer } = build();
 
-        const options = await triggerEventFactory('dragleave');
+        const event = new Event('dragleave');
 
-        await setTimeout(() => {
-            expect(options.preventDefault).toHaveBeenCalled();
-            expect(DNDImageComp().isDragging).toBe(false);
-            expect(methods.dragLeave).toBeCalled();
-        });
-    });
-
-    it('simulate a drop event.', async () => {
-        const { DNDImageComp } = build();
-
-        const getBlob = (baseURL: string): Blob => {
-            try {
-                return new Blob([window.btoa(faker.lorem.words())], {
-                    type: 'image/jpeg',
-                });
-            } catch (e) {
-                console.error('Failed to create Blobl file.');
-                throw new Error(e.stack);
-            }
-        };
-
-        const getDataTransfer = () => {
-            interface DataTranferMock {
-                files: File[];
-            }
-
-            const dataTransfer: DataTranferMock = {
-                files: [],
-            };
-
-            const blob: Blob = getBlob(faker.image.food());
-
-            dataTransfer.files.push(new File([blob], faker.system.fileName()));
-
-            return dataTransfer;
-        };
-
-        const dataTransfer = await getDataTransfer();
-
-        const options = await triggerEventFactory('drop', {
+        const options = {
             preventDefault: jest.fn(),
-            dataTransfer,
-        });
+        };
+
+        Object.assign(event, options);
+
+        await imgContainer().element.dispatchEvent(event);
 
         await setTimeout(() => {
             expect(options.preventDefault).toBeCalled();
-            expect(DNDImageComp().drop).toBeCalledWith({
-                dataTransfer,
-            });
-        });
+            expect(DNDImageComp().isDragging).toBe(false);
+            done();
+        }, 0);
+    });
+
+    it('simulate a drop event with an image.', async done => {
+        const imageMimeType = faker.random.arrayElement(
+            Object.values(ImageMimeTypes),
+        );
+        const { file } = getFakeFile(imageMimeType);
+        const { DNDImageComp, imgContainer } = build();
+        interface DataTranferMock {
+            files: File[];
+        }
+        const dataTransfer: DataTranferMock = {
+            files: [file],
+        };
+        const options = {
+            preventDefault: jest.fn(),
+            dataTransfer,
+        };
+
+        const event = new Event('drop');
+
+        Object.assign(event, options);
+
+        imgContainer().element.dispatchEvent(event);
+
+        // Haven't found a way of waiting DOM to trigger my event.
+        // Even using Vue.nextTick or wrapper.vm.nextTick several times, hasn't played out.
+        await setTimeout(() => {
+            expect(options.preventDefault).toBeCalled();
+            expect(DNDImageComp().imageSource).toBeTruthy();
+            done();
+        }, 1000);
+    });
+
+    it('simulate a drop event without a file.', async done => {
+        const { DNDImageComp, imgContainer } = build();
+
+        const options = {
+            preventDefault: jest.fn(),
+            dataTransfer: { files: [] },
+        };
+
+        const { imageSource, wrongFile, isDragging } = DNDImageComp();
+        const event = new Event('drop');
+
+        Object.assign(event, options);
+
+        imgContainer().element.dispatchEvent(event);
+
+        // Haven't found a way of waiting DOM to trigger my event.
+        // Even using Vue.nextTick or wrapper.vm.nextTick several times, hasn't played out.
+        await setTimeout(() => {
+            expect(options.preventDefault).toBeCalled();
+            // Expecting them to be the same as before.
+            expect(DNDImageComp().imageSource).toBe(imageSource);
+            expect(DNDImageComp().wrongFile).toBe(wrongFile);
+            expect(DNDImageComp().isDragging).toBe(isDragging);
+            done();
+        }, 1000);
+    });
+    it('simulate a drop event with a file that is not an image.', async done => {
+        const notAnImageMimeType = 'application/pdf';
+        const { file } = getFakeFile(notAnImageMimeType);
+        const { DNDImageComp, imgContainer } = build();
+        interface DataTranferMock {
+            files: File[];
+        }
+        const dataTransfer: DataTranferMock = {
+            files: [file],
+        };
+        const options = {
+            preventDefault: jest.fn(),
+            dataTransfer,
+        };
+
+        const event = new Event('drop');
+
+        Object.assign(event, options);
+
+        imgContainer().element.dispatchEvent(event);
+
+        // Haven't found a way of waiting DOM to trigger my event.
+        // Even using Vue.nextTick or wrapper.vm.nextTick several times, hasn't played out.
+        await setTimeout(() => {
+            expect(options.preventDefault).toBeCalled();
+            expect(DNDImageComp().imageSource).toBe(null);
+            expect(DNDImageComp().wrongFile).toBe(true);
+            expect(DNDImageComp().isDragging).toBe(false);
+            done();
+        }, 1000);
     });
 });

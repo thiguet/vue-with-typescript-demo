@@ -1,3 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Alert renders component 1`] = ``;
+exports[`Alert renders component 1`] = `
+<div class="alert-bg">
+  <div class="alert-card">
+    <div class="alert-header">
+      <h3 class="title"></h3>
+    </div>
+    <div class="alert-mid"><span class="message">Some default text</span></div>
+    <div class="alert-bottom"><button class="close-btn">Fechar</button></div>
+  </div>
+</div>
+`;

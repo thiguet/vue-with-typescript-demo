@@ -32,3 +32,8 @@ export interface AlertProps {
     closeFn: Function;
     message: string;
 }
+
+export enum ImageMimeTypes {
+    png = 'image/png',
+    jpeg = 'image/jpeg',
+}

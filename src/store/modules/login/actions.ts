@@ -1,6 +1,6 @@
 import { Actions as VActions, Getters } from 'vuex-smart-module';
 import { LoginSubmit } from '@/store/datatypes/models';
-import { login } from '@/store/api';
+import { login } from '@/services/Login';
 import { Store } from 'vuex';
 import State from './state';
 import Mutations, { MutationTypes } from './mutations';
@@ -27,7 +27,7 @@ export default class Actions extends VActions<
     async [ActionTypes.loginAction](payload: LoginSubmit) {
         const result = await this.login(payload);
 
-        if (result !== null) this.commit(MutationTypes.setCurrentUser, result);
+        this.commit(MutationTypes.setCurrentUser, result);
         // else
         // this.dispatch()
     }

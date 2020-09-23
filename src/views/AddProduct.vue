@@ -147,6 +147,7 @@ select#measure {
     display: flex;
     flex-flow: row;
     width: 100%;
+    margin-top: 10px;
     justify-content: space-around;
     align-self: center;
     align-content: center;

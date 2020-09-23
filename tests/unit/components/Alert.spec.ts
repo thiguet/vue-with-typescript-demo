@@ -59,21 +59,25 @@ describe('Alert', () => {
     it('renders component', () => {
         const { state } = alert;
         state.message = 'Some default text';
+        state.display = true;
         const { wrapper } = build();
         expect(wrapper).toMatchSnapshot();
     });
 
     it('renders main components', () => {
+        const { state } = alert;
+        const bool = faker.random.boolean();
+        state.display = bool;
         const { closeBtn, message } = build();
 
-        expect(closeBtn().exists()).toBe(true);
-        expect(message().exists()).toBe(true);
+        expect(closeBtn().exists()).toBe(bool);
+        expect(message().exists()).toBe(bool);
     });
 
     it('message text must be the same as props', () => {
         const { state } = alert;
-        const { closeBtn, message } = build();
         state.display = true;
+        const { closeBtn, message } = build();
 
         expect(closeBtn().exists()).toBe(true);
         expect(message().exists()).toBe(true);
