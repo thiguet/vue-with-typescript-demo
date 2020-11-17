@@ -17,6 +17,9 @@ const root = new Module({
     },
 });
 
-export default createStore(root, {
+export default createStore(
+  root,
+  {
     strict: process.env.NODE_ENV !== 'production',
-});
+  },
+);
