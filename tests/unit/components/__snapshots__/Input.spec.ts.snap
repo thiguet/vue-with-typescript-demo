@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Input.vue renders component 1`] = `
-<fieldset>
-  <legend>someFixedLegend</legend> <label class="label">someFixedValidLabel</label> <input id="someFixedValidId" class="input">
-</fieldset>
-`;

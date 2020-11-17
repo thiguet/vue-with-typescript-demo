@@ -5,15 +5,16 @@ import { createStore, Module } from 'vuex-smart-module';
 import LoginModule from '@/store/modules/login';
 import ProductsModule from '@/store/modules/products';
 import AlertModule from '@/store/modules/alert';
+import { VuexAppModules } from './datatypes/models';
 
 Vue.use(Vuex);
 
 const root = new Module({
-  modules: {
-    products: ProductsModule,
-    login: LoginModule,
-    alert: AlertModule,
-  },
+    modules: {
+        [VuexAppModules.products]: ProductsModule,
+        [VuexAppModules.login]: LoginModule,
+        [VuexAppModules.alert]: AlertModule,
+    },
 });
 
 export default createStore(

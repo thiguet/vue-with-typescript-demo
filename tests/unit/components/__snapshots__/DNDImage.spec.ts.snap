@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DNDImage.vue renders component 1`] = `
+<div class="drop img-container" id="someFixedId" value="someFixedValue" setvalue="function mockConstructor() {
+        return fn.apply(this, arguments);
+      }">
+  <!---->
+  <!---->
+  <h1 id="drop-image-header">
+    Arraste uma imagem aqui!
+  </h1>
+</div>
+`;

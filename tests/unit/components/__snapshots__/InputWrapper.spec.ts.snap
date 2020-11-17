@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputWrapper.vue renders component 1`] = `
+<fieldset>
+  <legend><span class="accessibility">someFixedValidLegend</span></legend> <label class="label"><span>someFixedValidLabel:</span></label>
+  <textinput-stub id="someid" type="text" value="somevalue" setvalue="function mockConstructor() {
+        return fn.apply(this, arguments);
+      }"></textinput-stub>
+</fieldset>
+`;

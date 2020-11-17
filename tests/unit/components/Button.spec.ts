@@ -1,63 +1,82 @@
 import { shallowMount } from '@vue/test-utils';
 import Button from '@/components/Button.vue';
 import faker from 'faker';
-
-interface ButtonProps {
-  label: string;
-  onclick: Function;
-}
-
-const props: ButtonProps = {
-  label: faker.random.word(),
-  onclick: jest.fn(),
-};
+import { ButtonProps } from './models';
 
 describe('Button', () => {
-  const build = () => {
-    const wrapper = shallowMount(Button, {
-      propsData: { ...props },
+    let props: ButtonProps;
+
+    const build = () => {
+        const wrapper = shallowMount(Button, {
+            propsData: { ...props },
+        });
+
+        return {
+            wrapper,
+            btnWrapper: () => wrapper.find('.wrapper-btn'),
+            button: () => wrapper.find('.btn'),
+        };
+    };
+
+    beforeEach(() => {
+        props = {
+            id: faker.random.uuid(),
+            name: faker.random.word(),
+            label: faker.random.word(),
+            onclick: jest.fn(),
+        };
     });
 
-    return {
-      wrapper,
-      btnWrapper: () => wrapper.find('.wrapper-btn'),
-      button: () => wrapper.find('.btn'),
-    };
-  };
+    it('renders component', () => {
+        const fixedProps: ButtonProps = {
+            id: 'someID',
+            name: 'someName',
+            label: 'someLabel',
+            onclick: jest.fn(),
+        };
+        props = fixedProps;
 
-  it('renders component', () => {
-    props.label = 'someFixedLabel';
-    const { wrapper } = build();
-    expect(wrapper).toMatchSnapshot();
-  });
+        const { wrapper } = build();
 
-  it('renders main child components', () => {
-    const {
-      btnWrapper,
-      button,
-    } = build();
+        expect(wrapper).toMatchSnapshot();
+    });
 
-    expect(btnWrapper().exists()).toBe(true);
-    expect(button().exists()).toBe(true);
-  });
+    it('check if props have been passed', () => {
+        const { wrapper } = build();
 
-  it('clicks method', async () => {
-    const { button } = build();
+        expect({ ...props }).toEqual({ ...wrapper.vm.$props });
+    });
 
-    await button().trigger('click');
+    it('renders main child components', () => {
+        const { btnWrapper, button } = build();
 
-    expect(props.onclick).toHaveBeenCalled();
-  });
+        expect(btnWrapper().exists()).toBe(true);
+        expect(button().exists()).toBe(true);
+    });
 
-  it('must call evt.preventDefault fn', async () => {
-    const { button } = build();
-    
-    const opts = {
-      preventDefault: jest.fn(),
-    };
-    
-    button().trigger('click', opts);
-    
-    expect(opts.preventDefault).toHaveBeenCalled();
-  });
+    it('clicks method', async () => {
+        const { button } = build();
+
+        await button().trigger('click');
+
+        expect(props.onclick).toHaveBeenCalled();
+    });
+
+    it('sets buttons name.', async () => {
+        const { button } = build();
+
+        expect(props.name).toBe(button().attributes().name);
+    });
+
+    it('must call evt.preventDefault fn', async () => {
+        const { button } = build();
+
+        const opts = {
+            preventDefault: jest.fn(),
+        };
+
+        button().trigger('click', opts);
+
+        expect(opts.preventDefault).toHaveBeenCalled();
+    });
 });

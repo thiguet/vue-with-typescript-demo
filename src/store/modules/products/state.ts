@@ -1,7 +1,12 @@
-import { Product } from '@/store/datatypes/models.d';
+import { Measures, Product } from '@/store/datatypes/models';
 
 export default class ProductsState {
-  selectedProduct!: Product;
+    selectedProduct: Product = {
+        name: '',
+        qtd: 0,
+        minQtd: 0,
+        measure: Measures.KG,
+    };
 
-  products: Product[] = [];
+    products: Product[] = [];
 }

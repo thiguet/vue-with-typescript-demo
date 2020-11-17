@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "unit": "vue-cli-service test:unit",
     "unit:update": "vue-cli-service test:unit -u",
-    "unit:coverage": "vue-cli-service test:unit --coverage --watch",
+    "unit:coverage": "vue-cli-service test:unit -u --coverage",
     "unit:watch": "vue-cli-service test:unit --watch",
     "e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
@@ -15,6 +15,8 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "crypto-js": "^4.0.0",
+    "ts-transformer-keys": "^0.4.2",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",

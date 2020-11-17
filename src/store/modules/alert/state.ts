@@ -1,5 +1,5 @@
 export default class AlertState {
-    message!: string;
+    message = '';
 
-    display!: boolean;
+    display = false;
 }

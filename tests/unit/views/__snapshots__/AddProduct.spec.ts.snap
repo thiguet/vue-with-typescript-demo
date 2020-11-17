@@ -3,22 +3,28 @@
 exports[`AddProduct.vue renders the component 1`] = `
 <div class="add-product">
   <div class="img-wrapper">
-    <div class="img-container"><span>Img:</span> <img id="img"></div>
-    <button-stub label="Escolha uma imagem" onclick="function () {
-        /* istanbul ignore next */
-        cov_19aoqzlbsq.f[2]++;
-      }" id="img-btn"></button-stub>
+    <dndimage-stub id="img" value="someFixedImage" setvalue="function () { [native code] }"></dndimage-stub>
+    <button-stub id="img-btn" name="img-btn" label="Escolha uma imagem" onclick="function () {}"></button-stub>
   </div>
   <div class="form">
     <form action="#">
-      <input-stub id="name" label="Nome" value="" type="text" legend="Product Name"></input-stub>
-      <input-stub id="qtd" label="Quantidade" value="" type="text" legend="Product Quantity"></input-stub>
-      <input-stub id="minQtd" label="Quantidade (Min)" value="" type="text" legend="Product Minimun Quantity"></input-stub>
-      <input-stub id="measure" label="Un. Medida" value="" type="text" legend="Product Measure"></input-stub>
-      <button-stub label="Enviar" onclick="function () {
-        /* istanbul ignore next */
-        cov_19aoqzlbsq.f[3]++;
-      }" id="submit"></button-stub>
+      <inputwrapper-stub label="Nome" legend="Product Name">
+        <textinput-stub id="name" type="text" value="someFixedName" setvalue="function () { [native code] }"></textinput-stub>
+      </inputwrapper-stub>
+      <inputwrapper-stub label="Quantidade" legend="Product Quantity">
+        <number-stub id="qtd" min="0" value="0" setvalue="function () { [native code] }" type="number"></number-stub>
+      </inputwrapper-stub>
+      <inputwrapper-stub label="Qtd (Min)" legend="Product Min Quantity">
+        <number-stub id="min-qtd" min="0" value="0" setvalue="function () { [native code] }" type="number"></number-stub>
+      </inputwrapper-stub>
+      <inputwrapper-stub label="Product Measure" legend="Product Measure" for="measure"><select name="measure" id="measure">
+          <option disabled="disabled">Escolha uma opção</option>
+          <option>UN</option>
+          <option>L</option>
+          <option>KG</option>
+          <option>G</option>
+        </select></inputwrapper-stub>
+      <button-stub id="add-product" name="add-product" label="Enviar" onclick="function () { [native code] }"></button-stub>
     </form>
   </div>
 </div>
