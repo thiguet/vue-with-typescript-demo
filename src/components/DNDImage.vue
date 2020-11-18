@@ -7,7 +7,7 @@
         @dragleave.prevent="dragLeave"
         @drop.prevent="drop($event)"
     >
-        <img id="img" :src="imageSource" v-if="imageSource" />
+        <img id="img" :src="imageSource" v-if="imageSource" alt="Chosen Image" />
         <h1 id="wrong-file-header" v-if="wrongFile">Arquivo inválido!</h1>
         <h1
             id="drop-image-header"

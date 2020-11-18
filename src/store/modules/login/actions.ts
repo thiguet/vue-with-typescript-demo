@@ -11,7 +11,7 @@ export enum ActionTypes {
 
 export default class Actions extends VActions<
     State,
-    {} & Getters<State>,
+    Getters<State>,
     Mutations,
     Actions
 > {

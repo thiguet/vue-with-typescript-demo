@@ -143,7 +143,7 @@ describe('AddProduct.vue', () => {
             setProductQtd,
             setProductMinQtd,
         } = products.mutations;
-        const { name, qtd, minQtd, measure } = build();
+        const { name, qtd, minQtd, } = build();
 
         const nameVal = `${faker.random.word()}`;
         const qtdVal = `${faker.random.number()}`;
