@@ -18,8 +18,8 @@ const root = new Module({
 });
 
 export default createStore(
-  root,
-  {
-    strict: process.env.NODE_ENV !== 'production',
-  },
+    root,
+    {
+        strict: process.env.NODE_ENV !== 'production',
+    },
 );

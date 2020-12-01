@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import store from '@/store';
-import { AlertState, MutationTypes } from '@/store/modules/alert';
+import { State, MutationTypes } from '@/store/modules/alert';
 import faker from 'faker';
 
 Vue.use(Vuex);
@@ -9,7 +9,7 @@ Vue.use(Vuex);
 const namespace = 'alert/';
 
 describe('Alert Vuex Module', () => {
-  let state: AlertState;
+  let state: State;
 
   beforeEach(() => {
     state = store.state.alert;

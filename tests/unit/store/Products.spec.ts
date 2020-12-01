@@ -5,7 +5,7 @@ import store from '@/store';
 
 import faker from 'faker';
 
-import { ProductsState } from '@/store/modules/products';
+import { State } from '@/store/modules/products';
 
 import { Product, Measures } from '@/store/datatypes/models.d';
 
@@ -16,7 +16,7 @@ Vue.use(Vuex);
 const namespace = 'products/';
 
 describe('Products Vuex Module', () => {
-  let state: ProductsState,
+  let state: State,
       product: Product;
 
   const lastAddedProduct = (products: Product[]) => ({...products.slice(-1)[0]});
