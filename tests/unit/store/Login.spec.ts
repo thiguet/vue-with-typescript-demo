@@ -1,9 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import store from '@/store';
-import { LoginState, MutationTypes } from '@/store/modules/login';
+import { ActionTypes, LoginState, MutationTypes } from '@/store/modules/login';
+
+import  { login as loginPostCall } from '@/services/Login';
 
 import faker from 'faker';
+
+jest.mock('@/services/Login');
 
 Vue.use(Vuex);
 
@@ -36,5 +40,19 @@ describe('Login Vuex Module', () => {
       ...state,
       password: newPassword,
     });
+  });
+
+  it('calls the login API request on valid call', async () => {
+    const login = faker.internet.userName();
+    const pass  = faker.internet.password();
+
+    const credentials = {
+      login,
+      pass,
+    };
+    
+    await store.dispatch(namespace + ActionTypes.loginAction, credentials);
+
+    expect(loginPostCall).toHaveBeenCalledWith(credentials);
   });
 });
