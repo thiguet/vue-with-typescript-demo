@@ -3,11 +3,7 @@
 exports[`DNDImage.vue renders component 1`] = `
 <div class="drop img-container" id="someFixedId" value="someFixedValue" setvalue="function mockConstructor() {
         return fn.apply(this, arguments);
-      }">
+      }"><img id="img" src="./assets/icons/upload-image.svg" class="fallback">
   <!---->
-  <!---->
-  <h1 id="drop-image-header">
-    Arraste uma imagem aqui!
-  </h1>
 </div>
 `;
