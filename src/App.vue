@@ -19,6 +19,7 @@ export default Vue.extend({
     --border-color: gray;
     --font-family: 'Open Sans', sans-serif;
     --second-bg: green;
+    --ternary-bg:#089630;
     --font-title-size: 20px;
     --font-input-size: 16px;
 }
@@ -30,12 +31,9 @@ body {
     font-size: var(--font-title-size);
 }
 
-form {
-    width: 100%;
-}
-
 div {
     display: flex;
+    width: 100%;
 }
 
 legend span.accessibility {
@@ -44,5 +42,9 @@ legend span.accessibility {
     width: 100px;
     height: auto;
     overflow: hidden;
+}
+
+svg, img {
+    filter: brightness(55);
 }
 </style>
