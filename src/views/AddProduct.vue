@@ -155,7 +155,9 @@ select#measure {
 }
 .form > form {
     display: relative;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 form > fieldset {
