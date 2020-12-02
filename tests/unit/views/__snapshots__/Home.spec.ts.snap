@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Login renders component 1`] = `
+exports[`Home renders component 1`] = `
 <div class="home">
   <div class="row">
-    <card-stub onclick="function () {}" icon="./assets/icons/supermarket-car.svg"></card-stub>
-    <card-stub onclick="function () {}" icon="./assets/icons/statistics.svg"></card-stub>
+    <card-stub onclick="function () { [native code] }" icon="./assets/icons/supermarket-car.svg"></card-stub>
+    <card-stub onclick="function () { [native code] }" icon="./assets/icons/statistics.svg"></card-stub>
   </div>
   <div class="row btn-row">
-    <button-stub id="goback" name="voltar" label="Voltar" onclick=""></button-stub>
+    <button-stub id="goback" name="voltar" label="Voltar" onclick="function () { [native code] }"></button-stub>
   </div>
 </div>
 `;

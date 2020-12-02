@@ -1,6 +1,7 @@
 import { shallowMount, mount, createLocalVue, Wrapper } from '@vue/test-utils';
 
 import Vuex from 'vuex';
+import VueRouter from 'vue-router';
 
 import Home from '@/views/Home.vue';
 
@@ -9,16 +10,19 @@ import Card from '@/components/Card.vue';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
+localVue.use(VueRouter);
 
-describe('Login', () => {
+const router = new VueRouter();
+
+describe('Home', () => {
     const build = () => {
-        const wrapper: Wrapper<Home> = shallowMount(Home, {
+        const options = {
             localVue,
-        });
+            router,
+        };
 
-        const mountedWrapper: Wrapper<Home> = mount(Home, {
-            localVue,
-        });
+        const wrapper: Wrapper<Home> = shallowMount(Home, options);
+        const mountedWrapper: Wrapper<Home> = mount(Home, options);
 
         return {
             wrapper,
@@ -29,7 +33,8 @@ describe('Login', () => {
     };
 
     beforeEach(() => {
-    });
+        router.push = jest.fn();
+    })
 
     it('renders component', () => {
         const { wrapper } = build();
@@ -42,5 +47,29 @@ describe('Login', () => {
         expect(productsCard().exists()).toBe(true);
         expect(reportsCard().exists()).toBe(true);
         expect(goBackButton().exists()).toBe(true);
+    });
+
+    it('go to the products page', async () => {
+        const { productsCard } = build();
+
+        await productsCard().trigger('click');
+
+        expect(router.push).toHaveBeenCalledWith('/products');
+    });
+
+    it('go to the reports page', async () => {
+        const { reportsCard } = build();
+
+        await reportsCard().trigger('click');
+
+        expect(router.push).toHaveBeenCalledWith('/reports');
+    });
+
+    it('go back to login page', async () => {
+        const { goBackButton } = build();
+
+        await goBackButton().find('button').trigger('click');
+
+        expect(router.push).toHaveBeenCalledWith('/login');
     });
 });

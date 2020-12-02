@@ -1,13 +1,13 @@
 <template>
   <div class="home">
     <div class="row">
-      <Card :onclick="() => {}" icon="./assets/icons/supermarket-car.svg">
+      <Card :onclick="routeToProducts" icon="./assets/icons/supermarket-car.svg">
       </Card>
-      <Card :onclick="() => {}" icon="./assets/icons/statistics.svg">
+      <Card :onclick="routeToReports" icon="./assets/icons/statistics.svg">
       </Card>
     </div>
     <div class="row btn-row">
-      <Button id="goback" name="voltar" label="Voltar" onclick=""  />
+      <Button id="goback" name="voltar" label="Voltar" :onclick="routeToLogin"  />
     </div>
   </div>
 </template>
@@ -21,6 +21,17 @@ export default {
     components: {
         Card,
         Button,
+    },
+    methods: {
+        routeToProducts() {
+            this.$router.push('/products');
+        },
+        routeToReports() {
+            this.$router.push('/reports');
+        },
+        routeToLogin() {
+            this.$router.push('/login');
+        },
     },
 };
 </script>
