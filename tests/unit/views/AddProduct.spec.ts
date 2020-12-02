@@ -13,8 +13,8 @@ import {
     ActionTypes as AlertActionsTypes,
 } from '@/store/modules/alert';
 import Vue from 'vue';
-import { ProductsVuex, AlertVuex } from '../store/models.d';
 import { newProductSuccess, newProductError } from '@/assets/messages';
+import { ProductsVuex, AlertVuex } from '../store/models.d';
 
 jest.setTimeout(30000);
 
@@ -28,8 +28,7 @@ describe('AddProduct.vue', () => {
 
     let store: Store<AlertState & ProductsState>;
 
-    const getInputEl = (wrapperFn: Wrapper<Vue>) =>
-        wrapperFn.element as HTMLInputElement;
+    const getInputEl = (wrapperFn: Wrapper<Vue>) => wrapperFn.element as HTMLInputElement;
 
     const build = () => {
         const wrapper = shallowMount(AddProduct, {
@@ -54,8 +53,7 @@ describe('AddProduct.vue', () => {
         };
     };
 
-    const getRandomMeasure = () =>
-        faker.random.arrayElement(Object.values(Measures)) as Measures;
+    const getRandomMeasure = () => faker.random.arrayElement(Object.values(Measures)) as Measures;
 
     beforeEach(() => {
         products = {
@@ -137,7 +135,7 @@ describe('AddProduct.vue', () => {
         expect(imgBtn().exists()).toBe(true);
     });
 
-    it('calls vuex mutations on input', async done => {
+    it('calls vuex mutations on input', async (done) => {
         const {
             setProductName,
             setProductQtd,

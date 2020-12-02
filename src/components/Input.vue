@@ -16,7 +16,7 @@ import Component from 'vue-class-component';
 import { Prop } from 'vue-property-decorator';
 
 @Component({
-  name: 'Input',
+    name: 'Input',
 })
 export default class Input extends Vue {
     @Prop({ required: true }) readonly id!: string;
