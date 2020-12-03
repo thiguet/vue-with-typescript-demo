@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductsTable renders component 1`] = `
+<div class="table-container">
+  <table id="table" width="100%">
+    <tbody>
+      <tr class="row">
+        <td class="left"><span><img></span></td>
+        <td><span>test</span></td>
+        <td class="right">
+          <div>
+            <button-stub id="edit-1" name="editar" label="Edit" icon="./assets/icons/edit.svg" onclick="function (evt) { return _vm.onEdit(evt, index); }" class="edit"></button-stub>
+            <button-stub id="delete-1" name="deletar" label="Delete" icon="./assets/icons/delete.svg" onclick="function (evt) { return _vm.onDelete(evt, index); }" class="delete"></button-stub>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

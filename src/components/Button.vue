@@ -1,6 +1,9 @@
 <template>
     <div class="wrapper-btn">
-        <button :id="id" class="btn" :name="name" @click.prevent="onclick">{{ label }}</button>
+        <button :id="id" class="btn" :name="name" @click.prevent="onclick">
+            <img class="icon" v-if="icon" :src="icon" :alt="name" />
+            <span v-else>{{ label }} </span>
+        </button>
     </div>
 </template>
 
@@ -16,7 +19,9 @@ export default class Button extends Vue {
 
     @Prop({ required: true }) readonly name!: string;
 
-    @Prop({ required: true }) readonly label!: string;
+    @Prop() readonly label!: string;
+
+    @Prop() readonly icon!: string;
 
     @Prop({ required: true }) readonly onclick!: Function;
 }

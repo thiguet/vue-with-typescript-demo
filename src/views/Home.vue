@@ -1,15 +1,28 @@
 <template>
-  <div class="home">
-    <div class="row">
-      <Card :onclick="routeToProducts" icon="./assets/icons/supermarket-car.svg">
-      </Card>
-      <Card :onclick="routeToReports" icon="./assets/icons/statistics.svg">
-      </Card>
+    <div class="home">
+        <div class="row">
+            <Card
+                :onclick="routeToProducts"
+                icon="./assets/icons/supermarket-car.svg"
+            >
+            </Card>
+            <Card
+                :onclick="routeToReports"
+                icon="./assets/icons/statistics.svg"
+            >
+            </Card>
+        </div>
+        <div class="row btn-row">
+            <Button
+                id="goback"
+                class="goback"
+                icon="./assets/icons/goback.svg"
+                name="voltar"
+                label="Voltar"
+                :onclick="routeToLogin"
+            />
+        </div>
     </div>
-    <div class="row btn-row">
-      <Button id="goback" name="voltar" label="Voltar" :onclick="routeToLogin"  />
-    </div>
-  </div>
 </template>
 
 <script>
@@ -36,7 +49,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .home {
     flex-direction: column;
 }
@@ -56,8 +69,22 @@ export default {
         justify-content: center;
     }
     .row .container:nth-child(2) {
-      margin-top: 10px;
+        margin-top: 10px;
     }
 }
 
+.goback {
+    margin: auto;
+}
+
+.goback button {
+    width: 150px;
+    justify-content: center;
+    display: flex;
+}
+
+.goback > button > .icon {
+    width: 60px !important;
+    filter: brightness(55);
+}
 </style>

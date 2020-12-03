@@ -15,6 +15,7 @@ describe('Button', () => {
             wrapper,
             btnWrapper: () => wrapper.find('.wrapper-btn'),
             button: () => wrapper.find('.btn'),
+            icon: () => wrapper.find('.icon'),
         };
     };
 
@@ -23,6 +24,7 @@ describe('Button', () => {
             id: faker.random.uuid(),
             name: faker.random.word(),
             label: faker.random.word(),
+            icon: faker.image.imageUrl(),
             onclick: jest.fn(),
         };
     });
@@ -31,6 +33,7 @@ describe('Button', () => {
         const fixedProps: ButtonProps = {
             id: 'someID',
             name: 'someName',
+            icon: 'some broken icon',
             label: 'someLabel',
             onclick: jest.fn(),
         };
@@ -48,10 +51,11 @@ describe('Button', () => {
     });
 
     it('renders main child components', () => {
-        const { btnWrapper, button } = build();
+        const { btnWrapper, button, icon } = build();
 
         expect(btnWrapper().exists()).toBe(true);
         expect(button().exists()).toBe(true);
+        expect(icon().exists()).toBe(true);
     });
 
     it('clicks method', async () => {
@@ -78,5 +82,11 @@ describe('Button', () => {
         button().trigger('click', opts);
 
         expect(opts.preventDefault).toHaveBeenCalled();
+    });
+
+    it('must set icon to the img src', async () => {
+        const { icon } = build();
+
+        expect(icon().attributes('src')).toBe(props.icon);
     });
 });

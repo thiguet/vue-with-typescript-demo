@@ -1,13 +1,26 @@
 <template>
     <div class="add-product">
         <div class="img-wrapper">
-            <DNDImage id="img" :value="selectedProduct.image" :setValue="setProductImage" />
-            <Button id="img-btn" name="img-btn" label="Escolha uma imagem" :onclick="() => {}" />
+            <DNDImage
+                id="img"
+                :value="selectedProduct.image"
+                :setValue="setProductImage"
+            />
+            <Button
+                id="img-btn"
+                name="img-btn"
+                label="Escolha uma imagem"
+                :onclick="() => {}"
+            />
         </div>
         <div class="form">
             <form action="#">
                 <InputWrapper label="Nome" legend="Product Name">
-                    <TextInput id="name" :value="selectedProduct.name" :setValue="setProductName" />
+                    <TextInput
+                        id="name"
+                        :value="selectedProduct.name"
+                        :setValue="setProductName"
+                    />
                 </InputWrapper>
                 <InputWrapper label="Quantidade" legend="Product Quantity">
                     <Number
@@ -27,7 +40,11 @@
                         :setValue="setProductMinQtd"
                     />
                 </InputWrapper>
-                <InputWrapper label="Product Measure" legend="Product Measure" for="measure">
+                <InputWrapper
+                    label="Product Measure"
+                    legend="Product Measure"
+                    for="measure"
+                >
                     <select
                         name="measure"
                         id="measure"
@@ -39,10 +56,24 @@
                             v-for="(measure, index) in measures"
                             :key="index"
                             :selected="index == 0"
-                        >{{ measure }}</option>
+                            >{{ measure }}</option
+                        >
                     </select>
                 </InputWrapper>
-                <Button id="add-product" name="add-product" label="Enviar" :onclick="submitForm" />
+                <div class="btn">
+                    <Button
+                        id="go-back"
+                        name="voltar"
+                        label="Voltar"
+                        :onclick="routeToHomePage"
+                    />
+                    <Button
+                        id="add-product"
+                        name="add-product"
+                        label="Enviar"
+                        :onclick="submitForm"
+                    />
+                </div>
             </form>
         </div>
     </div>
@@ -126,6 +157,10 @@ export default class AddProduct extends Vue implements AddProductView {
         } catch (e) {
             this.openAlert(newProductError);
         }
+    }
+
+    public routeToHomePage() {
+        this.$router.push('/products');
     }
 }
 </script>

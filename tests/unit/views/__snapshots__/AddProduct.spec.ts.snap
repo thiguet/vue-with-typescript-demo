@@ -24,7 +24,10 @@ exports[`AddProduct.vue renders the component 1`] = `
           <option>KG</option>
           <option>G</option>
         </select></inputwrapper-stub>
-      <button-stub id="add-product" name="add-product" label="Enviar" onclick="function () { [native code] }"></button-stub>
+      <div class="btn">
+        <button-stub id="go-back" name="voltar" label="Voltar" onclick="function () { [native code] }"></button-stub>
+        <button-stub id="add-product" name="add-product" label="Enviar" onclick="function () { [native code] }"></button-stub>
+      </div>
     </form>
   </div>
 </div>

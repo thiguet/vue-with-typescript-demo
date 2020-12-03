@@ -18,6 +18,16 @@ const routes: Array<RouteConfig> = [
     {
         path: '/products',
         name: 'products',
+        component: () => import('../views/ProductsList.vue'),
+    },
+    {
+        path: '/products/new',
+        name: 'new-product',
+        component: () => import('../views/AddProduct.vue'),
+    },
+    {
+        path: '/products/edit',
+        name: 'edit-product',
         component: () => import('../views/AddProduct.vue'),
     },
 ];

@@ -7,7 +7,7 @@ import faker from 'faker';
 
 import { State, MutationTypes, ActionTypes } from '@/store/modules/products';
 
-import { Product, Measures } from '@/store/datatypes/models.d';
+import { Product, Measures } from '@/store/datatypes/models';
 
 Vue.use(Vuex);
 
@@ -17,15 +17,18 @@ describe('Products Vuex Module', () => {
     let state: State;
     let product: Product;
 
-    const lastAddedProduct = (products: Product[]) => ({ ...products.slice(-1)[0] });
-    const getRandomMeasure = () => faker.random.arrayElement(Object.values(typeof Measures)) as keyof typeof Measures;
+    const lastAddedProduct = (products: Product[]) => ({
+        ...products.slice(-1)[0],
+    });
+    const getRandomMeasure = () =>
+        faker.random.arrayElement(Object.values(typeof Measures)) as Measures;
 
     beforeEach(() => {
         state = store.state.products;
         product = {
             name: faker.name.title(),
             measure: getRandomMeasure(),
-            img: faker.image.image(),
+            image: faker.image.image(),
             qtd: faker.random.number(),
             minQtd: faker.random.number(),
         };

@@ -2,6 +2,7 @@ import Vuex, { ModuleTree, Store } from 'vuex';
 import { shallowMount, createLocalVue, Wrapper, mount } from '@vue/test-utils';
 import faker from 'faker';
 import AddProduct from '@/views/AddProduct.vue';
+import Button from '@/components/Button.vue';
 import { Measures, VuexAppModules } from '@/store/datatypes/models';
 import {
     State as ProductsState,
@@ -15,12 +16,15 @@ import {
 import Vue from 'vue';
 import { newProductSuccess, newProductError } from '@/assets/messages';
 import { ProductsVuex, AlertVuex } from '../store/models.d';
+import VueRouter from 'vue-router';
 
 jest.setTimeout(30000);
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
+localVue.use(VueRouter);
+const router = new VueRouter();
 
 describe('AddProduct.vue', () => {
     let products: ProductsVuex;
@@ -28,17 +32,18 @@ describe('AddProduct.vue', () => {
 
     let store: Store<AlertState & ProductsState>;
 
-    const getInputEl = (wrapperFn: Wrapper<Vue>) => wrapperFn.element as HTMLInputElement;
+    const getInputEl = (wrapperFn: Wrapper<Vue>) =>
+        wrapperFn.element as HTMLInputElement;
 
     const build = () => {
-        const wrapper = shallowMount(AddProduct, {
+        const options = {
             localVue,
             store,
-        });
-        const mountedWrapper = mount(AddProduct, {
-            localVue,
-            store,
-        });
+            router,
+        };
+
+        const wrapper = shallowMount(AddProduct, options);
+        const mountedWrapper = mount(AddProduct, options);
 
         return {
             wrapper,
@@ -50,12 +55,16 @@ describe('AddProduct.vue', () => {
             qtd: () => mountedWrapper.find('#qtd'),
             minQtd: () => mountedWrapper.find('#min-qtd'),
             submit: () => mountedWrapper.find('#add-product'),
+            goBackButton: () => mountedWrapper.find('#go-back'),
         };
     };
 
-    const getRandomMeasure = () => faker.random.arrayElement(Object.values(Measures)) as Measures;
+    const getRandomMeasure = () =>
+        faker.random.arrayElement(Object.values(Measures)) as Measures;
 
     beforeEach(() => {
+        router.push = jest.fn();
+
         products = {
             namespaced: true,
             state: {
@@ -135,7 +144,7 @@ describe('AddProduct.vue', () => {
         expect(imgBtn().exists()).toBe(true);
     });
 
-    it('calls vuex mutations on input', async (done) => {
+    it('calls vuex mutations on input', async done => {
         const {
             setProductName,
             setProductQtd,
@@ -203,5 +212,13 @@ describe('AddProduct.vue', () => {
 
         expect(openAlert).toBeCalled();
         expect(openAlert.mock.calls[0][1]).toBe(newProductError);
+    });
+
+    it('go back to home page', async () => {
+        const { goBackButton } = build();
+
+        await goBackButton().trigger('click');
+
+        expect(router.push).toHaveBeenCalledWith('/products');
     });
 });
