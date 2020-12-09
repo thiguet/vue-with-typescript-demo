@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login renders component 1`] = `
+<div class="container"><img src="http://lorempixel.com/640/480">
+  <div>Main Content</div>
+</div>
+`;

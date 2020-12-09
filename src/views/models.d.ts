@@ -6,6 +6,8 @@ export interface AddProductView {
     submitForm(): void;
 }
 
+export interface ProductsListView {}
+
 export interface DNDImageData {
     imageSource?: ArrayBuffer | string | null;
     wrongFile: boolean;

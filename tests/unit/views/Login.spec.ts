@@ -120,7 +120,7 @@ describe('Login', () => {
         const { loginAction } = actions;
         await btn().trigger('click');
         // Used to force the waiting for the desired methods.
-        setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
+        await setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
     });
 
     it('calling clickLogin from vm', async () => {
@@ -128,7 +128,7 @@ describe('Login', () => {
         const { loginAction } = actions;
         await wrapperVM.clickLogin();
         // Used to force the waiting for the desired methods.
-        setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
+        await setTimeout(() => expect(loginAction).toHaveBeenCalled(), 0);
     });
 
     it('must have a password input typed', async () => {

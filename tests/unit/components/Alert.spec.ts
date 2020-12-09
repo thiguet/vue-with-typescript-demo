@@ -3,8 +3,8 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Alert from '@/components/Alert.vue';
 import faker from 'faker';
 import { State, ActionTypes } from '@/store/modules/alert';
-import { AlertVuex } from '../store/models.d';
 import { VuexAppModules } from '@/store/datatypes/models';
+import { AlertVuex } from '../store/models.d';
 
 const localVue = createLocalVue();
 

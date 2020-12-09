@@ -1,3 +1,5 @@
+import { Product } from '@/store/datatypes/models';
+
 export interface BaseProps {
     id: string;
 }
@@ -25,6 +27,7 @@ export interface ButtonProps extends BaseProps {
     name: string;
     label: string;
     onclick: Function;
+    icon: string;
 }
 export type DNDImageProps = BaseInput;
 export interface AlertProps {
@@ -36,4 +39,12 @@ export interface AlertProps {
 export enum ImageMimeTypes {
     png = 'image/png',
     jpeg = 'image/jpeg',
+}
+export interface CardProps {
+    onclick: Function;
+    icon: string;
+}
+
+export interface ProductsTableProps {
+    rows: Array<Product>;
 }

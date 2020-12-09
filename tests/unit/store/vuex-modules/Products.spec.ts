@@ -23,8 +23,7 @@ describe('Products Vuex Module', () => {
         ...products.slice(-1)[0],
     });
 
-    const getRandomMeasure = () =>
-        faker.random.arrayElement(Object.values(typeof Measures)) as Measures;
+    const getRandomMeasure = () => faker.random.arrayElement(Object.values(typeof Measures)) as Measures;
 
     const getNewProduct = (): Product => ({
         name: faker.name.title(),

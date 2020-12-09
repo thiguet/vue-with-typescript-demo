@@ -45,7 +45,6 @@ describe('DNDImage.vue', () => {
             img: () => wrapper.find('#img'),
             imgContainer: () => wrapper.find('.img-container'),
             wrongFileHeader: () => wrapper.find('#wrong-file-header'),
-            dropImageHeader: () => wrapper.find('#drop-image-header'),
         };
     };
 
@@ -67,12 +66,10 @@ describe('DNDImage.vue', () => {
     });
 
     it('renders main components', () => {
-        const { img, imgContainer, dropImageHeader, wrongFileHeader } = build();
+        const { img, imgContainer, wrongFileHeader } = build();
 
         expect(imgContainer().exists()).toBe(true);
-        expect(dropImageHeader().exists()).toBe(true);
-
-        expect(img().exists()).toBe(false);
+        expect(img().exists()).toBe(true);
         expect(wrongFileHeader().exists()).toBe(false);
     });
 
@@ -81,7 +78,6 @@ describe('DNDImage.vue', () => {
             wrapper,
             img,
             imgContainer,
-            dropImageHeader,
             wrongFileHeader,
         } = build();
 
@@ -93,8 +89,7 @@ describe('DNDImage.vue', () => {
         await wrapper.setData({ ...data });
 
         expect(imgContainer().exists()).toBe(true);
-        expect(dropImageHeader().exists()).toBe(false);
-        expect(img().exists()).toBe(false);
+        expect(img().exists()).toBe(true);
         expect(wrongFileHeader().exists()).toBe(true);
     });
 
@@ -103,7 +98,6 @@ describe('DNDImage.vue', () => {
             wrapper,
             img,
             imgContainer,
-            dropImageHeader,
             wrongFileHeader,
         } = build();
 
@@ -116,7 +110,6 @@ describe('DNDImage.vue', () => {
         await wrapper.setData({ ...data });
 
         expect(imgContainer().exists()).toBe(true);
-        expect(dropImageHeader().exists()).toBe(false);
         expect(img().exists()).toBe(true);
         expect(wrongFileHeader().exists()).toBe(false);
     });
@@ -135,7 +128,7 @@ describe('DNDImage.vue', () => {
         }, 0);
     });
 
-    it('simulate a dragLeave event.', async done => {
+    it('simulate a dragLeave event.', async (done) => {
         const { DNDImageComp, imgContainer } = build();
 
         const event = new Event('dragleave');
@@ -155,7 +148,7 @@ describe('DNDImage.vue', () => {
         }, 0);
     });
 
-    it('simulate a drop event with an image.', async done => {
+    it('simulate a drop event with an image.', async (done) => {
         const imageMimeType = faker.random.arrayElement(
             Object.values(ImageMimeTypes),
         );
@@ -187,7 +180,7 @@ describe('DNDImage.vue', () => {
         }, 1000);
     });
 
-    it('simulate a drop event without a file.', async done => {
+    it('simulate a drop event without a file.', async (done) => {
         const { DNDImageComp, imgContainer } = build();
 
         const options = {
@@ -213,7 +206,8 @@ describe('DNDImage.vue', () => {
             done();
         }, 1000);
     });
-    it('simulate a drop event with a file that is not an image.', async done => {
+    
+    it('simulate a drop event with a file that is not an image.', async (done) => {
         const notAnImageMimeType = 'application/pdf';
         const { file } = getFakeFile(notAnImageMimeType);
         const { DNDImageComp, imgContainer } = build();
