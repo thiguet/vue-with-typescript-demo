@@ -10,7 +10,7 @@ export interface BaseInput extends BaseProps {
 }
 
 export interface TextInputProps extends BaseInput {
-    type?: 'text' | 'password' | undefined;
+    type?: 'text' | 'password';
 }
 
 export interface NumberInputProps extends BaseInput {

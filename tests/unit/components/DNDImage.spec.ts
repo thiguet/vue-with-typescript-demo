@@ -172,7 +172,7 @@ describe('DNDImage.vue', () => {
         imgContainer().element.dispatchEvent(event);
 
         // Haven't found a way of waiting DOM to trigger my event.
-        // Even using Vue.nextTick or wrapper.vm.nextTick several times, hasn't played out.
+        // Even using setTimeout or wrapper.vm.nextTick several times, hasn't played out.
         await setTimeout(() => {
             expect(options.preventDefault).toBeCalled();
             expect(DNDImageComp().imageSource).toBeTruthy();
@@ -196,7 +196,7 @@ describe('DNDImage.vue', () => {
         imgContainer().element.dispatchEvent(event);
 
         // Haven't found a way of waiting DOM to trigger my event.
-        // Even using Vue.nextTick or wrapper.vm.nextTick several times, hasn't played out.
+        // Even using setTimeout or wrapper.vm.nextTick several times, hasn't played out.
         await setTimeout(() => {
             expect(options.preventDefault).toBeCalled();
             // Expecting them to be the same as before.
@@ -229,7 +229,7 @@ describe('DNDImage.vue', () => {
         imgContainer().element.dispatchEvent(event);
 
         // Haven't found a way of waiting DOM to trigger my event.
-        // Even using Vue.nextTick or wrapper.vm.nextTick several times, hasn't played out.
+        // Even using setTimeout or wrapper.vm.nextTick several times, hasn't played out.
         await setTimeout(() => {
             expect(options.preventDefault).toBeCalled();
             expect(DNDImageComp().imageSource).toBe(null);
