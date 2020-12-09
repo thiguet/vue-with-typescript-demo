@@ -19,7 +19,8 @@ export default Vue.extend({
     --border-color: gray;
     --font-family: 'Open Sans', sans-serif;
     --second-bg: green;
-    --ternary-bg:#089630;
+    --ternary-bg: #089630;
+    --forth-bg: blue;
     --font-title-size: 20px;
     --font-input-size: 16px;
 }
@@ -44,7 +45,8 @@ legend span.accessibility {
     overflow: hidden;
 }
 
-svg, img {
+svg,
+img {
     filter: brightness(55);
 }
 </style>

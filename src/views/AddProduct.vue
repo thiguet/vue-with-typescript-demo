@@ -60,15 +60,19 @@
                         >
                     </select>
                 </InputWrapper>
-                <div class="btn">
+                <div class="btn" style="img.icon {width: 40px; }">
                     <Button
                         id="go-back"
+                        class="footer-button"
+                        icon="../assets/icons/goback.svg"
                         name="voltar"
                         label="Voltar"
                         :onclick="routeToHomePage"
                     />
                     <Button
                         id="add-product"
+                        class="footer-button"
+                        icon="../assets/icons/check.svg"
                         name="add-product"
                         label="Enviar"
                         :onclick="submitForm"
@@ -212,9 +216,13 @@ form > fieldset {
 
 .img-wrapper {
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 70%;
+}
+
+.img-wrapper .wrapper-btn {
+    width: auto;
 }
 
 select {
@@ -234,5 +242,30 @@ fieldset {
 
 label {
     width: 100%;
+}
+</style>
+
+<style>
+.footer-button .icon {
+    width: 50px;
+    align-self: center;
+    filter: contrast(0) brightness(55);
+}
+.footer-button button {
+    height: 60px;
+    padding: 0;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+}
+
+.label span {
+    cursor: text;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+select {
+    cursor: pointer;
 }
 </style>

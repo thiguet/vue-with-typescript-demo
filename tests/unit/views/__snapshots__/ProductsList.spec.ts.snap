@@ -3,7 +3,7 @@
 exports[`ProductsList renders component 1`] = `
 <div class="products-container">
   <div class="row">
-    <productstable-stub rows="[object Object],[object Object],[object Object],[object Object],[object Object]"></productstable-stub>
+    <productstable-stub rows=""></productstable-stub>
   </div>
   <div class="row">
     <button-stub id="go-back" name="voltar" label="Voltar" icon="./assets/icons/goback.svg" onclick="function () { [native code] }" class="footer-btn"></button-stub>
@@ -15,7 +15,7 @@ exports[`ProductsList renders component 1`] = `
 exports[`ProductsList renders main components 1`] = `
 <div class="products-container">
   <div class="row">
-    <productstable-stub rows="[object Object],[object Object],[object Object],[object Object],[object Object]"></productstable-stub>
+    <productstable-stub rows=""></productstable-stub>
   </div>
   <div class="row">
     <button-stub id="go-back" name="voltar" label="Voltar" icon="./assets/icons/goback.svg" onclick="function () { [native code] }" class="footer-btn"></button-stub>

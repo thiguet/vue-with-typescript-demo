@@ -7,9 +7,11 @@
         @dragleave.prevent="dragLeave"
         @drop.prevent="drop($event)"
     >
-        <img id="img"
-                :class="{fallback: !imageSource}"
-                :src="imageSource ? imageSource : fallbackImage" />
+        <img
+            id="img"
+            :class="{ fallback: !imageSource }"
+            :src="imageSource ? imageSource : fallbackImage"
+        />
         <h1 id="wrong-file-header" v-if="wrongFile">Arquivo inválido!</h1>
     </div>
 </template>
@@ -36,7 +38,7 @@ export default class DNDImage extends Vue implements DNDImageComponent {
         this.isDragging = false;
         this.wrongFile = false;
         this.imageSource = null;
-        this.fallbackImage = './assets/icons/upload-image.svg';
+        this.fallbackImage = '/assets/icons/upload-image.svg';
     }
 
     get getClasses() {
@@ -119,7 +121,7 @@ img.fallback {
 }
 
 @media (max-width: 320px) {
-    .img-container{
+    .img-container {
         width: 150px;
         height: 150px;
     }

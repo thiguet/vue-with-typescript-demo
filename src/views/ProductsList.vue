@@ -31,11 +31,19 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
+import { namespace } from 'vuex-class';
+
 import Button from '@/components/Button.vue';
 
 import ProductsTable from '@/components/ProductsTable.vue';
 
 import { ProductsListView } from './models.d';
+
+import { Product, VuexAppModules } from '../store/datatypes/models';
+
+const products = namespace(VuexAppModules.products);
+
+const { Mutation, Action, State } = products;
 
 interface RowsData {
     name: string;
@@ -50,33 +58,22 @@ interface RowsData {
     },
     data() {
         return {
-            rows: [
-                {
-                    name: 'test 1',
-                    icon: './assets/icons/statistics.svg',
-                },
-                {
-                    name: 'test 2',
-                    icon: './assets/icons/statistics.svg',
-                },
-                {
-                    name: 'test 3',
-                    icon: './assets/icons/statistics.svg',
-                },
-                {
-                    name: 'test 4',
-                    icon: './assets/icons/statistics.svg',
-                },
-                {
-                    name: 'test 5',
-                    icon: './assets/icons/statistics.svg',
-                },
-            ],
+            rows: [],
         };
     },
 })
 export default class ProductsList extends Vue implements ProductsListView {
     private rows!: Array<RowsData>;
+
+    @State
+    private products: Product[];
+
+    mounted() {
+        this.rows = this.products.map((p: Product) => ({
+            icon: p.image,
+            name: p.name,
+        }));
+    }
 
     public routeToHomePage() {
         this.$router.push('/');
@@ -101,6 +98,11 @@ export default class ProductsList extends Vue implements ProductsListView {
     flex-direction: column;
 }
 
+.row:nth-child(1) {
+    max-height: 440px;
+    overflow: auto;
+}
+
 .row:nth-child(2) {
     margin-top: 40px;
     margin-bottom: 40px;
@@ -108,9 +110,11 @@ export default class ProductsList extends Vue implements ProductsListView {
 
 .footer-btn > button {
     padding: 5px 50px;
+    height: 60px;
 }
 .footer-btn > button > img {
     display: flex;
     width: 50px;
+    filter: contrast(0) brightness(55);
 }
 </style>

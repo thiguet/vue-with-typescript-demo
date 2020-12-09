@@ -7,32 +7,37 @@
                     v-for="({ icon, name }, index) in rows"
                     :key="index"
                 >
-                    <td class="left">
-                        <span><img :src="icon"/></span>
-                    </td>
-                    <td>
-                        <span>{{ name }}</span>
-                    </td>
-                    <td class="right">
-                        <div>
-                            <Button
-                                :id="`edit-${index + 1}`"
-                                class="edit"
-                                icon="./assets/icons/edit.svg"
-                                name="editar"
-                                label="Edit"
-                                :onclick="evt => onEdit(evt, index)"
-                            />
-                            <Button
-                                :id="`delete-${index + 1}`"
-                                class="delete"
-                                icon="./assets/icons/delete.svg"
-                                name="deletar"
-                                label="Delete"
-                                :onclick="evt => onDelete(evt, index)"
-                            />
-                        </div>
-                    </td>
+                    <div
+                        style="justify-content:space-around;align-items: center;"
+                    >
+                        <td class="left">
+                            <span>{{ index + 1 }}</span>
+                            <span><img :src="icon"/></span>
+                        </td>
+                        <td>
+                            <span>{{ name }}</span>
+                        </td>
+                        <td class="right">
+                            <div>
+                                <Button
+                                    :id="`edit-${index + 1}`"
+                                    class="edit"
+                                    icon="./assets/icons/edit.svg"
+                                    name="editar"
+                                    label="Edit"
+                                    :onclick="evt => onEdit(evt, index)"
+                                />
+                                <Button
+                                    :id="`delete-${index + 1}`"
+                                    class="delete"
+                                    icon="./assets/icons/delete.svg"
+                                    name="deletar"
+                                    label="Delete"
+                                    :onclick="evt => onDelete(evt, index)"
+                                />
+                            </div>
+                        </td>
+                    </div>
                 </tr>
             </tbody>
         </table>
@@ -77,6 +82,7 @@ export default class ProductsTable extends Vue implements ProductsTableComp {
 #table {
     margin: auto;
     width: 100%;
+    margin-top: 20px;
 }
 
 #table > tbody > tr > td > span > img {
@@ -85,11 +91,11 @@ export default class ProductsTable extends Vue implements ProductsTableComp {
 }
 
 .left {
-    text-align: 'left';
+    text-align: center;
     margin-left: 1em;
 }
 .right {
-    text-align: 'right';
+    text-align: right;
     margin-right: 1em;
 }
 

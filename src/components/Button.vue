@@ -38,7 +38,7 @@ button {
     font-family: var(--font-family);
     font-size: var(--font-input-size);
     border: none;
-    background: var(--second-bg);
+    background-color: var(--second-bg);
     color: #fff;
     padding: 10px 15px;
     outline-offset: -4px;

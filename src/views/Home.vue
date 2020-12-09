@@ -85,6 +85,6 @@ export default {
 
 .goback > button > .icon {
     width: 60px !important;
-    filter: brightness(55);
+    filter: contrast(0) brightness(88);
 }
 </style>

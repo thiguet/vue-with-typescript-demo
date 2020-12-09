@@ -2,7 +2,6 @@ import Vuex, { ModuleTree, Store } from 'vuex';
 import { shallowMount, createLocalVue, Wrapper, mount } from '@vue/test-utils';
 import faker from 'faker';
 import AddProduct from '@/views/AddProduct.vue';
-import Button from '@/components/Button.vue';
 import { Measures, VuexAppModules } from '@/store/datatypes/models';
 import {
     State as ProductsState,
@@ -150,7 +149,7 @@ describe('AddProduct.vue', () => {
             setProductQtd,
             setProductMinQtd,
         } = products.mutations;
-        const { name, qtd, minQtd, } = build();
+        const { name, qtd, minQtd } = build();
 
         const nameVal = `${faker.random.word()}`;
         const qtdVal = `${faker.random.number()}`;

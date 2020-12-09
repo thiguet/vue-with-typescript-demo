@@ -1,8 +1,8 @@
 <template>
-  <div class="container" @click="onclick">
-      <img :src="icon" />
-      <slot />
-  </div>
+    <div class="container" @click="onclick">
+        <img :src="icon" />
+        <slot />
+    </div>
 </template>
 
 <script lang="ts">
@@ -20,13 +20,12 @@ export default class Card extends Vue {
 </script>
 
 <style>
-
 .container {
     cursor: pointer;
     justify-content: center;
     padding: 10px;
     background-color: var(--ternary-bg);
-    height: 75vh;
+    height: 72vh;
     width: 40vw;
 }
 
@@ -38,9 +37,12 @@ export default class Card extends Vue {
 
 @media screen and (max-width: 600px) {
     .container {
-        padding: 0;
-        height: 35vh;
-        width: 100%;
+        height: 32vh;
+        padding: 10px;
+        width: 85%;
+        justify-content: center;
+        align-self: center;
+        margin-top: 20px;
     }
 
     .container > img {
@@ -48,5 +50,4 @@ export default class Card extends Vue {
         max-height: 120px;
     }
 }
-
 </style>
