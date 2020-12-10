@@ -5,6 +5,9 @@ export interface LoginView {
 export interface AddProductView {
     submitForm(): void;
     chooseAnImageHandler(): void;
+    handleImgFileChange(files: File[]): void;
+    handleFileChange(): void;
+    setImage(file: File): void;
 }
 
 export interface ProductsListView {

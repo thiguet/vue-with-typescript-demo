@@ -5,6 +5,7 @@
                 id="img"
                 :value="selectedProduct.image"
                 :setValue="setProductImage"
+                @change="handleImgFileChange"
             />
             <Button
                 id="img-btn"
@@ -185,8 +186,16 @@ export default class AddProduct extends Vue implements AddProductView {
         this.$router.push('/products');
     }
 
+    public setImage(file: File) {
+        this.setProductImage(file);
+    }
+
     public handleFileChange() {
-        this.setProductImage(this.files[0]);
+        this.setImage(this.files[0]);
+    }
+
+    public handleImgFileChange(files: File[]) {
+        this.setImage(files[0]);
     }
 }
 </script>

@@ -18,6 +18,7 @@ import VueRouter from 'vue-router';
 import { ProductsVuex, AlertVuex } from '../store/models.d';
 import { AddProductView } from '@/views/models.d';
 import { getOptionsWithFile } from '../utils/FileHelper';
+import DNDImage from '@/components/DNDImage.vue';
 
 jest.setTimeout(30000);
 
@@ -51,6 +52,7 @@ describe('AddProduct.vue', () => {
             mountedWrapper,
             AddProductComp: () =>
                 (mountedWrapper.vm as unknown) as AddProductView,
+            DNDImageComp: () => mountedWrapper.findComponent(DNDImage),
             img: () => mountedWrapper.find('#img'),
             imgBtn: () => mountedWrapper.find('#img-btn'),
             name: () => mountedWrapper.find('#name'),
@@ -246,6 +248,34 @@ describe('AddProduct.vue', () => {
             );
             done();
         }, 1000);
+    });
+
+    it('@drop on img must call setProductImage from products.mutation', async done => {
+        const { setProductImage } = products.mutations;
+
+        const { mountedWrapper } = build();
+
+        const options = getOptionsWithFile();
+
+        const event = new CustomEvent('drop', {
+            bubbles: true,
+            cancelable: false,
+            detail: {
+                dataTransfer: options.dataTransfer,
+            },
+        });
+
+        Object.assign(event, options);
+
+        mountedWrapper.find('.img-container').element.dispatchEvent(event);
+
+        await setTimeout(() => {
+            expect(
+                (setProductImage as jest.Mock<typeof setProductImage>).mock
+                    .calls[0][1],
+            ).toBe(options.dataTransfer.files[0]);
+            done();
+        }, 0);
     });
 
     it('fails to add a product when button triggers', async () => {

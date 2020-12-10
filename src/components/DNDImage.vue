@@ -68,6 +68,7 @@ export default class DNDImage extends Vue implements DNDImageComponent {
                     this.isDragging = false;
                 };
                 reader.readAsDataURL(file);
+                this.$emit('change', [file]);
             } else {
                 this.wrongFile = true;
                 this.imageSource = null;

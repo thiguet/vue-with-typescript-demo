@@ -1,10 +1,7 @@
 import { mount } from '@vue/test-utils';
 import DNDImage from '@/components/DNDImage.vue';
 import faker from 'faker';
-import {
-    DNDImageComponent,
-    DNDImageData,
-} from '@/views/models.d';
+import { DNDImageComponent, DNDImageData } from '@/views/models.d';
 import { DNDImageProps, ImageMimeTypes } from './models';
 
 describe('DNDImage.vue', () => {
@@ -74,12 +71,7 @@ describe('DNDImage.vue', () => {
     });
 
     it('display wrong answer based on component data.', async () => {
-        const {
-            wrapper,
-            img,
-            imgContainer,
-            wrongFileHeader,
-        } = build();
+        const { wrapper, img, imgContainer, wrongFileHeader } = build();
 
         data = {
             wrongFile: true,
@@ -94,12 +86,7 @@ describe('DNDImage.vue', () => {
     });
 
     it('display image based on component data.', async () => {
-        const {
-            wrapper,
-            img,
-            imgContainer,
-            wrongFileHeader,
-        } = build();
+        const { wrapper, img, imgContainer, wrongFileHeader } = build();
 
         data = {
             imageSource: 'http://lorempixel.com/640/480/food',
@@ -128,7 +115,7 @@ describe('DNDImage.vue', () => {
         }, 0);
     });
 
-    it('simulate a dragLeave event.', async (done) => {
+    it('simulate a dragLeave event.', async done => {
         const { DNDImageComp, imgContainer } = build();
 
         const event = new Event('dragleave');
@@ -148,12 +135,12 @@ describe('DNDImage.vue', () => {
         }, 0);
     });
 
-    it('simulate a drop event with an image.', async (done) => {
+    it('simulate a drop event with an image.', async done => {
         const imageMimeType = faker.random.arrayElement(
             Object.values(ImageMimeTypes),
         );
         const { file } = getFakeFile(imageMimeType);
-        const { DNDImageComp, imgContainer } = build();
+        const { DNDImageComp, imgContainer, wrapper } = build();
         interface DataTranferMock {
             files: File[];
         }
@@ -176,11 +163,12 @@ describe('DNDImage.vue', () => {
         await setTimeout(() => {
             expect(options.preventDefault).toBeCalled();
             expect(DNDImageComp().imageSource).toBeTruthy();
+            expect(wrapper.emitted('change')).toBeTruthy();
             done();
         }, 1000);
     });
 
-    it('simulate a drop event without a file.', async (done) => {
+    it('simulate a drop event without a file.', async done => {
         const { DNDImageComp, imgContainer } = build();
 
         const options = {
@@ -207,7 +195,7 @@ describe('DNDImage.vue', () => {
         }, 1000);
     });
 
-    it('simulate a drop event with a file that is not an image.', async (done) => {
+    it('simulate a drop event with a file that is not an image.', async done => {
         const notAnImageMimeType = 'application/pdf';
         const { file } = getFakeFile(notAnImageMimeType);
         const { DNDImageComp, imgContainer } = build();
