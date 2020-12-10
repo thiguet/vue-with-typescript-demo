@@ -2,7 +2,7 @@
     <div class="products-container">
         <div class="row">
             <ProductsTable
-                :rows="rows"
+                :rows="tableRows"
                 @on-edit="routeToEditProductPage"
                 @on-delete="removeLine"
             />
@@ -37,13 +37,15 @@ import Button from '@/components/Button.vue';
 
 import ProductsTable from '@/components/ProductsTable.vue';
 
+import { ActionTypes, Actions } from '@/store/modules/products';
+
 import { ProductsListView } from './models.d';
 
-import { Product, VuexAppModules } from '../store/datatypes/models';
+import { VuexAppModules } from '../store/datatypes/models';
 
 const products = namespace(VuexAppModules.products);
 
-const { State } = products;
+const { Action, Getter } = products;
 
 interface RowsData {
     name: string;
@@ -56,24 +58,16 @@ interface RowsData {
         Button,
         ProductsTable,
     },
-    data() {
-        return {
-            rows: [],
-        };
-    },
 })
 export default class ProductsList extends Vue implements ProductsListView {
-    private rows!: Array<RowsData>;
+    @Getter
+    private tableRows!: [];
 
-    @State
-    private products!: Product[];
+    @Action
+    private selectProduct!: Actions[ActionTypes.selectProduct];
 
-    mounted() {
-        this.rows = this.products.map((p: Product) => ({
-            icon: p.image as string,
-            name: p.name,
-        }));
-    }
+    @Action
+    private deleteProduct!: Actions[ActionTypes.deleteProduct];
 
     public routeToHomePage() {
         this.$router.push('/');
@@ -83,12 +77,13 @@ export default class ProductsList extends Vue implements ProductsListView {
         this.$router.push('/products/new');
     }
 
-    public routeToEditProductPage() {
+    public routeToEditProductPage(index: number) {
         this.$router.push('/products/edit');
+        this.selectProduct(index);
     }
 
     public removeLine(index: number) {
-        this.rows.splice(index, 1);
+        this.deleteProduct(index);
     }
 }
 </script>

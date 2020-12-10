@@ -1,19 +1,31 @@
-import { Actions as VActions, Getters } from 'vuex-smart-module';
+import { Actions as VActions } from 'vuex-smart-module';
 import { Product } from '@/store/datatypes/models';
 import State from './state';
 import Mutations, { MutationTypes } from './mutations';
+import Getters from './getters';
 
 export enum ActionTypes {
-    newProduct = 'newProduct',
+    saveProduct = 'saveProduct',
+    selectProduct = 'selectProduct',
+    deleteProduct = 'deleteProduct',
 }
 
 export default class Actions extends VActions<
     State,
-    Getters<State>,
+    Getters,
     Mutations,
     Actions
 > {
-    [ActionTypes.newProduct](payload: Product) {
-        this.commit(MutationTypes.addProduct, payload);
+    [ActionTypes.saveProduct](payload: Product) {
+        this.commit(MutationTypes.addProduct, { ...payload });
+        this.commit(MutationTypes.resetState);
+    }
+
+    [ActionTypes.selectProduct](payload: number) {
+        this.commit(MutationTypes.selectProduct, payload);
+    }
+
+    [ActionTypes.deleteProduct](payload: number) {
+        this.commit(MutationTypes.deleteProduct, payload);
     }
 }

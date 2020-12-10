@@ -160,14 +160,14 @@ export default class AddProduct extends Vue implements AddProductView {
     private setProductImage!: Mutations[MutationTypes.setProductImage];
 
     @Action
-    private newProduct!: Actions[ActionTypes.newProduct];
+    private saveProduct!: Actions[ActionTypes.saveProduct];
 
     @alert.Action
     private openAlert!: AlertActions[AlertActionTypes.openAlert];
 
     public submitForm() {
         try {
-            this.newProduct(this.selectedProduct);
+            this.saveProduct(this.selectedProduct);
             this.openAlert(newProductSuccess);
         } catch (e) {
             this.openAlert(newProductError);

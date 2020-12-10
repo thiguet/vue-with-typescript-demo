@@ -91,7 +91,7 @@ describe('AddProduct.vue', () => {
                 [MutationTypes.setProductImage]: jest.fn(),
             },
             actions: {
-                [ActionTypes.newProduct]: jest.fn(),
+                [ActionTypes.saveProduct]: jest.fn(),
             },
         };
 
@@ -205,7 +205,7 @@ describe('AddProduct.vue', () => {
         const { submit } = build();
 
         await submit().trigger('click');
-        expect(products.actions.newProduct).toBeCalled();
+        expect(products.actions.saveProduct).toBeCalled();
         expect(
             (alertActions.openAlert as jest.Mock<typeof alertActions.openAlert>)
                 .mock.calls[0][1],
@@ -280,8 +280,8 @@ describe('AddProduct.vue', () => {
 
     it('fails to add a product when button triggers', async () => {
         const alertActions = alert.actions;
-        (products.actions.newProduct as jest.Mock<
-            typeof products.actions.newProduct
+        (products.actions.saveProduct as jest.Mock<
+            typeof products.actions.saveProduct
         >).mockImplementation(() => {
             throw new Error();
         });

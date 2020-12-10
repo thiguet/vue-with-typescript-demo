@@ -20,7 +20,8 @@ describe('Products Vuex Module', () => {
     const lastAddedProduct = (products: Product[]) => ({
         ...products.slice(-1)[0],
     });
-    const getRandomMeasure = () => faker.random.arrayElement(Object.values(typeof Measures)) as Measures;
+    const getRandomMeasure = () =>
+        faker.random.arrayElement(Object.values(typeof Measures)) as Measures;
 
     beforeEach(() => {
         state = store.state.products;
@@ -54,7 +55,7 @@ describe('Products Vuex Module', () => {
         const { products } = state;
         const { length } = products;
 
-        await store.dispatch(namespace + ActionTypes.newProduct, product);
+        await store.dispatch(namespace + ActionTypes.saveProduct, product);
 
         expect(products.length).toBe(length + 1);
         expect(lastAddedProduct(products)).toEqual({ ...product });

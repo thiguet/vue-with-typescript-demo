@@ -9,6 +9,8 @@ import {
     Mutations,
     MutationTypes,
     Actions,
+    Getters,
+    GettersTypes,
 } from '@/store/modules/products';
 
 import { Product, Measures } from '@/store/datatypes/models';
@@ -23,7 +25,8 @@ describe('Products Vuex Module', () => {
         ...products.slice(-1)[0],
     });
 
-    const getRandomMeasure = () => faker.random.arrayElement(Object.values(typeof Measures)) as Measures;
+    const getRandomMeasure = () =>
+        faker.random.arrayElement(Object.values(typeof Measures)) as Measures;
 
     const getNewProduct = (): Product => ({
         name: faker.name.title(),
@@ -45,11 +48,40 @@ describe('Products Vuex Module', () => {
             state,
         });
 
+        const getters = inject(Getters, {
+            state,
+        });
+
         return {
             commit,
+            getters,
             mutations,
         };
     };
+
+    it('gets tableRows from state.products .', () => {
+        state = {
+            products: Array(20)
+                .fill(null)
+                .map(() => ({
+                    ...getNewProduct(),
+                })),
+            selectedProduct: getNewProduct(),
+        };
+
+        const getters = inject(Getters, {
+            state,
+        });
+
+        const data = state.products.map(p => ({
+            icon: p.image,
+            name: p.name,
+        }));
+
+        console.log(getters[GettersTypes.tableRows]);
+
+        expect(getters[GettersTypes.tableRows]).toEqual(data);
+    });
 
     it('sets the product to the module state.', () => {
         const { mutations } = build();
@@ -188,6 +220,20 @@ describe('Products Vuex Module', () => {
         expect(lastAddedProduct(products)).toEqual({ ...newProduct });
     });
 
+    it('sets a product to state.selectedProduct.', () => {
+        const { mutations } = build();
+
+        const newProduct = getNewProduct();
+
+        const { products } = state;
+
+        mutations.addProduct(newProduct);
+
+        mutations.selectProduct(0);
+
+        expect({ ...products[0] }).toEqual({ ...newProduct });
+    });
+
     it('dispatches new product action: ', async () => {
         const newProduct = getNewProduct();
 
@@ -197,11 +243,53 @@ describe('Products Vuex Module', () => {
             commit,
         });
 
-        await actions.newProduct(newProduct);
+        await actions.saveProduct(newProduct);
 
         expect(commit).toHaveBeenCalledWith(
             MutationTypes.addProduct,
             newProduct,
+        );
+    });
+
+    it('dispatches select product action: ', async () => {
+        const index = 0;
+
+        const { commit } = build();
+
+        const actions = inject(Actions, {
+            commit,
+        });
+
+        await actions.selectProduct(index);
+
+        expect(commit).toHaveBeenLastCalledWith(
+            MutationTypes.selectProduct,
+            index,
+        );
+    });
+
+    it('dispatches delete product action: ', async () => {
+        const index = 0;
+
+        const { commit } = build();
+
+        const { products } = state;
+
+        const newProduct = getNewProduct();
+
+        const actions = inject(Actions, {
+            commit,
+        });
+
+        await actions.saveProduct(newProduct);
+
+        await actions.deleteProduct(index);
+
+        expect(products.length).toEqual(0);
+
+        expect(commit).toHaveBeenLastCalledWith(
+            MutationTypes.deleteProduct,
+            index,
         );
     });
 });

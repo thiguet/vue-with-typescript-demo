@@ -18,9 +18,11 @@ const router = new VueRouter();
 
 describe('ProductsList', () => {
     let store: Store<State>;
+
     let products: ProductsVuex;
 
-    const getRandomMeasure = () => faker.random.arrayElement(Object.values(Measures)) as Measures;
+    const getRandomMeasure = () =>
+        faker.random.arrayElement(Object.values(Measures)) as Measures;
 
     const build = () => {
         const options = {
@@ -77,7 +79,9 @@ describe('ProductsList', () => {
                 [MutationTypes.setProductImage]: jest.fn(),
             },
             actions: {
-                [ActionTypes.newProduct]: jest.fn(),
+                [ActionTypes.saveProduct]: jest.fn(),
+                [ActionTypes.selectProduct]: jest.fn(),
+                [ActionTypes.deleteProduct]: jest.fn(),
             },
         };
 
@@ -118,11 +122,29 @@ describe('ProductsList', () => {
         expect(router.push).toHaveBeenCalledWith('/products/new');
     });
 
-    it('sends the user to the edit page with props', async () => {
+    it('sends the user to the edit page selecting the product', async () => {
+        const { actions } = products;
+
         const { productsList } = build();
 
-        await productsList().vm.$emit('on-edit');
+        const index = faker.random.number({ min: 0, max: 5 });
+
+        await productsList().vm.$emit('on-edit', index);
 
         expect(router.push).toHaveBeenCalledWith('/products/edit');
+
+        expect(actions.selectProduct).toBeCalled();
+    });
+
+    it('calls deleteProduct action', async () => {
+        const { actions } = products;
+
+        const { productsList } = build();
+
+        const index = faker.random.number({ min: 0, max: 5 });
+
+        await productsList().vm.$emit('on-delete', index);
+
+        expect(actions.deleteProduct).toBeCalled();
     });
 });

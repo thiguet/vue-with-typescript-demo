@@ -13,7 +13,7 @@ export interface AddProductView {
 export interface ProductsListView {
     routeToHomePage(): void;
     routeToNewProductPage(): void;
-    routeToEditProductPage(): void;
+    routeToEditProductPage(index: number): void;
     removeLine(index: number): void;
 }
 
