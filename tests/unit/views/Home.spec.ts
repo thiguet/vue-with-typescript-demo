@@ -34,7 +34,7 @@ describe('Home', () => {
 
     beforeEach(() => {
         router.push = jest.fn();
-    })
+    });
 
     it('renders component', () => {
         const { wrapper } = build();

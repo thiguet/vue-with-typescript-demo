@@ -43,11 +43,11 @@ import { Product, VuexAppModules } from '../store/datatypes/models';
 
 const products = namespace(VuexAppModules.products);
 
-const { Mutation, Action, State } = products;
+const { State } = products;
 
 interface RowsData {
     name: string;
-    icon: string;
+    icon?: string;
 }
 
 @Component({
@@ -66,7 +66,7 @@ export default class ProductsList extends Vue implements ProductsListView {
     private rows!: Array<RowsData>;
 
     @State
-    private products: Product[];
+    private products!: Product[];
 
     mounted() {
         this.rows = this.products.map((p: Product) => ({

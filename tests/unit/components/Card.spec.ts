@@ -3,9 +3,8 @@ import { shallowMount, mount, createLocalVue, Wrapper } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import Card from '@/components/Card.vue';
-import { CardProps } from './models';
-
 import faker from 'faker';
+import { CardProps } from './models';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -16,7 +15,7 @@ describe('Login', () => {
 
     const build = () => {
         const componentBindings = {
-            propsData: {...props},
+            propsData: { ...props },
             slots: {
                 default: slotContent,
             },
@@ -27,7 +26,7 @@ describe('Login', () => {
         const mountedWrapper: Wrapper<Card> = mount(Card, componentBindings);
 
         const CardComp = () => {
-            const CardInstance = ((wrapper.vm as unknown) as any);
+            const CardInstance = (wrapper.vm as unknown) as CardProps;
 
             jest.spyOn(CardInstance, 'onclick');
 
@@ -48,7 +47,7 @@ describe('Login', () => {
             onclick: jest.fn(),
             icon: faker.image.imageUrl(),
         };
-    })
+    });
 
     it('renders component', () => {
         const { wrapper } = build();
@@ -69,8 +68,8 @@ describe('Login', () => {
         const { wrapper, CardComp } = build();
         await wrapper.trigger('click');
         expect(CardComp().onclick).toHaveBeenCalled();
-    });    
-    
+    });
+
     it('sets icon prop to the src of the img component', async () => {
         const { img } = build();
         expect(img().attributes('src')).toBe(props.icon);

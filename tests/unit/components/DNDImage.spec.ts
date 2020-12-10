@@ -206,7 +206,7 @@ describe('DNDImage.vue', () => {
             done();
         }, 1000);
     });
-    
+
     it('simulate a drop event with a file that is not an image.', async (done) => {
         const notAnImageMimeType = 'application/pdf';
         const { file } = getFakeFile(notAnImageMimeType);

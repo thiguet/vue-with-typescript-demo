@@ -1,4 +1,4 @@
-import { conduitAPI, clearJWT, setJWT, login } from '@/services/Login.ts';
+import { conduitAPI, clearJWT, setJWT, login } from '@/services/Login';
 import { LoginSubmit, User } from '@/store/datatypes/models';
 import faker from 'faker';
 

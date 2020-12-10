@@ -6,9 +6,9 @@ import VueRouter from 'vue-router';
 import ProductsList from '@/views/ProductsList.vue';
 import ProductsTable from '@/components/ProductsTable.vue';
 import faker from 'faker';
-import { ProductsVuex } from '../store/models.d';
 import { Measures, VuexAppModules } from '@/store/datatypes/models';
 import { State, MutationTypes, ActionTypes } from '@/store/modules/products';
+import { ProductsVuex } from '../store/models.d';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -20,8 +20,7 @@ describe('ProductsList', () => {
     let store: Store<State>;
     let products: ProductsVuex;
 
-    const getRandomMeasure = () =>
-        faker.random.arrayElement(Object.values(Measures)) as Measures;
+    const getRandomMeasure = () => faker.random.arrayElement(Object.values(Measures)) as Measures;
 
     const build = () => {
         const options = {

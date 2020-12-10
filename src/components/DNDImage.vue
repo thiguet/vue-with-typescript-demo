@@ -1,4 +1,3 @@
-<!-- Inspiration: https://github.com/fabiofranchino/vue-drop-image-and-preview/blob/master/src/components/DropAnImage.vue -->
 <template>
     <div
         class="drop img-container"

@@ -12,6 +12,14 @@ module.exports = {
         ecmaVersion: 2020,
     },
     rules: {
+        'max-len': [
+            'error',
+            {
+                code: 120,
+                ignoreStrings: true,
+                ignoreComments: true,
+            },
+        ],
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'object-curly-newline': 'off',
@@ -28,13 +36,15 @@ module.exports = {
             },
         ],
     },
-    overrides: [{
-        files: [
-            '**/__tests__/*.{j,t}s?(x)',
-            '**/tests/unit/**/*.spec.{j,t}s?(x)',
-        ],
-        env: {
-            jest: true,
+    overrides: [
+        {
+            files: [
+                '**/__tests__/*.{j,t}s?(x)',
+                '**/tests/unit/**/*.spec.{j,t}s?(x)',
+            ],
+            env: {
+                jest: true,
+            },
         },
-    }],
+    ],
 };

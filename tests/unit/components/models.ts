@@ -41,7 +41,7 @@ export enum ImageMimeTypes {
     jpeg = 'image/jpeg',
 }
 export interface CardProps {
-    onclick: Function;
+    onclick(): void;
     icon: string;
 }
 

@@ -7,7 +7,7 @@ import Login from '@/views/Login.vue';
 import Button from '@/components/Button.vue';
 import TextInput from '@/components/TextInput.vue';
 
-import faker, { fake } from 'faker';
+import faker from 'faker';
 import { LoginState } from '@/store/modules/login';
 
 import { LoginView } from '@/views/models.d';

@@ -6,7 +6,12 @@ export interface AddProductView {
     submitForm(): void;
 }
 
-export interface ProductsListView {}
+export interface ProductsListView {
+    routeToHomePage(): void;
+    routeToNewProductPage(): void;
+    routeToEditProductPage(): void;
+    removeLine(index: number): void;
+}
 
 export interface DNDImageData {
     imageSource?: ArrayBuffer | string | null;

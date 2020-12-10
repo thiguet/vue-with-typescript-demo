@@ -1,16 +1,14 @@
 import { mount, shallowMount, Wrapper } from '@vue/test-utils';
 
-import Vue from 'vue';
 import ProductsTable from '@/components/ProductsTable.vue';
-import { ProductsTableProps } from './models';
 import faker from 'faker';
 import { Measures } from '@/store/datatypes/models';
+import { ProductsTableProps } from './models';
 
 describe('ProductsTable', () => {
     let props: ProductsTableProps;
 
-    const getRandomMeasure = () =>
-        faker.random.arrayElement(Object.values(Measures)) as Measures;
+    const getRandomMeasure = () => faker.random.arrayElement(Object.values(Measures)) as Measures;
 
     const build = () => {
         const options = {
@@ -32,16 +30,14 @@ describe('ProductsTable', () => {
             mountedWrapper,
             table: () => mountedWrapper.find('#table'),
             rows: () => mountedWrapper.findAll('.row'),
-            editBtn: () =>
-                mountedWrapper
-                    .findAll('.row')
-                    .at(0)
-                    .find('#edit-1'),
-            deleteBtn: () =>
-                mountedWrapper
-                    .findAll('.row')
-                    .at(0)
-                    .find('#delete-1'),
+            editBtn: () => mountedWrapper
+                .findAll('.row')
+                .at(0)
+                .find('#edit-1'),
+            deleteBtn: () => mountedWrapper
+                .findAll('.row')
+                .at(0)
+                .find('#delete-1'),
         };
     };
 

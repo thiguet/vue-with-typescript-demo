@@ -15,7 +15,7 @@ describe('TextInput.vue', () => {
         return {
             wrapper,
             input,
-            inputEl: (): HTMLInputElement => <HTMLInputElement>input().element,
+            inputEl: (): HTMLInputElement => input().element as HTMLInputElement,
         };
     };
 
