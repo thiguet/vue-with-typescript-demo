@@ -17,6 +17,12 @@ export interface ProductsListView {
     removeLine(index: number): void;
 }
 
+export interface HomeView {
+    routeToProducts(): void;
+    routeToReports(): void;
+    routeToLogin(): void;
+}
+
 export interface DNDImageData {
     imageSource?: ArrayBuffer | string | null;
     wrongFile: boolean;

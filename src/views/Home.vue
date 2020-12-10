@@ -25,28 +25,34 @@
     </div>
 </template>
 
-<script>
-import Card from '@/components/Card';
-import Button from '@/components/Button';
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
 
-export default {
+import Card from '@/components/Card.vue';
+import Button from '@/components/Button.vue';
+
+import { HomeView } from './models.d';
+
+@Component({
     name: 'Home',
     components: {
         Card,
         Button,
     },
-    methods: {
-        routeToProducts() {
-            this.$router.push('/products');
-        },
-        routeToReports() {
-            this.$router.push('/reports');
-        },
-        routeToLogin() {
-            this.$router.push('/login');
-        },
-    },
-};
+})
+export default class Home extends Vue implements HomeView {
+    public routeToProducts() {
+        this.$router.push('/products');
+    }
+
+    public routeToReports() {
+        this.$router.push('/reports');
+    }
+
+    public routeToLogin() {
+        this.$router.push('/login');
+    }
+}
 </script>
 
 <style>

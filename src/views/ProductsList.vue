@@ -70,7 +70,7 @@ export default class ProductsList extends Vue implements ProductsListView {
 
     mounted() {
         this.rows = this.products.map((p: Product) => ({
-            icon: p.image,
+            icon: p.image as string,
             name: p.name,
         }));
     }
