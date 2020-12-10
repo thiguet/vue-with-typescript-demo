@@ -4,6 +4,7 @@ export interface LoginView {
 
 export interface AddProductView {
     submitForm(): void;
+    chooseAnImageHandler(): void;
 }
 
 export interface ProductsListView {
@@ -26,3 +27,7 @@ export interface DNDImageMethods {
 }
 
 export type DNDImageComponent = DNDImageData & DNDImageMethods;
+
+export interface Files {
+    files: FileList;
+}

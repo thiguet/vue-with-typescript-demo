@@ -10,7 +10,14 @@
                 id="img-btn"
                 name="img-btn"
                 label="Escolha uma imagem"
-                :onclick="() => {}"
+                :onclick="chooseAnImageHandler"
+            />
+            <input
+                id="file-input"
+                type="file"
+                ref="files"
+                style="display:none;"
+                @change="handleFileChange"
             />
         </div>
         <div class="form">
@@ -84,7 +91,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Ref } from 'vue-property-decorator';
 
 import InputWrapper from '@/components/InputWrapper.vue';
 import TextInput from '@/components/TextInput.vue';
@@ -130,6 +137,9 @@ const { Mutation, Action, State } = products;
     }),
 })
 export default class AddProduct extends Vue implements AddProductView {
+    @Ref()
+    private files!: FileList;
+
     @State
     private selectedProduct!: Product;
 
@@ -163,8 +173,20 @@ export default class AddProduct extends Vue implements AddProductView {
         }
     }
 
+    public chooseAnImageHandler() {
+        const fileInputComp = document.getElementById('file-input');
+
+        if (fileInputComp !== null) {
+            fileInputComp.click();
+        }
+    }
+
     public routeToHomePage() {
         this.$router.push('/products');
+    }
+
+    public handleFileChange() {
+        this.setProductImage(this.files[0]);
     }
 }
 </script>

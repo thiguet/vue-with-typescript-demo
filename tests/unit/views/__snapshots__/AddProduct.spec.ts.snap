@@ -4,7 +4,7 @@ exports[`AddProduct.vue renders the component 1`] = `
 <div class="add-product">
   <div class="img-wrapper">
     <dndimage-stub id="img" value="someFixedImage" setvalue="function () { [native code] }"></dndimage-stub>
-    <button-stub id="img-btn" name="img-btn" label="Escolha uma imagem" onclick="function () {}"></button-stub>
+    <button-stub id="img-btn" name="img-btn" label="Escolha uma imagem" onclick="function () { [native code] }"></button-stub> <input id="file-input" type="file" style="display: none;">
   </div>
   <div class="form">
     <form action="#">

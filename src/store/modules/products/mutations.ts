@@ -37,7 +37,7 @@ export default class Mutations extends VMutations<State> {
         this.state.selectedProduct.measure = payload;
     }
 
-    [MutationTypes.setProductImage](payload: string) {
+    [MutationTypes.setProductImage](payload: File | string) {
         this.state.selectedProduct.image = payload;
     }
 }

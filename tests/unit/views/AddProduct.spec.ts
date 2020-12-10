@@ -16,6 +16,8 @@ import Vue from 'vue';
 import { newProductSuccess, newProductError } from '@/assets/messages';
 import VueRouter from 'vue-router';
 import { ProductsVuex, AlertVuex } from '../store/models.d';
+import { AddProductView } from '@/views/models.d';
+import { getOptionsWithFile } from '../utils/FileHelper';
 
 jest.setTimeout(30000);
 
@@ -31,7 +33,8 @@ describe('AddProduct.vue', () => {
 
     let store: Store<AlertState & ProductsState>;
 
-    const getInputEl = (wrapperFn: Wrapper<Vue>) => wrapperFn.element as HTMLInputElement;
+    const getInputEl = (wrapperFn: Wrapper<Vue>) =>
+        wrapperFn.element as HTMLInputElement;
 
     const build = () => {
         const options = {
@@ -46,6 +49,8 @@ describe('AddProduct.vue', () => {
         return {
             wrapper,
             mountedWrapper,
+            AddProductComp: () =>
+                (mountedWrapper.vm as unknown) as AddProductView,
             img: () => mountedWrapper.find('#img'),
             imgBtn: () => mountedWrapper.find('#img-btn'),
             name: () => mountedWrapper.find('#name'),
@@ -54,10 +59,12 @@ describe('AddProduct.vue', () => {
             minQtd: () => mountedWrapper.find('#min-qtd'),
             submit: () => mountedWrapper.find('#add-product'),
             goBackButton: () => mountedWrapper.find('#go-back'),
+            file: () => mountedWrapper.find('#file-input'),
         };
     };
 
-    const getRandomMeasure = () => faker.random.arrayElement(Object.values(Measures)) as Measures;
+    const getRandomMeasure = () =>
+        faker.random.arrayElement(Object.values(Measures)) as Measures;
 
     beforeEach(() => {
         router.push = jest.fn();
@@ -128,7 +135,16 @@ describe('AddProduct.vue', () => {
     });
 
     it('renders main components', () => {
-        const { img, imgBtn, name, qtd, minQtd, measure, submit } = build();
+        const {
+            img,
+            imgBtn,
+            name,
+            qtd,
+            minQtd,
+            measure,
+            submit,
+            file,
+        } = build();
 
         expect(name().exists()).toBe(true);
         expect(qtd().exists()).toBe(true);
@@ -139,9 +155,11 @@ describe('AddProduct.vue', () => {
 
         expect(img().exists()).toBe(true);
         expect(imgBtn().exists()).toBe(true);
+
+        expect(file().exists()).toBe(true);
     });
 
-    it('calls vuex mutations on input', async (done) => {
+    it('calls vuex mutations on input', async done => {
         const {
             setProductName,
             setProductQtd,
@@ -190,6 +208,44 @@ describe('AddProduct.vue', () => {
             (alertActions.openAlert as jest.Mock<typeof alertActions.openAlert>)
                 .mock.calls[0][1],
         ).toBe(newProductSuccess);
+    });
+
+    it('imgBtn must trigger a click on fileInput', async () => {
+        const { imgBtn, AddProductComp } = build();
+
+        jest.spyOn(AddProductComp(), 'chooseAnImageHandler');
+
+        await imgBtn().trigger('click');
+
+        await setTimeout(() => {
+            expect(AddProductComp().chooseAnImageHandler).toBeCalled();
+        }, 2000);
+    });
+
+    it('@change file input must call setProductImage from products.mutation', async done => {
+        const { setProductImage } = products.mutations;
+
+        const { file, mountedWrapper } = build();
+
+        const options = getOptionsWithFile();
+
+        const event = new Event('change');
+
+        Object.assign(event, options);
+
+        file().element.dispatchEvent(event);
+
+        await setTimeout(() => {
+            expect(
+                (setProductImage as jest.Mock<typeof setProductImage>).mock
+                    .calls[0][1],
+            ).toBe(
+                ((mountedWrapper.vm.$refs.files as unknown) as {
+                    files: FileList;
+                }).files[0],
+            );
+            done();
+        }, 1000);
     });
 
     it('fails to add a product when button triggers', async () => {
