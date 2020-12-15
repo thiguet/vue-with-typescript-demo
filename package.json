@@ -8,6 +8,7 @@
         "unit": "vue-cli-service test:unit",
         "unit:update": "vue-cli-service test:unit -u",
         "unit:coverage": "vue-cli-service test:unit -u --coverage",
+        "unit:watchCoverage": "vue-cli-service test:unit --coverage --watch",
         "unit:watch": "vue-cli-service test:unit --watch",
         "e2e": "vue-cli-service test:e2e",
         "lint": "vue-cli-service lint --fix"

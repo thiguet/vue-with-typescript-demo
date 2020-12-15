@@ -1,4 +1,4 @@
 export interface ProductsTableComp {
-    onEdit: Function;
-    onDelete: Function;
+    onEdit(index: number): void;
+    onDelete(index: number): void;
 }

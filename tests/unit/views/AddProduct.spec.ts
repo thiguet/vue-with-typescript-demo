@@ -1,5 +1,11 @@
 import Vuex, { ModuleTree, Store } from 'vuex';
-import { shallowMount, createLocalVue, Wrapper, mount } from '@vue/test-utils';
+import {
+    shallowMount,
+    createLocalVue,
+    Wrapper,
+    mount,
+    createWrapper,
+} from '@vue/test-utils';
 import faker from 'faker';
 import AddProduct from '@/views/AddProduct.vue';
 import { Measures, VuexAppModules } from '@/store/datatypes/models';
@@ -7,6 +13,7 @@ import {
     State as ProductsState,
     MutationTypes,
     ActionTypes,
+    GettersTypes,
 } from '@/store/modules/products';
 import {
     State as AlertState,
@@ -17,7 +24,11 @@ import { newProductSuccess, newProductError } from '@/assets/messages';
 import VueRouter from 'vue-router';
 import { ProductsVuex, AlertVuex } from '../store/models.d';
 import { AddProductView } from '@/views/models.d';
-import { getOptionsWithFile } from '../utils/FileHelper';
+import {
+    getOptionsWithFile,
+    readFileAsync,
+    getImageFakeFile,
+} from '../utils/FileHelper';
 import DNDImage from '@/components/DNDImage.vue';
 
 jest.setTimeout(30000);
@@ -83,6 +94,9 @@ describe('AddProduct.vue', () => {
                 },
                 products: [],
             },
+            getters: {
+                [GettersTypes.tableRows]: jest.fn(),
+            },
             mutations: {
                 [MutationTypes.setProductName]: jest.fn(),
                 [MutationTypes.setProductQtd]: jest.fn(),
@@ -92,6 +106,7 @@ describe('AddProduct.vue', () => {
             },
             actions: {
                 [ActionTypes.saveProduct]: jest.fn(),
+                [ActionTypes.resetSelectedProduct]: jest.fn(),
             },
         };
 
@@ -161,7 +176,7 @@ describe('AddProduct.vue', () => {
         expect(file().exists()).toBe(true);
     });
 
-    it('calls vuex mutations on input', async done => {
+    it('calls vuex mutations on input', async (done) => {
         const {
             setProductName,
             setProductQtd,
@@ -212,26 +227,28 @@ describe('AddProduct.vue', () => {
         ).toBe(newProductSuccess);
     });
 
-    it('imgBtn must trigger a click on fileInput', async () => {
-        const { imgBtn, AddProductComp } = build();
-
-        jest.spyOn(AddProductComp(), 'chooseAnImageHandler');
-
-        await imgBtn().trigger('click');
-
-        await setTimeout(() => {
-            expect(AddProductComp().chooseAnImageHandler).toBeCalled();
-        }, 2000);
-    });
-
-    it('@change file input must call setProductImage from products.mutation', async done => {
+    it('@change file input must call setProductImage from products.mutation', async (done) => {
         const { setProductImage } = products.mutations;
 
-        const { file, mountedWrapper } = build();
+        const { mountedWrapper, file } = build();
+
+        const fileData = getImageFakeFile();
+
+        const dataURL = await readFileAsync(fileData);
+
+        (mountedWrapper.vm.$refs.files as any) = ({
+            files: [fileData],
+        } as unknown) as HTMLInputElement;
 
         const options = getOptionsWithFile();
 
-        const event = new Event('change');
+        const event = new CustomEvent('change', {
+            bubbles: true,
+            cancelable: false,
+            detail: {
+                dataTransfer: options.dataTransfer,
+            },
+        });
 
         Object.assign(event, options);
 
@@ -241,16 +258,12 @@ describe('AddProduct.vue', () => {
             expect(
                 (setProductImage as jest.Mock<typeof setProductImage>).mock
                     .calls[0][1],
-            ).toBe(
-                ((mountedWrapper.vm.$refs.files as unknown) as {
-                    files: FileList;
-                }).files[0],
-            );
+            ).toBe(dataURL);
             done();
         }, 1000);
     });
 
-    it('@drop on img must call setProductImage from products.mutation', async done => {
+    it('@drop on img must call setProductImage from products.mutation', async (done) => {
         const { setProductImage } = products.mutations;
 
         const { mountedWrapper } = build();
@@ -265,6 +278,8 @@ describe('AddProduct.vue', () => {
             },
         });
 
+        const dataURL = await readFileAsync(options.dataTransfer.files[0]);
+
         Object.assign(event, options);
 
         mountedWrapper.find('.img-container').element.dispatchEvent(event);
@@ -273,9 +288,67 @@ describe('AddProduct.vue', () => {
             expect(
                 (setProductImage as jest.Mock<typeof setProductImage>).mock
                     .calls[0][1],
-            ).toBe(options.dataTransfer.files[0]);
+            ).toBe(dataURL);
             done();
-        }, 0);
+        }, 5000);
+    });
+
+    it('testing imgBtn click, dispatch a click on the file input.', async () => {
+        const { imgBtn, file } = build();
+
+        const mockFn = jest.fn();
+
+        file().element.addEventListener('click', mockFn);
+
+        await imgBtn().trigger('click');
+
+        await setTimeout(() => {
+            expect(mockFn).toBeCalled();
+        }, 1000);
+    });
+
+    it('testing imgBtn click, must not dispatch a click on the file input.', async () => {
+        const { imgBtn, file } = build();
+
+        const mockFn = jest.fn();
+
+        file().element.addEventListener('click', mockFn);
+
+        file().element.remove();
+
+        await imgBtn().trigger('click');
+
+        await setTimeout(() => {
+            expect(mockFn).not.toBeCalled();
+        }, 1000);
+    });
+
+    it('testing imgBtn click, calls click method on the file input.', async () => {
+        const { imgBtn, file } = build();
+
+        jest.spyOn(file().element, 'click');
+
+        await imgBtn().trigger('click');
+
+        await setTimeout(() => {
+            expect(file().element.click).toBeCalled();
+        }, 1000);
+    });
+
+    it('testing imgBtn click, calls click method on the file input.', async () => {
+        const { imgBtn, file } = build();
+
+        jest.spyOn(file().element, 'click');
+
+        jest.spyOn(document, 'getElementById').mockImplementation(
+            () => file().element,
+        );
+
+        await imgBtn().trigger('click');
+
+        await setTimeout(() => {
+            expect(file().element.click).toBeCalled();
+        }, 1000);
     });
 
     it('fails to add a product when button triggers', async () => {
@@ -303,5 +376,6 @@ describe('AddProduct.vue', () => {
         await goBackButton().trigger('click');
 
         expect(router.push).toHaveBeenCalledWith('/products');
+        expect(products.actions.resetSelectedProduct).toBeCalled();
     });
 });

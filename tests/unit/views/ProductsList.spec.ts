@@ -7,7 +7,12 @@ import ProductsList from '@/views/ProductsList.vue';
 import ProductsTable from '@/components/ProductsTable.vue';
 import faker from 'faker';
 import { Measures, VuexAppModules } from '@/store/datatypes/models';
-import { State, MutationTypes, ActionTypes } from '@/store/modules/products';
+import {
+    State,
+    MutationTypes,
+    ActionTypes,
+    GettersTypes,
+} from '@/store/modules/products';
 import { ProductsVuex } from '../store/models.d';
 
 const localVue = createLocalVue();
@@ -70,6 +75,9 @@ describe('ProductsList', () => {
                         minQtd: faker.random.number(),
                         image: faker.image.image(),
                     })),
+            },
+            getters: {
+                [GettersTypes.tableRows]: jest.fn(),
             },
             mutations: {
                 [MutationTypes.setProductName]: jest.fn(),

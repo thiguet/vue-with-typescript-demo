@@ -3,6 +3,7 @@ import DNDImage from '@/components/DNDImage.vue';
 import faker from 'faker';
 import { DNDImageComponent, DNDImageData } from '@/views/models.d';
 import { DNDImageProps, ImageMimeTypes } from './models';
+import Vue from 'vue';
 
 describe('DNDImage.vue', () => {
     let data: DNDImageData;
@@ -115,7 +116,7 @@ describe('DNDImage.vue', () => {
         }, 0);
     });
 
-    it('simulate a dragLeave event.', async done => {
+    it('simulate a dragLeave event.', async (done) => {
         const { DNDImageComp, imgContainer } = build();
 
         const event = new Event('dragleave');
@@ -135,7 +136,7 @@ describe('DNDImage.vue', () => {
         }, 0);
     });
 
-    it('simulate a drop event with an image.', async done => {
+    it('simulate a drop event with an image.', async (done) => {
         const imageMimeType = faker.random.arrayElement(
             Object.values(ImageMimeTypes),
         );
@@ -168,7 +169,7 @@ describe('DNDImage.vue', () => {
         }, 1000);
     });
 
-    it('simulate a drop event without a file.', async done => {
+    it('simulate a drop event without a file.', async (done) => {
         const { DNDImageComp, imgContainer } = build();
 
         const options = {
@@ -195,7 +196,7 @@ describe('DNDImage.vue', () => {
         }, 1000);
     });
 
-    it('simulate a drop event with a file that is not an image.', async done => {
+    it('simulate a drop event with a file that is not an image.', async (done) => {
         const notAnImageMimeType = 'application/pdf';
         const { file } = getFakeFile(notAnImageMimeType);
         const { DNDImageComp, imgContainer } = build();
@@ -225,5 +226,48 @@ describe('DNDImage.vue', () => {
             expect(DNDImageComp().isDragging).toBe(false);
             done();
         }, 1000);
+    });
+
+    it('must set syncedValue to the same value as imageSource when imageSource changes', async () => {
+        const { wrapper, DNDImageComp } = build();
+
+        wrapper.setProps({
+            syncedValue: 'some_text0',
+        });
+
+        await Vue.nextTick();
+
+        wrapper.setData({
+            imageSource: 'metal',
+        });
+
+        DNDImageComp().onValueChange();
+
+        await Vue.nextTick();
+        expect(DNDImageComp().syncedValue).toEqual(DNDImageComp().imageSource);
+    });
+    it('must set syncedValue to the same value as imageSource when imageSource changes.', async () => {
+        const value = 'some_text0';
+
+        data = {
+            imageSource: value,
+            wrongFile: false,
+            isDragging: false,
+        };
+
+        props = {
+            id: '123',
+            value,
+            setValue: jest.fn(),
+        };
+
+        const { DNDImageComp } = build();
+
+        console.log(DNDImageComp().syncedValue);
+        console.log(DNDImageComp().imageSource);
+        DNDImageComp().onValueChange();
+
+        await Vue.nextTick();
+        expect(DNDImageComp().syncedValue).toEqual(DNDImageComp().imageSource);
     });
 });

@@ -3,32 +3,34 @@
 exports[`AddProduct.vue renders the component 1`] = `
 <div class="add-product">
   <div class="img-wrapper">
-    <dndimage-stub id="img" value="someFixedImage" setvalue="function () { [native code] }"></dndimage-stub>
-    <button-stub id="img-btn" name="img-btn" label="Escolha uma imagem" onclick="function () { [native code] }"></button-stub> <input id="file-input" type="file" style="display: none;">
+    <dndimage-stub value="someFixedImage" id="img"></dndimage-stub>
+    <button-stub id="img-btn" name="img-btn" label="Escolha uma imagem" icon="/assets/icons/upload.svg" onclick="function () { [native code] }"></button-stub> <input id="file-input" type="file" style="display: none;">
   </div>
   <div class="form">
-    <form action="#">
-      <inputwrapper-stub label="Nome" legend="Product Name">
-        <textinput-stub id="name" type="text" value="someFixedName" setvalue="function () { [native code] }"></textinput-stub>
-      </inputwrapper-stub>
-      <inputwrapper-stub label="Quantidade" legend="Product Quantity">
-        <number-stub id="qtd" min="0" value="0" setvalue="function () { [native code] }" type="number"></number-stub>
-      </inputwrapper-stub>
-      <inputwrapper-stub label="Qtd (Min)" legend="Product Min Quantity">
-        <number-stub id="min-qtd" min="0" value="0" setvalue="function () { [native code] }" type="number"></number-stub>
-      </inputwrapper-stub>
-      <inputwrapper-stub label="Product Measure" legend="Product Measure" for="measure"><select name="measure" id="measure">
-          <option disabled="disabled">Escolha uma opção</option>
-          <option>UN</option>
-          <option>L</option>
-          <option>KG</option>
-          <option>G</option>
-        </select></inputwrapper-stub>
-      <div class="btn">
-        <button-stub id="go-back" name="voltar" label="Voltar" icon="../assets/icons/goback.svg" onclick="function () { [native code] }" class="footer-button"></button-stub>
-        <button-stub id="add-product" name="add-product" label="Enviar" icon="../assets/icons/check.svg" onclick="function () { [native code] }" class="footer-button"></button-stub>
-      </div>
-    </form>
+    <div>
+      <form action="#">
+        <inputwrapper-stub label="Nome" legend="Product Name">
+          <textinput-stub id="name" type="text" value="someFixedName" setvalue="function () { [native code] }"></textinput-stub>
+        </inputwrapper-stub>
+        <inputwrapper-stub label="Quantidade" legend="Product Quantity">
+          <number-stub id="qtd" min="0" value="0" setvalue="function () { [native code] }" type="number"></number-stub>
+        </inputwrapper-stub>
+        <inputwrapper-stub label="Qtd (Min)" legend="Product Min Quantity">
+          <number-stub id="min-qtd" min="0" value="0" setvalue="function () { [native code] }" type="number"></number-stub>
+        </inputwrapper-stub>
+        <inputwrapper-stub label="Product Measure" legend="Product Measure" for="measure"><select name="measure" id="measure">
+            <option disabled="disabled">Escolha uma opção</option>
+            <option>UN</option>
+            <option>L</option>
+            <option>KG</option>
+            <option>G</option>
+          </select></inputwrapper-stub>
+      </form>
+    </div>
+  </div>
+  <div class="btn">
+    <button-stub id="go-back" name="voltar" label="Voltar" icon="../assets/icons/goback.svg" onclick="function () { [native code] }" class="footer-button"></button-stub>
+    <button-stub id="add-product" name="add-product" label="Enviar" icon="../assets/icons/check.svg" onclick="function () { [native code] }" class="footer-button"></button-stub>
   </div>
 </div>
 `;

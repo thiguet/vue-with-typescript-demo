@@ -6,6 +6,7 @@ export default class ProductsState {
         qtd: 0,
         minQtd: 0,
         measure: Measures.KG,
+        image: '',
     };
 
     products: Product[] = [];

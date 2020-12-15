@@ -4,11 +4,12 @@
             <DNDImage
                 id="img"
                 :value="selectedProduct.image"
-                :setValue="setProductImage"
+                @update-value="setProductImage"
                 @change="handleImgFileChange"
             />
             <Button
                 id="img-btn"
+                icon="/assets/icons/upload.svg"
                 name="img-btn"
                 label="Escolha uma imagem"
                 :onclick="chooseAnImageHandler"
@@ -22,71 +23,76 @@
             />
         </div>
         <div class="form">
-            <form action="#">
-                <InputWrapper label="Nome" legend="Product Name">
-                    <TextInput
-                        id="name"
-                        :value="selectedProduct.name"
-                        :setValue="setProductName"
-                    />
-                </InputWrapper>
-                <InputWrapper label="Quantidade" legend="Product Quantity">
-                    <Number
-                        id="qtd"
-                        type="number"
-                        min="0"
-                        :value="selectedProduct.qtd"
-                        :setValue="setProductQtd"
-                    />
-                </InputWrapper>
-                <InputWrapper label="Qtd (Min)" legend="Product Min Quantity">
-                    <Number
-                        id="min-qtd"
-                        type="number"
-                        min="0"
-                        :value="selectedProduct.minQtd"
-                        :setValue="setProductMinQtd"
-                    />
-                </InputWrapper>
-                <InputWrapper
-                    label="Product Measure"
-                    legend="Product Measure"
-                    for="measure"
-                >
-                    <select
-                        name="measure"
-                        id="measure"
-                        :value="selectedProduct.measure"
-                        @change="setProductMeasure($event.target.value)"
+            <div>
+                <form action="#">
+                    <InputWrapper label="Nome" legend="Product Name">
+                        <TextInput
+                            id="name"
+                            :value="selectedProduct.name"
+                            :setValue="setProductName"
+                        />
+                    </InputWrapper>
+                    <InputWrapper label="Quantidade" legend="Product Quantity">
+                        <Number
+                            id="qtd"
+                            type="number"
+                            min="0"
+                            :value="selectedProduct.qtd"
+                            :setValue="setProductQtd"
+                        />
+                    </InputWrapper>
+                    <InputWrapper
+                        label="Qtd (Min)"
+                        legend="Product Min Quantity"
                     >
-                        <option disabled>Escolha uma opção</option>
-                        <option
-                            v-for="(measure, index) in measures"
-                            :key="index"
-                            :selected="index == 0"
-                            >{{ measure }}</option
+                        <Number
+                            id="min-qtd"
+                            type="number"
+                            min="0"
+                            :value="selectedProduct.minQtd"
+                            :setValue="setProductMinQtd"
+                        />
+                    </InputWrapper>
+                    <InputWrapper
+                        label="Product Measure"
+                        legend="Product Measure"
+                        for="measure"
+                    >
+                        <select
+                            name="measure"
+                            id="measure"
+                            :value="selectedProduct.measure"
+                            @change="setProductMeasure($event.target.value)"
                         >
-                    </select>
-                </InputWrapper>
-                <div class="btn" style="img.icon {width: 40px; }">
-                    <Button
-                        id="go-back"
-                        class="footer-button"
-                        icon="../assets/icons/goback.svg"
-                        name="voltar"
-                        label="Voltar"
-                        :onclick="routeToHomePage"
-                    />
-                    <Button
-                        id="add-product"
-                        class="footer-button"
-                        icon="../assets/icons/check.svg"
-                        name="add-product"
-                        label="Enviar"
-                        :onclick="submitForm"
-                    />
-                </div>
-            </form>
+                            <option disabled>Escolha uma opção</option>
+                            <option
+                                v-for="(measure, index) in measures"
+                                :key="index"
+                                :selected="index == 0"
+                                >{{ measure }}</option
+                            >
+                        </select>
+                    </InputWrapper>
+                </form>
+            </div>
+        </div>
+        <div class="btn" style="img.icon {width: 40px; }">
+            <Button
+                id="go-back"
+                class="footer-button"
+                icon="../assets/icons/goback.svg"
+                name="voltar"
+                label="Voltar"
+                :onclick="routeToHomePage"
+            />
+            <Button
+                id="add-product"
+                class="footer-button"
+                icon="../assets/icons/check.svg"
+                name="add-product"
+                label="Enviar"
+                :onclick="submitForm"
+            />
         </div>
     </div>
 </template>
@@ -135,11 +141,12 @@ const { Mutation, Action, State } = products;
     },
     data: () => ({
         measures: Object.values(Measures),
+        image: '',
     }),
 })
 export default class AddProduct extends Vue implements AddProductView {
     @Ref()
-    private files!: FileList;
+    private files!: { files: FileList };
 
     @State
     private selectedProduct!: Product;
@@ -162,8 +169,13 @@ export default class AddProduct extends Vue implements AddProductView {
     @Action
     private saveProduct!: Actions[ActionTypes.saveProduct];
 
+    @Action
+    private resetSelectedProduct!: Actions[ActionTypes.resetSelectedProduct];
+
     @alert.Action
     private openAlert!: AlertActions[AlertActionTypes.openAlert];
+
+    public image!: string;
 
     public submitForm() {
         try {
@@ -183,15 +195,31 @@ export default class AddProduct extends Vue implements AddProductView {
     }
 
     public routeToHomePage() {
+        this.resetSelectedProduct();
         this.$router.push('/products');
     }
 
-    public setImage(file: File) {
-        this.setProductImage(file);
+    private async readFileAsync(file: File): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                resolve(reader.result as string);
+            };
+
+            reader.onerror = reject;
+
+            reader.readAsDataURL(file);
+        });
+    }
+
+    public async setImage(file: File) {
+        this.image = await this.readFileAsync(file as File);
+        this.setProductImage(this.image);
     }
 
     public handleFileChange() {
-        this.setImage(this.files[0]);
+        this.setImage(this.files.files[0]);
     }
 
     public handleImgFileChange(files: File[]) {
@@ -249,7 +277,7 @@ form > fieldset {
     align-items: center;
     justify-content: space-around;
     flex-direction: row;
-    width: 70%;
+    width: 90%;
 }
 
 .img-wrapper .wrapper-btn {
@@ -273,6 +301,33 @@ fieldset {
 
 label {
     width: 100%;
+}
+
+.form {
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.form div:nth-child(1) {
+    align-self: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+    .img-container {
+        width: 150px;
+        height: 150px;
+    }
+
+    #img-btn {
+        width: 60px;
+        padding: 5px 5px;
+    }
+
+    .img-wrapper {
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
 }
 </style>
 
@@ -298,5 +353,17 @@ label {
 
 select {
     cursor: pointer;
+}
+#img-btn {
+    padding: 1vh 4vw;
+}
+#img-btn .icon {
+    filter: contrast(0) brightness(55);
+    width: 40px;
+}
+
+.drop #img {
+    filter: none !important;
+    border-radius: none;
 }
 </style>

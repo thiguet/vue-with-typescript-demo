@@ -10,7 +10,7 @@ export interface Product {
     measure: Measures;
     qtd: number;
     minQtd: number;
-    image?: File | string;
+    image?: string;
 }
 
 export interface User {

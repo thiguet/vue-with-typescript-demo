@@ -2,14 +2,20 @@
     <div
         class="drop img-container"
         :class="getClasses"
-        @dragover.prevent="dragOver"
-        @dragleave.prevent="dragLeave"
-        @drop.prevent="drop($event)"
+        @dragover.stop.prevent="dragOver"
+        @dragleave.stop.prevent="dragLeave"
+        @drop.stop.prevent="drop($event)"
     >
         <img
             id="img"
             :class="{ fallback: !imageSource }"
-            :src="imageSource ? imageSource : fallbackImage"
+            :src="
+                syncedValue
+                    ? syncedValue
+                    : imageSource
+                    ? imageSource
+                    : fallbackImage
+            "
         />
         <h1 id="wrong-file-header" v-if="wrongFile">Arquivo inválido!</h1>
     </div>
@@ -19,6 +25,7 @@
 import { DNDImageComponent } from '@/views/models.d';
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import { PropSync, Watch } from 'vue-property-decorator';
 
 @Component({
     name: 'DNDImage',
@@ -31,6 +38,8 @@ export default class DNDImage extends Vue implements DNDImageComponent {
     imageSource?: ArrayBuffer | string | null;
 
     fallbackImage: string;
+
+    @PropSync('value', { type: String }) syncedValue!: string;
 
     constructor() {
         super();
@@ -65,6 +74,7 @@ export default class DNDImage extends Vue implements DNDImageComponent {
                 reader.onload = (ev: ProgressEvent<FileReader>) => {
                     const fileReaderObj = ev.target as FileReader;
                     this.imageSource = fileReaderObj.result;
+                    this.syncedValue = this.imageSource as string;
                     this.isDragging = false;
                 };
                 reader.readAsDataURL(file);
@@ -75,6 +85,11 @@ export default class DNDImage extends Vue implements DNDImageComponent {
                 this.isDragging = false;
             }
         }
+    }
+
+    @Watch('syncedValue')
+    onValueChange() {
+        this.imageSource = this.syncedValue;
     }
 }
 </script>
@@ -103,7 +118,6 @@ h1 {
 }
 img {
     max-height: 200px;
-    border-radius: 50%;
 }
 
 img.fallback {

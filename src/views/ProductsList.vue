@@ -93,14 +93,18 @@ export default class ProductsList extends Vue implements ProductsListView {
     flex-direction: column;
 }
 
+.products-container .row {
+    justify-content: flex-start;
+}
+
 .row:nth-child(1) {
-    max-height: 440px;
+    min-height: 512px;
     overflow: auto;
 }
 
 .row:nth-child(2) {
-    margin-top: 40px;
-    margin-bottom: 40px;
+    width: 100%;
+    align-self: center;
 }
 
 .footer-btn > button {
@@ -111,5 +115,16 @@ export default class ProductsList extends Vue implements ProductsListView {
     display: flex;
     width: 50px;
     filter: contrast(0) brightness(55);
+}
+
+@media screen and (max-width: 600px) {
+    .row:nth-child(1) {
+        min-height: 520px;
+    }
+    .row:nth-child(2) {
+        width: 100%;
+        flex-direction: row;
+        margin-top: 40px;
+    }
 }
 </style>

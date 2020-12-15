@@ -3,7 +3,7 @@ import { Measures, Product } from '@/store/datatypes/models';
 import State from './state';
 
 export enum MutationTypes {
-    resetState = 'resetState',
+    resetSelectedProduct = 'resetSelectedProduct',
     setProduct = 'setProduct',
     addProduct = 'addProduct',
     setProductName = 'setProductName',
@@ -16,7 +16,7 @@ export enum MutationTypes {
 }
 
 export default class Mutations extends VMutations<State> {
-    [MutationTypes.resetState]() {
+    [MutationTypes.resetSelectedProduct]() {
         Object.assign(this.state.selectedProduct, new State().selectedProduct);
     }
 
@@ -44,7 +44,7 @@ export default class Mutations extends VMutations<State> {
         this.state.selectedProduct.measure = payload;
     }
 
-    [MutationTypes.setProductImage](payload: File | string) {
+    [MutationTypes.setProductImage](payload: string) {
         this.state.selectedProduct.image = payload;
     }
 

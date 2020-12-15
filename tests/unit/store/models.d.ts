@@ -1,4 +1,4 @@
-import { ActionTree, MutationTree } from 'vuex';
+import { ActionTree, MutationTree, GetterTree } from 'vuex';
 import { State as ProductsState } from '@/store/modules/products';
 import { State as AlertState } from '@/store/modules/alert';
 
@@ -8,6 +8,7 @@ interface NamespacedVuexModule {
 
 export interface ProductsVuex extends NamespacedVuexModule {
     state: ProductsState;
+    getters: GetterTree<{}, ProductsState>;
     mutations: MutationTree<ProductsState>;
     actions: ActionTree<MutationTree<ProductsState>, ProductsState>;
 }

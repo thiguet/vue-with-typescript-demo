@@ -3,6 +3,7 @@ export interface LoginView {
 }
 
 export interface AddProductView {
+    image: string;
     submitForm(): void;
     chooseAnImageHandler(): void;
     handleImgFileChange(files: File[]): void;
@@ -27,12 +28,14 @@ export interface DNDImageData {
     imageSource?: ArrayBuffer | string | null;
     wrongFile: boolean;
     isDragging: boolean;
+    syncedValue?: ArrayBuffer | string | null;
 }
 
 export interface DNDImageMethods {
     drop(event: { dataTransfer: DataTransfer }): void;
     dragLeave(): void;
     dragOver(): void;
+    onValueChange(): void;
 }
 
 export type DNDImageComponent = DNDImageData & DNDImageMethods;

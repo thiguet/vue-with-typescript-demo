@@ -59,13 +59,24 @@ export default class Home extends Vue implements HomeView {
 .home {
     flex-direction: column;
 }
-
 .btn-row {
-    margin-top: 40px;
+    margin-top: 0px;
     align-self: center;
     max-width: 200px;
 }
+
+.row:nth-child(1) {
+    min-height: 512px;
+    overflow: auto;
+}
+
+.row:nth-child(2) {
+    width: 100%;
+    align-self: center;
+}
+
 .row {
+    margin-top: 20px;
     justify-content: space-around;
 }
 
@@ -77,6 +88,10 @@ export default class Home extends Vue implements HomeView {
     .row .container:nth-child(2) {
         margin-top: 10px;
     }
+
+    .row:nth-child(2) {
+        margin-top: 40px;
+    }
 }
 
 .goback {
@@ -84,12 +99,14 @@ export default class Home extends Vue implements HomeView {
 }
 
 .goback button {
+    height: 60px;
     width: 150px;
     justify-content: center;
     display: flex;
 }
 
 .goback > button > .icon {
+    align-self: center;
     width: 60px !important;
     filter: contrast(0) brightness(88);
 }

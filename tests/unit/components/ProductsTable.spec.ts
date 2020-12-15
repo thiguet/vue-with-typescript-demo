@@ -4,11 +4,13 @@ import ProductsTable from '@/components/ProductsTable.vue';
 import faker from 'faker';
 import { Measures } from '@/store/datatypes/models';
 import { ProductsTableProps } from './models';
+import Vue from 'vue';
 
 describe('ProductsTable', () => {
     let props: ProductsTableProps;
 
-    const getRandomMeasure = () => faker.random.arrayElement(Object.values(Measures)) as Measures;
+    const getRandomMeasure = () =>
+        faker.random.arrayElement(Object.values(Measures)) as Measures;
 
     const build = () => {
         const options = {
@@ -30,14 +32,16 @@ describe('ProductsTable', () => {
             mountedWrapper,
             table: () => mountedWrapper.find('#table'),
             rows: () => mountedWrapper.findAll('.row'),
-            editBtn: () => mountedWrapper
-                .findAll('.row')
-                .at(0)
-                .find('#edit-1'),
-            deleteBtn: () => mountedWrapper
-                .findAll('.row')
-                .at(0)
-                .find('#delete-1'),
+            editBtn: () =>
+                mountedWrapper
+                    .findAll('.row')
+                    .at(0)
+                    .find('#edit-1'),
+            deleteBtn: () =>
+                mountedWrapper
+                    .findAll('.row')
+                    .at(0)
+                    .find('#delete-1'),
         };
     };
 
@@ -55,15 +59,7 @@ describe('ProductsTable', () => {
 
     it('renders component', () => {
         props = {
-            rows: [
-                {
-                    name: 'test',
-                    measure: getRandomMeasure(),
-                    qtd: 1,
-                    minQtd: 1,
-                    image: 'NO IMAGE :(',
-                },
-            ],
+            rows: [],
         };
         const { wrapper } = build();
         expect(wrapper).toMatchSnapshot();
@@ -82,23 +78,51 @@ describe('ProductsTable', () => {
         const { mountedWrapper, editBtn } = build();
 
         // await v-for to render our component.
-        await setTimeout(async () => {
-            await editBtn().trigger('click');
 
-            expect(mountedWrapper.emitted('on-edit')).toBeTruthy();
-            expect((mountedWrapper.emitted('on-edit') || [])[0]).toBe(0);
-        });
+        await Vue.nextTick();
+
+        await editBtn().trigger('click');
+
+        expect(mountedWrapper.emitted('on-edit')).toBeTruthy();
+        expect((mountedWrapper.emitted('on-edit') || [])[0]).toStrictEqual([0]);
     });
 
     it('dispatch event when we click on the delete btn', async () => {
         const { mountedWrapper, deleteBtn } = build();
 
         // await v-for to render our component.
-        await setTimeout(async () => {
-            await deleteBtn().trigger('click');
 
-            expect(mountedWrapper.emitted('on-delete')).toBeTruthy();
-            expect((mountedWrapper.emitted('on-delete') || [])[0]).toBe(0);
-        });
+        await Vue.nextTick();
+
+        await deleteBtn().trigger('click');
+
+        expect(mountedWrapper.emitted('on-delete')).toBeTruthy();
+        expect((mountedWrapper.emitted('on-delete') || [])[0]).toStrictEqual([
+            0,
+        ]);
+    });
+
+    it('dispatch event when we click on the edit btn', async () => {
+        const { mountedWrapper, editBtn } = build();
+
+        jest.spyOn(mountedWrapper.vm, '$emit');
+
+        // await v-for to render our component.
+        await Vue.nextTick();
+        await editBtn().trigger('click');
+
+        expect(mountedWrapper.vm.$emit).toBeCalledWith('on-edit', 0);
+    });
+
+    it('dispatch event when we click on the delete btn', async () => {
+        const { mountedWrapper, deleteBtn } = build();
+
+        jest.spyOn(mountedWrapper.vm, '$emit');
+
+        // await v-for to render our component.
+        await Vue.nextTick();
+        await deleteBtn().trigger('click');
+
+        expect(mountedWrapper.vm.$emit).toBeCalledWith('on-delete', 0);
     });
 });

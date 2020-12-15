@@ -7,12 +7,11 @@
                     v-for="({ icon, name }, index) in rows"
                     :key="index"
                 >
-                    <!-- <div
-                        style="justify-content:space-around;align-items: center;"
-                    > -->
                     <td class="left">
-                        <span>{{ index + 1 }}</span>
-                        <span><img :src="icon"/></span>
+                        <div class="left-content">
+                            <span>{{ index + 1 }}</span>
+                            <span><img :src="icon"/></span>
+                        </div>
                     </td>
                     <td>
                         <span>{{ name }}</span>
@@ -25,7 +24,7 @@
                                 icon="./assets/icons/edit.svg"
                                 name="editar"
                                 label="Edit"
-                                :onclick="evt => onEdit(evt, index)"
+                                :onclick="() => onEdit(index)"
                             />
                             <Button
                                 :id="`delete-${index + 1}`"
@@ -33,11 +32,10 @@
                                 icon="./assets/icons/delete.svg"
                                 name="deletar"
                                 label="Delete"
-                                :onclick="evt => onDelete(evt, index)"
+                                :onclick="() => onDelete(index)"
                             />
                         </div>
                     </td>
-                    <!-- </div> -->
                 </tr>
             </tbody>
         </table>
@@ -68,30 +66,30 @@ interface RowsData {
 export default class ProductsTable extends Vue implements ProductsTableComp {
     @Prop({ required: true }) private rows!: Array<RowsData>;
 
-    public onEdit(evt: Event, index: number) {
-        return this.$emit('on-edit', index);
+    public onEdit(index: number) {
+        this.$emit('on-edit', index);
     }
 
-    public onDelete(evt: Event, index: number) {
-        return this.$emit('on-delete', index);
+    public onDelete(index: number) {
+        this.$emit('on-delete', index);
     }
 }
 </script>
 
 <style>
-.table-container {
-    align-self: center;
-}
-
 #table {
     margin: auto;
     width: 90%;
     margin-top: 20px;
 }
 
-#table > tbody > tr > td > span > img {
+#table > tbody > tr > td > div > span > img {
     width: 60px;
-    filter: brightness(0);
+    filter: none;
+}
+
+.left-content {
+    justify-content: space-between;
 }
 
 .left {

@@ -32,6 +32,7 @@ export default Vue.extend({
 }
 
 body {
+    margin: auto;
     font-family: var(--font-family);
     font-size: var(--font-title-size);
 }

@@ -8,6 +8,7 @@ export enum ActionTypes {
     saveProduct = 'saveProduct',
     selectProduct = 'selectProduct',
     deleteProduct = 'deleteProduct',
+    resetSelectedProduct = 'resetSelectedProduct',
 }
 
 export default class Actions extends VActions<
@@ -18,7 +19,7 @@ export default class Actions extends VActions<
 > {
     [ActionTypes.saveProduct](payload: Product) {
         this.commit(MutationTypes.addProduct, { ...payload });
-        this.commit(MutationTypes.resetState);
+        this.commit(MutationTypes.resetSelectedProduct);
     }
 
     [ActionTypes.selectProduct](payload: number) {
@@ -27,5 +28,9 @@ export default class Actions extends VActions<
 
     [ActionTypes.deleteProduct](payload: number) {
         this.commit(MutationTypes.deleteProduct, payload);
+    }
+
+    [ActionTypes.resetSelectedProduct]() {
+        this.commit(MutationTypes.resetSelectedProduct);
     }
 }

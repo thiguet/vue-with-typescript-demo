@@ -23,10 +23,10 @@ export default class Card extends Vue {
 .container {
     cursor: pointer;
     justify-content: center;
-    padding: 10px;
+    padding: 0px;
     background-color: var(--ternary-bg);
-    height: 72vh;
-    width: 40vw;
+    height: 70vh;
+    width: 300px;
 }
 
 .container > img {
