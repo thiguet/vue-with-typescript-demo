@@ -12,6 +12,7 @@ module.exports = {
         ecmaVersion: 2020,
     },
     rules: {
+        'implicit-arrow-linebreak': 0,
         'max-len': [
             'error',
             {
