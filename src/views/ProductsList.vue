@@ -67,17 +67,32 @@ export default class ProductsList extends Vue implements ProductsListView {
     private selectProduct!: Actions[ActionTypes.selectProduct];
 
     @Action
+    private editProduct!: Actions[ActionTypes.editProduct];
+
+    @Action
+    private newProduct!: Actions[ActionTypes.newProduct];
+
+    @Action
     private deleteProduct!: Actions[ActionTypes.deleteProduct];
+
+    @Action
+    private fetchProducts!: Actions[ActionTypes.fetchProducts];
+
+    mounted() {
+        this.fetchProducts();
+    }
 
     public routeToHomePage() {
         this.$router.push('/');
     }
 
     public routeToNewProductPage() {
+        this.newProduct();
         this.$router.push('/products/new');
     }
 
     public routeToEditProductPage(index: number) {
+        this.editProduct();
         this.$router.push('/products/edit');
         this.selectProduct(index);
     }

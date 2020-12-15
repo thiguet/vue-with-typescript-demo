@@ -1,5 +1,5 @@
 interface Unique {
-    id: string;
+    id?: string;
 }
 
 export enum Measures {

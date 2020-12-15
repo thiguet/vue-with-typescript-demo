@@ -79,6 +79,7 @@ describe('AddProduct.vue', () => {
         products = {
             namespaced: true,
             state: {
+                editMode: false,
                 selectedProduct: {
                     id: faker.random.uuid(),
                     name: faker.random.word(),

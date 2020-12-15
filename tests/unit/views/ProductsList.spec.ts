@@ -13,8 +13,11 @@ import {
     ActionTypes,
     GettersTypes,
 } from '@/store/modules/products';
+import { getAllProducts } from '@/services/Products';
 import { ProductsVuex } from '../store/models.d';
 import { getFakeProduct } from '../utils/ProductFactory';
+
+jest.mock('@/services/Products');
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -57,6 +60,7 @@ describe('ProductsList', () => {
         products = {
             namespaced: true,
             state: {
+                editMode: false,
                 selectedProduct: {
                     ...getFakeProduct(),
                 },
@@ -75,7 +79,10 @@ describe('ProductsList', () => {
                 [MutationTypes.setProductImage]: jest.fn(),
             },
             actions: {
+                [ActionTypes.newProduct]: jest.fn(),
+                [ActionTypes.editProduct]: jest.fn(),
                 [ActionTypes.saveProduct]: jest.fn(),
+                [ActionTypes.fetchProducts]: jest.fn(),
                 [ActionTypes.selectProduct]: jest.fn(),
                 [ActionTypes.deleteProduct]: jest.fn(),
             },
@@ -102,6 +109,14 @@ describe('ProductsList', () => {
         expect(wrapper).toMatchSnapshot();
     });
 
+    it('fetch products on mount', async () => {
+        build();
+
+        await setTimeout(() => {
+            expect(getAllProducts).toHaveBeenCalled();
+        }, 1000);
+    });
+
     it('go back to home page', async () => {
         const { goBackButton } = build();
 
@@ -111,9 +126,13 @@ describe('ProductsList', () => {
     });
 
     it('go back to new product page', async () => {
+        const { actions } = products;
+
         const { addProductButton } = build();
 
         await addProductButton().trigger('click');
+
+        expect(actions.newProduct).toBeCalled();
 
         expect(router.push).toHaveBeenCalledWith('/products/new');
     });
@@ -128,6 +147,8 @@ describe('ProductsList', () => {
         await productsList().vm.$emit('on-edit', index);
 
         expect(router.push).toHaveBeenCalledWith('/products/edit');
+
+        expect(actions.editProduct).toBeCalled();
 
         expect(actions.selectProduct).toBeCalled();
     });

@@ -15,12 +15,21 @@ import {
 
 import { Product } from '@/store/datatypes/models';
 import { inject } from 'vuex-smart-module';
+import {
+    newProduct,
+    editProduct,
+    deleteProduct,
+    getAllProducts,
+} from '@/services/Products';
 import { getFakeProduct } from '../../utils/ProductFactory';
+
+jest.mock('@/services/Products');
 
 Vue.use(Vuex);
 
 describe('Products Vuex Module', () => {
     let state: State;
+    let product: Product;
 
     const lastAddedProduct = (products: Product[]) => ({
         ...products.slice(-1)[0],
@@ -28,9 +37,11 @@ describe('Products Vuex Module', () => {
 
     const build = () => {
         state = {
+            editMode: false,
             selectedProduct: getFakeProduct(),
             products: [],
         };
+        product = getFakeProduct();
 
         const commit = jest.fn();
 
@@ -52,6 +63,7 @@ describe('Products Vuex Module', () => {
     describe('getters', () => {
         it('gets tableRows from state.products .', () => {
             state = {
+                editMode: faker.random.boolean(),
                 products: Array(20)
                     .fill(null)
                     .map(getFakeProduct),
@@ -72,16 +84,29 @@ describe('Products Vuex Module', () => {
     });
 
     describe('mutations', () => {
-        it('sets the product to the module state.', () => {
+        it('sets products to the state', () => {
             const { mutations } = build();
 
-            const newProduct = getFakeProduct();
+            const products = Array(50)
+                .fill(null)
+                .map(getFakeProduct);
 
-            mutations.setProduct(newProduct);
+            mutations.setProducts(products);
 
             expect({ ...state }).toEqual({
                 ...state,
-                selectedProduct: newProduct,
+                products,
+            });
+        });
+
+        it('sets the product to the module state.', () => {
+            const { mutations } = build();
+
+            mutations.setProduct(product);
+
+            expect({ ...state }).toEqual({
+                ...state,
+                selectedProduct: product,
             });
         });
 
@@ -200,13 +225,11 @@ describe('Products Vuex Module', () => {
         it('add a product to the modules state in the end of the array.', () => {
             const { mutations } = build();
 
-            const newProduct = getFakeProduct();
-
             const { products } = state;
 
-            mutations.addProduct(newProduct);
+            mutations.addProduct(product);
 
-            expect(lastAddedProduct(products)).toEqual({ ...newProduct });
+            expect(lastAddedProduct(products)).toEqual({ ...product });
         });
 
         it('reset state to the initial state.', () => {
@@ -222,15 +245,13 @@ describe('Products Vuex Module', () => {
         it('sets a product to state.selectedProduct.', () => {
             const { mutations } = build();
 
-            const newProduct = getFakeProduct();
-
             const { products } = state;
 
-            mutations.addProduct(newProduct);
+            mutations.addProduct(product);
 
             mutations.selectProduct(0);
 
-            expect({ ...products[0] }).toEqual({ ...newProduct });
+            expect({ ...products[0] }).toEqual({ ...product });
         });
 
         it('deletes a product from the state', async () => {
@@ -247,23 +268,74 @@ describe('Products Vuex Module', () => {
 
             expect(state.products.splice).toHaveBeenCalledWith(index, 1);
         });
+
+        it('sets the edit mode on', async () => {
+            state.editMode = false;
+
+            const { mutations } = build();
+
+            mutations.changeEditMode(true);
+
+            expect(state.editMode).toBe(true);
+        });
     });
+
     describe('actions', () => {
-        it('dispatches new product action: ', async () => {
-            const newProduct = getFakeProduct();
+        it('dispatches get all products action: ', async () => {
+            const { commit } = build();
+
+            const actions = inject(Actions, {
+                state,
+                commit,
+            });
+
+            await actions.fetchProducts();
+
+            expect(commit).toHaveBeenCalledWith(MutationTypes.setProducts, []);
+
+            expect(getAllProducts).toHaveBeenCalled();
+        });
+        it('dispatches save new product action: ', async () => {
+            const fakeProduct = getFakeProduct();
 
             const { commit } = build();
 
             const actions = inject(Actions, {
+                state,
                 commit,
             });
 
-            await actions.saveProduct(newProduct);
+            state.editMode = false;
+
+            await actions.saveProduct(fakeProduct);
 
             expect(commit).toHaveBeenCalledWith(
                 MutationTypes.addProduct,
-                newProduct,
+                fakeProduct,
             );
+
+            expect(newProduct).toHaveBeenCalledWith(fakeProduct);
+        });
+        it('dispatches save editing product action: ', async () => {
+            const fakeProduct = getFakeProduct();
+
+            const { commit } = build();
+
+            const actions = inject(Actions, {
+                state,
+                commit,
+            });
+
+            state.editMode = true;
+
+            await actions.saveProduct(fakeProduct);
+
+            expect(commit).toHaveBeenCalledWith(
+                MutationTypes.addProduct,
+                fakeProduct,
+            );
+
+            expect(editProduct).toHaveBeenCalledWith(fakeProduct);
         });
 
         it('dispatches select product action: ', async () => {
@@ -283,12 +355,45 @@ describe('Products Vuex Module', () => {
             );
         });
 
+        it('dispatches new product action: ', async () => {
+            const { commit } = build();
+
+            const actions = inject(Actions, {
+                state,
+                commit,
+            });
+
+            await actions.newProduct();
+
+            expect(commit).toHaveBeenLastCalledWith(
+                MutationTypes.changeEditMode,
+                false,
+            );
+        });
+
+        it('dispatches edit product action: ', async () => {
+            const { commit } = build();
+
+            const actions = inject(Actions, {
+                state,
+                commit,
+            });
+
+            await actions.editProduct();
+
+            expect(commit).toHaveBeenCalledWith(
+                MutationTypes.changeEditMode,
+                true,
+            );
+        });
+
         it('dispatches delete product action: ', async () => {
             const index = 0;
 
             const { commit } = build();
 
             const actions = inject(Actions, {
+                state,
                 commit,
             });
 
@@ -298,6 +403,8 @@ describe('Products Vuex Module', () => {
                 MutationTypes.deleteProduct,
                 index,
             );
+
+            expect(deleteProduct).toHaveBeenCalledWith(state.products[index]);
         });
 
         it('dispatches resetSelectedProduct product action: ', async () => {

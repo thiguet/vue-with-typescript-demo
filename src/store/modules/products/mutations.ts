@@ -5,6 +5,7 @@ import State from './state';
 export enum MutationTypes {
     resetSelectedProduct = 'resetSelectedProduct',
     setProduct = 'setProduct',
+    setProducts = 'setProducts',
     addProduct = 'addProduct',
     setProductName = 'setProductName',
     setProductQtd = 'setProductQtd',
@@ -13,6 +14,8 @@ export enum MutationTypes {
     setProductImage = 'setProductImage',
     selectProduct = 'selectProduct',
     deleteProduct = 'deleteProduct',
+
+    changeEditMode = 'changeEditMode',
 }
 
 export default class Mutations extends VMutations<State> {
@@ -26,6 +29,10 @@ export default class Mutations extends VMutations<State> {
 
     [MutationTypes.addProduct](payload: Product) {
         this.state.products.push(payload);
+    }
+
+    [MutationTypes.setProducts](payload: Product[]) {
+        this.state.products = payload;
     }
 
     [MutationTypes.setProductName](payload: string) {
@@ -54,5 +61,9 @@ export default class Mutations extends VMutations<State> {
 
     [MutationTypes.deleteProduct](payload: number) {
         this.state.products.splice(payload, 1);
+    }
+
+    [MutationTypes.changeEditMode](payload: boolean) {
+        this.state.editMode = payload;
     }
 }

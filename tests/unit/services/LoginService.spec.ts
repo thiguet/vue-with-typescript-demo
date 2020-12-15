@@ -1,4 +1,4 @@
-import { conduitAPI, clearJWT, setJWT, login } from '@/services/Login';
+import { VueWithTSAPI, clearJWT, setJWT, login } from '@/services/Login';
 import { LoginSubmit, User } from '@/store/datatypes/models';
 import faker from 'faker';
 
@@ -11,7 +11,7 @@ describe('Login Service API', () => {
 
         setJWT(fakeJWT);
 
-        expect(conduitAPI.defaults.headers.common.Authorization).toBe(
+        expect(VueWithTSAPI.defaults.headers.common.Authorization).toBe(
             `Bearer ${fakeJWT}`,
         );
     });
@@ -22,7 +22,7 @@ describe('Login Service API', () => {
         setJWT(fakeJWT);
         clearJWT();
 
-        expect(conduitAPI.defaults.headers.common.Authorization).toBe(null);
+        expect(VueWithTSAPI.defaults.headers.common.Authorization).toBe(null);
     });
 
     it('should dispatch login action', async () => {
@@ -32,7 +32,7 @@ describe('Login Service API', () => {
             email: faker.internet.email(),
         };
 
-        jest.spyOn(conduitAPI, 'post').mockResolvedValue({
+        jest.spyOn(VueWithTSAPI, 'post').mockResolvedValue({
             data: user,
         });
 
@@ -43,7 +43,7 @@ describe('Login Service API', () => {
 
         const result = await login(loginSubmitExample);
 
-        expect(conduitAPI.post).toBeCalledWith('/users/login', {
+        expect(VueWithTSAPI.post).toBeCalledWith('/users/login', {
             user: loginSubmitExample,
         });
         expect(result).toEqual(user);
