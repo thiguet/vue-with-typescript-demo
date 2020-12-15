@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { inject } from 'vuex-smart-module';
 import {
-    LoginState,
+    State,
     MutationTypes,
     Mutations,
     Actions,
@@ -14,14 +14,20 @@ import { login } from '@/services/Login';
 Vue.use(Vuex);
 
 describe('Login Vuex Module', () => {
-    let state: LoginState;
+    let state: State;
+
+    const getNewUser = (): User => ({
+        id: faker.random.uuid(),
+        name: faker.name.firstName(),
+        email: faker.internet.email(),
+    });
 
     const build = () => {
         const username = faker.internet.userName();
         const password = faker.internet.password();
         const currentUser: User = {
+            ...getNewUser(),
             name: username,
-            email: faker.internet.email(),
         };
 
         state = {
@@ -75,10 +81,7 @@ describe('Login Vuex Module', () => {
     });
 
     it('sets the user to the state.', () => {
-        const newUser: User = {
-            name: faker.name.firstName(),
-            email: faker.internet.email(),
-        };
+        const newUser = getNewUser();
 
         const { mutations } = build();
 
@@ -96,9 +99,9 @@ describe('Login Vuex Module', () => {
             pass: faker.internet.password(),
         };
 
-        const currentUser: User = {
+        const currentUser = {
+            ...getNewUser(),
             name: loginSubmit.name,
-            email: faker.internet.email(),
         };
 
         const { commit } = build();

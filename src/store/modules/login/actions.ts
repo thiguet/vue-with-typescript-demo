@@ -28,7 +28,5 @@ export default class Actions extends VActions<
         const result = await this.login(payload);
 
         this.commit(MutationTypes.setCurrentUser, result);
-        // else
-        // this.dispatch()
     }
 }

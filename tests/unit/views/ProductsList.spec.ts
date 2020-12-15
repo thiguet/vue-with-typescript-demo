@@ -6,7 +6,7 @@ import VueRouter from 'vue-router';
 import ProductsList from '@/views/ProductsList.vue';
 import ProductsTable from '@/components/ProductsTable.vue';
 import faker from 'faker';
-import { Measures, VuexAppModules } from '@/store/datatypes/models';
+import { VuexAppModules } from '@/store/datatypes/models';
 import {
     State,
     MutationTypes,
@@ -14,6 +14,7 @@ import {
     GettersTypes,
 } from '@/store/modules/products';
 import { ProductsVuex } from '../store/models.d';
+import { getFakeProduct } from '../utils/ProductFactory';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -25,9 +26,6 @@ describe('ProductsList', () => {
     let store: Store<State>;
 
     let products: ProductsVuex;
-
-    const getRandomMeasure = () =>
-        faker.random.arrayElement(Object.values(Measures)) as Measures;
 
     const build = () => {
         const options = {
@@ -60,21 +58,11 @@ describe('ProductsList', () => {
             namespaced: true,
             state: {
                 selectedProduct: {
-                    name: faker.random.word(),
-                    measure: getRandomMeasure(),
-                    qtd: faker.random.number(),
-                    minQtd: faker.random.number(),
-                    image: faker.image.image(),
+                    ...getFakeProduct(),
                 },
                 products: Array(50)
                     .fill(null)
-                    .map(() => ({
-                        name: faker.random.word(),
-                        measure: getRandomMeasure(),
-                        qtd: faker.random.number(),
-                        minQtd: faker.random.number(),
-                        image: faker.image.image(),
-                    })),
+                    .map(getFakeProduct),
             },
             getters: {
                 [GettersTypes.tableRows]: jest.fn(),

@@ -1,11 +1,5 @@
 import Vuex, { ModuleTree, Store } from 'vuex';
-import {
-    shallowMount,
-    createLocalVue,
-    Wrapper,
-    mount,
-    createWrapper,
-} from '@vue/test-utils';
+import { shallowMount, createLocalVue, Wrapper, mount } from '@vue/test-utils';
 import faker from 'faker';
 import AddProduct from '@/views/AddProduct.vue';
 import { Measures, VuexAppModules } from '@/store/datatypes/models';
@@ -22,14 +16,14 @@ import {
 import Vue from 'vue';
 import { newProductSuccess, newProductError } from '@/assets/messages';
 import VueRouter from 'vue-router';
-import { ProductsVuex, AlertVuex } from '../store/models.d';
 import { AddProductView } from '@/views/models.d';
+import DNDImage from '@/components/DNDImage.vue';
+import { ProductsVuex, AlertVuex } from '../store/models.d';
 import {
     getOptionsWithFile,
     readFileAsync,
     getImageFakeFile,
 } from '../utils/FileHelper';
-import DNDImage from '@/components/DNDImage.vue';
 
 jest.setTimeout(30000);
 
@@ -86,6 +80,7 @@ describe('AddProduct.vue', () => {
             namespaced: true,
             state: {
                 selectedProduct: {
+                    id: faker.random.uuid(),
                     name: faker.random.word(),
                     measure: getRandomMeasure(),
                     qtd: faker.random.number(),
@@ -236,7 +231,7 @@ describe('AddProduct.vue', () => {
 
         const dataURL = await readFileAsync(fileData);
 
-        (mountedWrapper.vm.$refs.files as any) = ({
+        (mountedWrapper.vm.$refs.files as unknown) = ({
             files: [fileData],
         } as unknown) as HTMLInputElement;
 

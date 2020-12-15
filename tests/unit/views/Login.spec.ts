@@ -8,7 +8,7 @@ import Button from '@/components/Button.vue';
 import TextInput from '@/components/TextInput.vue';
 
 import faker from 'faker';
-import { LoginState } from '@/store/modules/login';
+import { State } from '@/store/modules/login';
 
 import { LoginView } from '@/views/models.d';
 
@@ -16,10 +16,10 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe('Login', () => {
-    let state: LoginState;
-    let mutations: MutationTree<LoginState>;
-    let actions: ActionTree<MutationTree<LoginState>, LoginState>;
-    let store: Store<LoginState>;
+    let state: State;
+    let mutations: MutationTree<State>;
+    let actions: ActionTree<MutationTree<State>, State>;
+    let store: Store<State>;
 
     const build = () => {
         // Now we can change state, before a running test.
@@ -58,6 +58,7 @@ describe('Login', () => {
 
         state = {
             currentUser: {
+                id: faker.random.uuid(),
                 name,
                 email: name,
             },
@@ -78,6 +79,7 @@ describe('Login', () => {
     it('renders component', () => {
         state = {
             currentUser: {
+                id: 'aljshdkgasjsvpu98hqoubqevhinlf',
                 name: 'testing_username',
                 email: 'someemail@a.com',
             },

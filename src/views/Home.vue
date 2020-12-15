@@ -59,6 +59,15 @@ export default class Home extends Vue implements HomeView {
 .home {
     flex-direction: column;
 }
+
+.home .row {
+    margin-top: 20px;
+}
+
+.home .row:nth-child(2) {
+    margin-top: 5px;
+}
+
 .btn-row {
     margin-top: 0px;
     align-self: center;

@@ -2,12 +2,26 @@
     <div class="login">
         <form class="form">
             <InputWrapper label="Login" legend="Login">
-                <TextInput id="email" :value="username" :setValue="setUsername" />
+                <TextInput
+                    id="email"
+                    :value="username"
+                    :setValue="setUsername"
+                />
             </InputWrapper>
             <InputWrapper label="Senha" legend="Password">
-                <TextInput id="pass" type="password" :value="password" :setValue="setPassword" />
+                <TextInput
+                    id="pass"
+                    type="password"
+                    :value="password"
+                    :setValue="setPassword"
+                />
             </InputWrapper>
-            <Button id="login" name="login" label="Login" :onclick="clickLogin" />
+            <Button
+                id="login"
+                name="login"
+                label="Login"
+                :onclick="clickLogin"
+            />
         </form>
     </div>
 </template>
@@ -24,8 +38,12 @@ import { LoginView } from '@/views/models.d';
 
 import { LoginSubmit, VuexAppModules } from '@/store/datatypes/models';
 
-import Mutations, { MutationTypes } from '@/store/modules/login/mutations';
-import Actions, { ActionTypes } from '@/store/modules/login/actions';
+import {
+    Mutations,
+    MutationTypes,
+    Actions,
+    ActionTypes,
+} from '@/store/modules/login';
 
 const login = namespace(VuexAppModules.login);
 

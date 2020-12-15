@@ -2,8 +2,8 @@ import { mount } from '@vue/test-utils';
 import DNDImage from '@/components/DNDImage.vue';
 import faker from 'faker';
 import { DNDImageComponent, DNDImageData } from '@/views/models.d';
-import { DNDImageProps, ImageMimeTypes } from './models';
 import Vue from 'vue';
+import { DNDImageProps, ImageMimeTypes } from './models';
 
 describe('DNDImage.vue', () => {
     let data: DNDImageData;
@@ -263,8 +263,6 @@ describe('DNDImage.vue', () => {
 
         const { DNDImageComp } = build();
 
-        console.log(DNDImageComp().syncedValue);
-        console.log(DNDImageComp().imageSource);
         DNDImageComp().onValueChange();
 
         await Vue.nextTick();

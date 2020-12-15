@@ -3,8 +3,8 @@ import { mount, shallowMount, Wrapper } from '@vue/test-utils';
 import ProductsTable from '@/components/ProductsTable.vue';
 import faker from 'faker';
 import { Measures } from '@/store/datatypes/models';
-import { ProductsTableProps } from './models';
 import Vue from 'vue';
+import { ProductsTableProps } from './models';
 
 describe('ProductsTable', () => {
     let props: ProductsTableProps;

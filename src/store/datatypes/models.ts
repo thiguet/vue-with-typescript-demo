@@ -1,3 +1,7 @@
+interface Unique {
+    id: string;
+}
+
 export enum Measures {
     UN = 'UN',
     L = 'L',
@@ -5,7 +9,7 @@ export enum Measures {
     G = 'G',
 }
 
-export interface Product {
+export interface Product extends Unique {
     name: string;
     measure: Measures;
     qtd: number;
@@ -13,7 +17,7 @@ export interface Product {
     image?: string;
 }
 
-export interface User {
+export interface User extends Unique {
     name: string;
     email: string;
 }

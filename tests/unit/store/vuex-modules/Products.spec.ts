@@ -2,7 +2,7 @@ import Vue from 'vue';
 
 import Vuex from 'vuex';
 
-import faker, { image } from 'faker';
+import faker from 'faker';
 
 import {
     State,
@@ -13,12 +13,9 @@ import {
     GettersTypes,
 } from '@/store/modules/products';
 
-import { Product, Measures } from '@/store/datatypes/models';
+import { Product } from '@/store/datatypes/models';
 import { inject } from 'vuex-smart-module';
-import {
-    getImageFakeFile,
-    getRandomImageMimeType,
-} from '../../utils/FileHelper';
+import { getFakeProduct } from '../../utils/ProductFactory';
 
 Vue.use(Vuex);
 
@@ -29,20 +26,9 @@ describe('Products Vuex Module', () => {
         ...products.slice(-1)[0],
     });
 
-    const getRandomMeasure = () =>
-        faker.random.arrayElement(Object.values(typeof Measures)) as Measures;
-
-    const getNewProduct = (): Product => ({
-        name: faker.name.title(),
-        measure: getRandomMeasure(),
-        image: faker.image.image(),
-        qtd: faker.random.number(),
-        minQtd: faker.random.number(),
-    });
-
     const build = () => {
         state = {
-            selectedProduct: getNewProduct(),
+            selectedProduct: getFakeProduct(),
             products: [],
         };
 
@@ -68,10 +54,8 @@ describe('Products Vuex Module', () => {
             state = {
                 products: Array(20)
                     .fill(null)
-                    .map(() => ({
-                        ...getNewProduct(),
-                    })),
-                selectedProduct: getNewProduct(),
+                    .map(getFakeProduct),
+                selectedProduct: getFakeProduct(),
             };
 
             const getters = inject(Getters, {
@@ -91,7 +75,7 @@ describe('Products Vuex Module', () => {
         it('sets the product to the module state.', () => {
             const { mutations } = build();
 
-            const newProduct = getNewProduct();
+            const newProduct = getFakeProduct();
 
             mutations.setProduct(newProduct);
 
@@ -104,7 +88,7 @@ describe('Products Vuex Module', () => {
         it('sets the product name to the state.', () => {
             const { mutations } = build();
 
-            const { name } = getNewProduct();
+            const { name } = getFakeProduct();
 
             mutations.setProductName(name);
 
@@ -120,7 +104,7 @@ describe('Products Vuex Module', () => {
         it('sets the product quantity to the state.', async () => {
             const { mutations } = build();
 
-            const { qtd } = getNewProduct();
+            const { qtd } = getFakeProduct();
 
             await mutations.setProductQtd(qtd);
 
@@ -152,7 +136,7 @@ describe('Products Vuex Module', () => {
         it('sets the product minimum quantity to the state.', () => {
             const { mutations } = build();
 
-            const { minQtd } = getNewProduct();
+            const { minQtd } = getFakeProduct();
 
             mutations.setProductMinQtd(minQtd);
 
@@ -184,7 +168,7 @@ describe('Products Vuex Module', () => {
         it('sets the product measure to the state.', () => {
             const { mutations } = build();
 
-            const { measure } = getNewProduct();
+            const { measure } = getFakeProduct();
 
             mutations.setProductMeasure(measure);
 
@@ -200,7 +184,7 @@ describe('Products Vuex Module', () => {
         it('sets the product image to the state.', () => {
             const { mutations } = build();
 
-            const { image } = getNewProduct();
+            const { image } = getFakeProduct();
 
             mutations.setProductImage(image as string);
 
@@ -216,7 +200,7 @@ describe('Products Vuex Module', () => {
         it('add a product to the modules state in the end of the array.', () => {
             const { mutations } = build();
 
-            const newProduct = getNewProduct();
+            const newProduct = getFakeProduct();
 
             const { products } = state;
 
@@ -238,7 +222,7 @@ describe('Products Vuex Module', () => {
         it('sets a product to state.selectedProduct.', () => {
             const { mutations } = build();
 
-            const newProduct = getNewProduct();
+            const newProduct = getFakeProduct();
 
             const { products } = state;
 
@@ -266,7 +250,7 @@ describe('Products Vuex Module', () => {
     });
     describe('actions', () => {
         it('dispatches new product action: ', async () => {
-            const newProduct = getNewProduct();
+            const newProduct = getFakeProduct();
 
             const { commit } = build();
 

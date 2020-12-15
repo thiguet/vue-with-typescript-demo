@@ -48,16 +48,14 @@ export const getOptionsWithFile = (): EventFileOptions => {
     };
 };
 
-export const readFileAsync = async (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
+export const readFileAsync = async (file: File): Promise<string> => new Promise((resolve, reject) => {
+    const reader = new FileReader();
 
-        reader.onload = () => {
-            resolve(reader.result as string);
-        };
+    reader.onload = () => {
+        resolve(reader.result as string);
+    };
 
-        reader.onerror = reject;
+    reader.onerror = reject;
 
-        reader.readAsDataURL(file);
-    });
-};
+    reader.readAsDataURL(file);
+});
