@@ -54,54 +54,82 @@ describe('Login Vuex Module', () => {
         };
     };
 
-    it('sets the username to the state.', () => {
-        const newUsername = faker.internet.userName();
+    describe('mutations', () => {
+        it('sets the username to the state.', () => {
+            const newUsername = faker.internet.userName();
 
-        const { mutations } = build();
+            const { mutations } = build();
 
-        mutations.setUsername(newUsername);
+            mutations.setUsername(newUsername);
 
-        expect({ ...state }).toEqual({
-            ...state,
-            username: newUsername,
+            expect({ ...state }).toEqual({
+                ...state,
+                username: newUsername,
+            });
+        });
+
+        it('sets the password to the state.', () => {
+            const newPassword = faker.internet.password();
+
+            const { mutations } = build();
+
+            mutations.setPassword(newPassword);
+
+            expect({ ...state }).toEqual({
+                ...state,
+                password: newPassword,
+            });
+        });
+
+        it('sets the user to the state.', () => {
+            const newUser = getNewUser();
+
+            const { mutations } = build();
+
+            mutations.setCurrentUser(newUser);
+
+            expect({ ...state }).toEqual({
+                ...state,
+                currentUser: newUser,
+            });
         });
     });
 
-    it('sets the password to the state.', () => {
-        const newPassword = faker.internet.password();
+    describe('actions', () => {
+        it('dispatches a valid login action', async () => {
+            const loginSubmit: LoginSubmit = {
+                name: faker.internet.userName(),
+                pass: faker.internet.password(),
+            };
 
-        const { mutations } = build();
+            const currentUser = {
+                ...getNewUser(),
+                name: loginSubmit.name,
+            };
 
-        mutations.setPassword(newPassword);
+            const { commit } = build();
 
-        expect({ ...state }).toEqual({
-            ...state,
-            password: newPassword,
+            const loginSuccess = jest.fn().mockResolvedValue(currentUser);
+
+            const actions = inject(Actions, {
+                commit,
+                login: loginSuccess,
+            });
+
+            await actions.loginAction(loginSubmit);
+
+            expect(actions.login).toHaveBeenCalled();
+
+            expect(commit).toHaveBeenCalledWith(
+                MutationTypes.setCurrentUser,
+                currentUser,
+            );
         });
     });
 
-    it('sets the user to the state.', () => {
-        const newUser = getNewUser();
-
-        const { mutations } = build();
-
-        mutations.setCurrentUser(newUser);
-
-        expect({ ...state }).toEqual({
-            ...state,
-            currentUser: newUser,
-        });
-    });
-
-    it('dispatches a valid login action', async () => {
-        const loginSubmit: LoginSubmit = {
-            name: faker.internet.userName(),
-            pass: faker.internet.password(),
-        };
-
+    it('dispatch a instagram login attempt', async () => {
         const currentUser = {
             ...getNewUser(),
-            name: loginSubmit.name,
         };
 
         const { commit } = build();
@@ -110,12 +138,60 @@ describe('Login Vuex Module', () => {
 
         const actions = inject(Actions, {
             commit,
-            login: loginSuccess,
+            instagramService: loginSuccess,
         });
 
-        await actions.loginAction(loginSubmit);
+        await actions.instagramLogin();
 
-        expect(actions.login).toHaveBeenCalled();
+        expect(actions.instagramService).toHaveBeenCalled();
+
+        expect(commit).toHaveBeenCalledWith(
+            MutationTypes.setCurrentUser,
+            currentUser,
+        );
+    });
+
+    it('dispatch a facebook login attempt', async () => {
+        const currentUser = {
+            ...getNewUser(),
+        };
+
+        const { commit } = build();
+
+        const loginSuccess = jest.fn().mockResolvedValue(currentUser);
+
+        const actions = inject(Actions, {
+            commit,
+            facebookService: loginSuccess,
+        });
+
+        await actions.facebookLogin();
+
+        expect(actions.facebookService).toHaveBeenCalled();
+
+        expect(commit).toHaveBeenCalledWith(
+            MutationTypes.setCurrentUser,
+            currentUser,
+        );
+    });
+
+    it('dispatch a google login attempt', async () => {
+        const currentUser = {
+            ...getNewUser(),
+        };
+
+        const { commit } = build();
+
+        const loginSuccess = jest.fn().mockResolvedValue(currentUser);
+
+        const actions = inject(Actions, {
+            commit,
+            googleService: loginSuccess,
+        });
+
+        await actions.googleLogin();
+
+        expect(actions.googleService).toHaveBeenCalled();
 
         expect(commit).toHaveBeenCalledWith(
             MutationTypes.setCurrentUser,

@@ -120,7 +120,6 @@ describe('AddProduct.vue', () => {
         };
         const modules: ModuleTree<AlertState & ProductsState> = {
             [VuexAppModules.alert]: {
-                namespaced: true,
                 ...alert,
             },
             [VuexAppModules.products]: {

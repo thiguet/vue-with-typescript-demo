@@ -13,8 +13,21 @@ export const clearJWT = () => {
 };
 
 export async function login(user: LoginSubmit): Promise<User> {
-    const response = await VueWithTSAPI.post('/users/login', {
-        user,
-    });
-    return response.data as User;
+    return (
+        await VueWithTSAPI.post('/users/login', {
+            user,
+        })
+    ).data as User;
+}
+
+export async function googleService(): Promise<User> {
+    return (await VueWithTSAPI.get('/auth/google')).data as User;
+}
+
+export async function facebookService(): Promise<User> {
+    return (await VueWithTSAPI.get('/auth/facebook')).data as User;
+}
+
+export async function instagramService(): Promise<User> {
+    return (await VueWithTSAPI.get('/auth/instagram')).data as User;
 }
