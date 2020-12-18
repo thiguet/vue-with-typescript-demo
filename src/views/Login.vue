@@ -28,26 +28,17 @@
         <div class="other-apps-login">
             <div class="app-login">
                 <a :href="`${baseURL}/auth/facebook`"
-                    ><img
-                        id="facebook"
-                        src="/assets/icons/facebook.svg"
-                        @click="clickFacebookIcon"
+                    ><img id="facebook" src="/assets/icons/facebook.svg"
                 /></a>
             </div>
             <div class="app-login">
-                <a :href="`${baseURL}/auth/instagram`"
-                    ><img
-                        id="instagram"
-                        src="/assets/icons/instagram.svg"
-                        @click="clickInstagramIcon"
+                <a :href="`${baseURL}/auth/twitter`"
+                    ><img id="twitter" src="/assets/icons/twitter.svg"
                 /></a>
             </div>
             <div class="app-login">
                 <a :href="`${baseURL}/auth/google`"
-                    ><img
-                        id="google"
-                        src="/assets/icons/google.svg"
-                        @click="clickGoogleIcon"
+                    ><img id="google" src="/assets/icons/google.svg"
                 /></a>
             </div>
         </div>
@@ -110,7 +101,7 @@ export default class Login extends Vue implements LoginView {
     public facebookLogin!: Actions[ActionTypes.facebookLogin];
 
     @Action
-    public instagramLogin!: Actions[ActionTypes.instagramLogin];
+    public twitterLogin!: Actions[ActionTypes.twitterLogin];
 
     @Action
     public googleLogin!: Actions[ActionTypes.googleLogin];
@@ -128,8 +119,8 @@ export default class Login extends Vue implements LoginView {
         return this.facebookLogin();
     }
 
-    public clickInstagramIcon(): Promise<unknown> {
-        return this.instagramLogin();
+    public clicktwitterIcon(): Promise<unknown> {
+        return this.twitterLogin();
     }
 
     public clickGoogleIcon(): Promise<unknown> {

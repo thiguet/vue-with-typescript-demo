@@ -28,6 +28,6 @@ export async function facebookService(): Promise<User> {
     return (await VueWithTSAPI.get('/auth/facebook')).data as User;
 }
 
-export async function instagramService(): Promise<User> {
-    return (await VueWithTSAPI.get('/auth/instagram')).data as User;
+export async function twitterService(): Promise<User> {
+    return (await VueWithTSAPI.get('/auth/twitter')).data as User;
 }

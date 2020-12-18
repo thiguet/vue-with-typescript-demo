@@ -127,7 +127,7 @@ describe('Login Vuex Module', () => {
         });
     });
 
-    it('dispatch a instagram login attempt', async () => {
+    it('dispatch a twitter login attempt', async () => {
         const currentUser = {
             ...getNewUser(),
         };
@@ -138,12 +138,12 @@ describe('Login Vuex Module', () => {
 
         const actions = inject(Actions, {
             commit,
-            instagramService: loginSuccess,
+            twitterService: loginSuccess,
         });
 
-        await actions.instagramLogin();
+        await actions.twitterLogin();
 
-        expect(actions.instagramService).toHaveBeenCalled();
+        expect(actions.twitterService).toHaveBeenCalled();
 
         expect(commit).toHaveBeenCalledWith(
             MutationTypes.setCurrentUser,
