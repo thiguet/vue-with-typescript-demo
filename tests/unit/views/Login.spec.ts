@@ -46,7 +46,7 @@ describe('Login', () => {
             pass: () => mountedWrapper.findAllComponents(TextInput).at(1),
             btn: () => mountedWrapper.findComponent(Button),
             facebookIcon: () => mountedWrapper.find('#facebook'),
-            twitterIcon: () => mountedWrapper.find('#twitter'),
+            githubIcon: () => mountedWrapper.find('#github'),
             googleIcon: () => mountedWrapper.find('#google'),
         };
     };
@@ -72,7 +72,7 @@ describe('Login', () => {
             actions: {
                 [ActionTypes.loginAction]: jest.fn(),
                 [ActionTypes.facebookLogin]: jest.fn(),
-                [ActionTypes.twitterLogin]: jest.fn(),
+                [ActionTypes.githubLogin]: jest.fn(),
                 [ActionTypes.googleLogin]: jest.fn(),
             },
         };
@@ -106,7 +106,7 @@ describe('Login', () => {
             pass,
             btn,
             facebookIcon,
-            twitterIcon,
+            githubIcon,
             googleIcon,
         } = build();
 
@@ -115,7 +115,7 @@ describe('Login', () => {
         expect(btn().exists()).toBe(true);
 
         expect(facebookIcon().exists()).toBe(true);
-        expect(twitterIcon().exists()).toBe(true);
+        expect(githubIcon().exists()).toBe(true);
         expect(googleIcon().exists()).toBe(true);
     });
 
@@ -174,14 +174,14 @@ describe('Login', () => {
 
         expect(actions.facebookLogin).toBeCalled();
     });
-    it('must call twitter login action', async () => {
+    it('must call github login action', async () => {
         const { actions } = login;
 
-        const { twitterIcon } = build();
+        const { githubIcon } = build();
 
-        await twitterIcon().trigger('click');
+        await githubIcon().trigger('click');
 
-        expect(actions.twitterLogin).toBeCalled();
+        expect(actions.githubLogin).toBeCalled();
     });
     it('must call google login action', async () => {
         const { actions } = login;

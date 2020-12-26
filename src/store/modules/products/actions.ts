@@ -26,11 +26,11 @@ export default class Actions extends VActions<
     Mutations,
     Actions
 > {
-    [ActionTypes.saveProduct](payload: Product) {
+    async [ActionTypes.saveProduct](payload: Product) {
         if (this.state.editMode) {
-            editProductAPI(payload);
+            await editProductAPI(payload);
         } else {
-            newProductAPI(payload);
+            await newProductAPI(payload);
         }
 
         this.commit(MutationTypes.addProduct, { ...payload });

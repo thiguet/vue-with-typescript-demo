@@ -127,7 +127,7 @@ describe('Login Vuex Module', () => {
         });
     });
 
-    it('dispatch a twitter login attempt', async () => {
+    it('dispatch a github login attempt', async () => {
         const currentUser = {
             ...getNewUser(),
         };
@@ -138,12 +138,12 @@ describe('Login Vuex Module', () => {
 
         const actions = inject(Actions, {
             commit,
-            twitterService: loginSuccess,
+            githubService: loginSuccess,
         });
 
-        await actions.twitterLogin();
+        await actions.githubLogin();
 
-        expect(actions.twitterService).toHaveBeenCalled();
+        expect(actions.githubService).toHaveBeenCalled();
 
         expect(commit).toHaveBeenCalledWith(
             MutationTypes.setCurrentUser,

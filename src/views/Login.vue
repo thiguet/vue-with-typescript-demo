@@ -32,8 +32,8 @@
                 /></a>
             </div>
             <div class="app-login">
-                <a :href="`${baseURL}/auth/twitter`"
-                    ><img id="twitter" src="/assets/icons/twitter.svg"
+                <a :href="`${baseURL}/auth/github`"
+                    ><img id="github" src="/assets/icons/github.svg"
                 /></a>
             </div>
             <div class="app-login">
@@ -101,7 +101,7 @@ export default class Login extends Vue implements LoginView {
     public facebookLogin!: Actions[ActionTypes.facebookLogin];
 
     @Action
-    public twitterLogin!: Actions[ActionTypes.twitterLogin];
+    public githubLogin!: Actions[ActionTypes.githubLogin];
 
     @Action
     public googleLogin!: Actions[ActionTypes.googleLogin];
@@ -119,8 +119,8 @@ export default class Login extends Vue implements LoginView {
         return this.facebookLogin();
     }
 
-    public clicktwitterIcon(): Promise<unknown> {
-        return this.twitterLogin();
+    public clickGithubIcon(): Promise<unknown> {
+        return this.githubLogin();
     }
 
     public clickGoogleIcon(): Promise<unknown> {
@@ -178,5 +178,9 @@ export default class Login extends Vue implements LoginView {
 
 .wrapper {
     flex-direction: column;
+}
+
+a {
+    align-self: center;
 }
 </style>

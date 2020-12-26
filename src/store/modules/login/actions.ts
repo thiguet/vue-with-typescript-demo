@@ -4,7 +4,7 @@ import {
     login,
     facebookService,
     googleService,
-    twitterService,
+    githubService,
 } from '@/services/Login';
 import { Store } from 'vuex';
 import State from './state';
@@ -13,7 +13,7 @@ import Mutations, { MutationTypes } from './mutations';
 export enum ActionTypes {
     loginAction = 'loginAction',
     facebookLogin = 'facebookLogin',
-    twitterLogin = 'twitterLogin',
+    githubLogin = 'githubLogin',
     googleLogin = 'googleLogin',
 }
 
@@ -31,14 +31,14 @@ export default class Actions extends VActions<
 
     googleService!: typeof googleService;
 
-    twitterService!: typeof twitterService;
+    githubService!: typeof githubService;
 
     $init(store: Store<State>): void {
         this.store = store;
         this.login = login;
         this.facebookService = facebookService;
         this.googleService = googleService;
-        this.twitterService = twitterService;
+        this.githubService = githubService;
     }
 
     async [ActionTypes.loginAction](payload: LoginSubmit) {
@@ -53,8 +53,8 @@ export default class Actions extends VActions<
         this.commit(MutationTypes.setCurrentUser, result);
     }
 
-    async [ActionTypes.twitterLogin]() {
-        const result = await this.twitterService();
+    async [ActionTypes.githubLogin]() {
+        const result = await this.githubService();
 
         this.commit(MutationTypes.setCurrentUser, result);
     }

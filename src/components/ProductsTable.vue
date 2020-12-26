@@ -10,7 +10,10 @@
                     <td class="left">
                         <div class="left-content">
                             <span>{{ index + 1 }}</span>
-                            <span><img :src="icon"/></span>
+                            <span
+                                ><div class="img-wrapper">
+                                    <img :src="icon" /></div
+                            ></span>
                         </div>
                     </td>
                     <td>
@@ -83,13 +86,22 @@ export default class ProductsTable extends Vue implements ProductsTableComp {
     margin-top: 20px;
 }
 
-#table > tbody > tr > td > div > span > img {
+.img-wrapper {
     width: 60px;
+    height: 60px;
+}
+
+.img-wrapper > img {
+    max-width: 60px;
+    max-height: 60px;
     filter: none;
 }
 
 .left-content {
-    justify-content: space-between;
+    justify-content: space-around;
+}
+.left-content span {
+    align-self: center;
 }
 
 .left {

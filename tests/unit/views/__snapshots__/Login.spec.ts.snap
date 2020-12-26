@@ -15,7 +15,7 @@ exports[`Login renders component 1`] = `
   </div>
   <div class="other-apps-login">
     <div class="app-login"><a href="http://localhost:8090/auth/facebook"><img id="facebook" src="/assets/icons/facebook.svg"></a></div>
-    <div class="app-login"><a href="http://localhost:8090/auth/twitter"><img id="twitter" src="/assets/icons/twitter.svg"></a></div>
+    <div class="app-login"><a href="http://localhost:8090/auth/github"><img id="github" src="/assets/icons/github.svg"></a></div>
     <div class="app-login"><a href="http://localhost:8090/auth/google"><img id="google" src="/assets/icons/google.svg"></a></div>
   </div>
 </div>

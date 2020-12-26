@@ -22,7 +22,7 @@ describe('Product Service API', () => {
 
         const result = await newProduct(product);
 
-        expect(VueWithTSAPI.post).toBeCalledWith('/product', {
+        expect(VueWithTSAPI.post).toBeCalledWith('/products', {
             product,
         });
         expect(result).toEqual(product);
@@ -35,7 +35,7 @@ describe('Product Service API', () => {
 
         const result = await editProduct(product);
 
-        expect(VueWithTSAPI.put).toBeCalledWith(`/product/${product.id}`, {
+        expect(VueWithTSAPI.put).toBeCalledWith(`/products/${product.id}`, {
             product,
         });
         expect(result).toEqual(product);
@@ -46,7 +46,7 @@ describe('Product Service API', () => {
 
         const result = await deleteProduct(product);
 
-        expect(VueWithTSAPI.delete).toBeCalledWith(`/product/${product.id}`);
+        expect(VueWithTSAPI.delete).toBeCalledWith(`/products/${product.id}`);
         expect(result).toEqual(product);
     });
 
