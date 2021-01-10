@@ -10,8 +10,7 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import Component from 'vue-class-component';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Component } from 'vue-property-decorator';
 
 @Component
 export default class Button extends Vue {
@@ -19,11 +18,11 @@ export default class Button extends Vue {
 
     @Prop({ required: true }) readonly name!: string;
 
+    @Prop({ required: true }) readonly onclick!: Function;
+
     @Prop() readonly label!: string;
 
     @Prop() readonly icon!: string;
-
-    @Prop({ required: true }) readonly onclick!: Function;
 }
 </script>
 
