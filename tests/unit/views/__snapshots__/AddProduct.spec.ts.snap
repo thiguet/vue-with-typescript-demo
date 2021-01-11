@@ -4,7 +4,7 @@ exports[`AddProduct.vue renders the component 1`] = `
 <div class="add-product">
   <div class="img-wrapper">
     <dndimage-stub value="someFixedImage" id="img"></dndimage-stub>
-    <button-stub id="img-btn" name="img-btn" label="Escolha uma imagem" icon="/assets/icons/upload.svg" onclick="function () { [native code] }"></button-stub> <input id="file-input" type="file" style="display: none;">
+    <button-stub id="img-btn" name="img-btn" onclick="function () { [native code] }" label="Escolha uma imagem" icon="/assets/icons/upload.svg"></button-stub> <input id="file-input" type="file" style="display: none;">
   </div>
   <div class="form">
     <div>
@@ -29,8 +29,8 @@ exports[`AddProduct.vue renders the component 1`] = `
     </div>
   </div>
   <div class="btn">
-    <button-stub id="go-back" name="voltar" label="Voltar" icon="../assets/icons/goback.svg" onclick="function () { [native code] }" class="footer-button"></button-stub>
-    <button-stub id="add-product" name="add-product" label="Enviar" icon="../assets/icons/check.svg" onclick="function () { [native code] }" class="footer-button"></button-stub>
+    <button-stub id="go-back" name="voltar" onclick="function () { [native code] }" label="Voltar" icon="../assets/icons/goback.svg" class="footer-button"></button-stub>
+    <button-stub id="add-product" name="add-product" onclick="function () { [native code] }" label="Enviar" icon="../assets/icons/check.svg" class="footer-button"></button-stub>
   </div>
 </div>
 `;

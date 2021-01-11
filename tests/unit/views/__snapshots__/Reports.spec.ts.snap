@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reports renders component 1`] = `
+<div id="reports">
+  <div class="charts-wrapper">
+    <scalerbox-stub boxtitle="Produtos por Peso %">
+      <donutchart-stub data="[object Object]"></donutchart-stub>
+    </scalerbox-stub>
+    <scalerbox-stub boxtitle="Produtos em Estoque">
+      <linechart-stub data="[object Object]"></linechart-stub>
+    </scalerbox-stub>
+  </div>
+  <button-stub id="go-back" name="voltar" onclick="function () { [native code] }" label="Voltar" icon="./assets/icons/goback.svg" class="footer-btn goback"></button-stub>
+</div>
+`;

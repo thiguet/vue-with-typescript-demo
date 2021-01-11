@@ -7,7 +7,7 @@ exports[`Home renders component 1`] = `
     <card-stub onclick="function () { [native code] }" icon="./assets/icons/statistics.svg"></card-stub>
   </div>
   <div class="row btn-row">
-    <button-stub id="goback" name="voltar" label="Voltar" icon="./assets/icons/goback.svg" onclick="function () { [native code] }" class="goback"></button-stub>
+    <button-stub id="goback" name="voltar" onclick="function () { [native code] }" label="Voltar" icon="./assets/icons/goback.svg" class="goback"></button-stub>
   </div>
 </div>
 `;

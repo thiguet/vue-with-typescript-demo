@@ -10,13 +10,13 @@ exports[`Login renders component 1`] = `
       <inputwrapper-stub label="Senha" legend="Password">
         <textinput-stub id="pass" type="password" value="$@3sometest" setvalue="function () { [native code] }"></textinput-stub>
       </inputwrapper-stub>
-      <button-stub id="login" name="login" label="Login" onclick="function () { [native code] }"></button-stub>
+      <button-stub id="login" name="login" onclick="function () { [native code] }" label="Login"></button-stub>
     </form>
   </div>
   <div class="other-apps-login">
-    <div class="app-login"><a href="http://localhost:8090/auth/facebook"><img id="facebook" src="/assets/icons/facebook.svg"></a></div>
-    <div class="app-login"><a href="http://localhost:8090/auth/github"><img id="github" src="/assets/icons/github.svg"></a></div>
-    <div class="app-login"><a href="http://localhost:8090/auth/google"><img id="google" src="/assets/icons/google.svg"></a></div>
+    <div class="app-login"><a id="facebook" href="http://localhost:8090/auth/facebook"><img src="/assets/icons/facebook.svg" alt="facebook icon"></a></div>
+    <div class="app-login"><a id="github" href="http://localhost:8090/auth/github"><img src="/assets/icons/github.svg" alt="github icon"></a></div>
+    <div class="app-login"><a id="google" href="http://localhost:8090/auth/google"><img src="/assets/icons/google.svg" alt="google icon"></a></div>
   </div>
 </div>
 `;
