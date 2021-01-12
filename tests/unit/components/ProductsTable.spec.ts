@@ -1,16 +1,12 @@
 import { mount, shallowMount, Wrapper } from '@vue/test-utils';
 
 import ProductsTable from '@/components/ProductsTable.vue';
-import faker from 'faker';
-import { Measures } from '@/store/datatypes/models';
 import Vue from 'vue';
 import { ProductsTableProps } from './models';
+import { getFakeProductArray } from '../utils/ProductFactory';
 
 describe('ProductsTable', () => {
     let props: ProductsTableProps;
-
-    const getRandomMeasure = () =>
-        faker.random.arrayElement(Object.values(Measures)) as Measures;
 
     const build = () => {
         const options = {
@@ -47,13 +43,7 @@ describe('ProductsTable', () => {
 
     beforeEach(() => {
         props = {
-            rows: Array(20).fill({
-                name: faker.random.word(),
-                measure: getRandomMeasure(),
-                qtd: faker.random.number(),
-                minQtd: faker.random.number(),
-                image: faker.image.image(),
-            }),
+            rows: getFakeProductArray(),
         };
     });
 
