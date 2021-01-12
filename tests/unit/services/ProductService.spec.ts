@@ -6,7 +6,7 @@ import {
     getAllProducts,
 } from '@/services/Products';
 import { Product } from '@/store/datatypes/models';
-import { getFakeProduct } from '../utils/ProductFactory';
+import { getFakeProduct, getFakeProductArray } from '../utils/ProductFactory';
 
 describe('Product Service API', () => {
     let product: Product;
@@ -51,9 +51,7 @@ describe('Product Service API', () => {
     });
 
     it('must get all saved products', async () => {
-        const allProducts = Array(50)
-            .fill(null)
-            .map(getFakeProduct);
+        const allProducts = getFakeProductArray();
 
         jest.spyOn(VueWithTSAPI, 'get').mockResolvedValue({
             data: allProducts,
