@@ -1,4 +1,3 @@
-import { getRandomMeasure } from './ProductFactory';
 import {
     MeasuresReport,
     MeasuresReportData,
@@ -8,7 +7,8 @@ import {
     ReportItem,
 } from '@/store/datatypes/models';
 import faker from 'faker';
-import { generateRandomArray } from './ArrayHelper';
+import { getRandomMeasure } from './ProductFactory';
+import generateRandomArray from './ArrayHelper';
 
 export const getFakeMeasuresReportItem = (): MeasuresReportData => ({
     measureName: getRandomMeasure(),

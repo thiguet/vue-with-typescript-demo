@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { inject } from 'vuex-smart-module';
-import { State, Mutations, Actions } from '@/store/modules/reports';
+import { State, Mutations, Actions, MutationTypes } from '@/store/modules/reports';
+import { getMeasuresReport, getQuantityReport } from '@/services/Reports';
 import {
     getFakeMeasuresReportData,
     getFakeQuantityReportData,
 } from '../../utils/ReportsFactory';
-import { getMeasuresReport, getQuantityReport } from '@/services/Reports';
-import { MutationTypes } from '@/store/modules/reports';
 
 jest.mock('@/services/Reports');
 
@@ -15,8 +14,8 @@ Vue.use(Vuex);
 
 describe('Reports Vuex Module', () => {
     let state: State;
-    let quantityReport = getFakeQuantityReportData();
-    let measuresReport = getFakeMeasuresReportData();
+    const quantityReport = getFakeQuantityReportData();
+    const measuresReport = getFakeMeasuresReportData();
 
     const build = () => {
         state = {

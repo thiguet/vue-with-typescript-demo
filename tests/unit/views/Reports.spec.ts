@@ -7,11 +7,12 @@ import Reports from '@/views/Reports.vue';
 import {
     MeasuresReport,
     QuantityReport,
+    ReportItem,
     VuexAppModules,
 } from '@/store/datatypes/models';
 import { State, MutationTypes, ActionTypes } from '@/store/modules/reports';
 
-import { ReportsVuex } from '../store/models';
+import { ReportsVuex } from '../store/models.d';
 import {
     getFakeMeasuresReportData,
     getFakeQuantityReportData,
@@ -132,13 +133,15 @@ describe('Reports', () => {
         expect(
             donutChart()
                 .props()
-                .data.sort((a: any, b: any) => a.value - b.value),
+                .data.sort((a: ReportItem, b: ReportItem) => a.value - b.value),
         ).toEqual(
             measuresReport
-                .map((MRItem) => ({
-                    text: MRItem.measureName,
-                    value: MRItem.measureQuantity,
-                }))
+                .map(
+                    (MRItem): ReportItem => ({
+                        text: MRItem.measureName,
+                        value: MRItem.measureQuantity,
+                    }),
+                )
                 .sort((a, b) => a.value - b.value),
         );
     });
@@ -148,7 +151,7 @@ describe('Reports', () => {
         expect(
             lineChart()
                 .props()
-                .data.sort((a: any, b: any) => a.value - b.value),
+                .data.sort((a: ReportItem, b: ReportItem) => a.value - b.value),
         ).toEqual(
             quantityReport
                 .map((MRItem) => ({

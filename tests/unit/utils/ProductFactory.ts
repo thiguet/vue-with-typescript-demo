@@ -1,6 +1,6 @@
 import { Measures, Product } from '@/store/datatypes/models';
 import faker from 'faker';
-import { generateRandomArray } from './ArrayHelper';
+import generateRandomArray from './ArrayHelper';
 
 export const getRandomMeasure = () =>
     faker.random.arrayElement(Object.values(Measures)) as Measures;
