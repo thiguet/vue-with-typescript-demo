@@ -2,17 +2,6 @@
 
 exports[`Login renders component 1`] = `
 <div class="wrapper">
-  <div class="login">
-    <form class="form">
-      <inputwrapper-stub label="Login" legend="Login">
-        <textinput-stub id="email" type="text" value="testing_username" setvalue="function () { [native code] }"></textinput-stub>
-      </inputwrapper-stub>
-      <inputwrapper-stub label="Senha" legend="Password">
-        <textinput-stub id="pass" type="password" value="$@3sometest" setvalue="function () { [native code] }"></textinput-stub>
-      </inputwrapper-stub>
-      <button-stub id="login" name="login" onclick="function () { [native code] }" label="Login"></button-stub>
-    </form>
-  </div>
   <div class="other-apps-login">
     <div class="app-login"><a id="facebook" href="http://localhost:8090/auth/facebook"><img src="/assets/icons/facebook.svg" alt="facebook icon"></a></div>
     <div class="app-login"><a id="github" href="http://localhost:8090/auth/github"><img src="/assets/icons/github.svg" alt="github icon"></a></div>
