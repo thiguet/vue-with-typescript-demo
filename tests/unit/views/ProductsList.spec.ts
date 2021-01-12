@@ -15,7 +15,7 @@ import {
 } from '@/store/modules/products';
 import { getAllProducts } from '@/services/Products';
 import { ProductsVuex } from '../store/models.d';
-import { getFakeProduct } from '../utils/ProductFactory';
+import { getFakeProduct, getFakeProductArray } from '../utils/ProductFactory';
 
 jest.mock('@/services/Products');
 
@@ -64,9 +64,7 @@ describe('ProductsList', () => {
                 selectedProduct: {
                     ...getFakeProduct(),
                 },
-                products: Array(50)
-                    .fill(null)
-                    .map(getFakeProduct),
+                products: getFakeProductArray(),
             },
             getters: {
                 [GettersTypes.tableRows]: jest.fn(),
