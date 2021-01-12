@@ -139,12 +139,12 @@ const { Mutation, Action, State } = products;
         Button,
         DNDImage,
     },
-    data: () => ({
-        measures: Object.values(Measures),
-        image: '',
-    }),
 })
 export default class AddProduct extends Vue implements AddProductView {
+    private readonly measures = Object.values(Measures);
+
+    public image = '';
+
     @Ref()
     private files!: { files: FileList };
 
@@ -174,8 +174,6 @@ export default class AddProduct extends Vue implements AddProductView {
 
     @alert.Action
     private openAlert!: AlertActions[AlertActionTypes.openAlert];
-
-    public image!: string;
 
     public submitForm() {
         try {
@@ -363,7 +361,8 @@ select {
 }
 
 .drop #img {
-    filter: none !important;
+    filter: none;
+    max-height: 300px;
     border-radius: none;
 }
 </style>
