@@ -22,13 +22,29 @@ export interface User extends Unique {
     email: string;
 }
 
-export interface LoginSubmit {
-    name: string;
-    pass: string;
+export interface ReportItem {
+    text: string;
+    value: number;
 }
+
+export type ReportData = ReportItem[];
+
+export interface QuantityReportData {
+    productName: string;
+    productQuantity: number;
+}
+
+export type QuantityReport = QuantityReportData[];
+export interface MeasuresReportData {
+    measureName: string;
+    measureQuantity: number;
+}
+
+export type MeasuresReport = MeasuresReportData[];
 
 export enum VuexAppModules {
     products = 'products',
     login = 'login',
     alert = 'alert',
+    reports = 'reports',
 }
