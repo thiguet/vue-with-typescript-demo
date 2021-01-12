@@ -1,5 +1,7 @@
+import { ReportData } from '@/store/datatypes/models';
+
 export interface LoginView {
-    clickLogin(): void;
+    baseURL: string;
 }
 
 export interface AddProductView {
@@ -42,4 +44,9 @@ export type DNDImageComponent = DNDImageData & DNDImageMethods;
 
 export interface Files {
     files: FileList;
+}
+
+export interface ReportsView {
+    donutChartData(): ReportData;
+    lineChartData(): ReportData;
 }
