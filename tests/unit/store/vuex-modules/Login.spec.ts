@@ -1,7 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { inject } from 'vuex-smart-module';
-import { State, Mutations, Actions } from '@/store/modules/login';
+import {
+    State,
+    Mutations,
+    Actions,
+    MutationTypes,
+} from '@/store/modules/login';
 import faker from 'faker';
 import { User } from '@/store/datatypes/models';
 
@@ -32,15 +37,14 @@ describe('Login Vuex Module', () => {
             state,
         });
 
-        const getActions = () => ({
-            ...inject(Actions, {
-                commit,
-            }),
+        const actions = inject(Actions, {
+            commit,
         });
+
         return {
             commit,
             mutations,
-            getActions,
+            actions,
         };
     };
 
@@ -59,5 +63,13 @@ describe('Login Vuex Module', () => {
         });
     });
 
-    describe('actions', () => {});
+    describe('actions', () => {
+        it('sets the user to the state.', () => {
+            const { actions, commit } = build();
+
+            actions.login();
+
+            expect(commit).toBeCalledWith(MutationTypes.setCurrentUser, {});
+        });
+    });
 });
