@@ -25,9 +25,9 @@ export interface InputWrapperProps {
 
 export interface ButtonProps extends BaseProps {
     name: string;
-    label: string;
     onclick: Function;
-    icon: string;
+    label?: string;
+    icon?: string;
 }
 export type DNDImageProps = BaseInput;
 export interface AlertProps {
