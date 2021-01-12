@@ -1,5 +1,6 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex';
 import { State as ProductsState } from '@/store/modules/products';
+import { State as ReportsState } from '@/store/modules/reports';
 import { State as AlertState } from '@/store/modules/alert';
 import { State as LoginState } from '@/store/modules/login';
 
@@ -24,4 +25,11 @@ export interface AlertVuex extends NamespacedVuexModule {
     state: AlertState;
     mutations: MutationTree<AlertState>;
     actions: ActionTree<MutationTree<AlertState>, AlertState>;
+}
+
+export interface ReportsVuex extends NamespacedVuexModule {
+    state: ReportsState;
+    getters: GetterTree<{}, ReportsState>;
+    mutations: MutationTree<ReportsState>;
+    actions: ActionTree<MutationTree<ReportsState>, ReportsState>;
 }
