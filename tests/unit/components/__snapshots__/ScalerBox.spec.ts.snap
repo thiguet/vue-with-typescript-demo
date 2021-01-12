@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Scaler Box Props renders component 1`] = `
+<div class="box-container">
+  <div class="box">
+    <div>Main Content</div>
+  </div>
+  <div class="info">
+    <p>
+      teste
+    </p>
+  </div>
+</div>
+`;
