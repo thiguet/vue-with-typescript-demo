@@ -4,6 +4,8 @@ import {
     MeasuresReportData,
     QuantityReport,
     QuantityReportData,
+    ReportData,
+    ReportItem,
 } from '@/store/datatypes/models';
 import faker from 'faker';
 import { generateRandomArray } from './ArrayHelper';
@@ -18,8 +20,16 @@ export const getFakeQuantityReportItem = (): QuantityReportData => ({
     productQuantity: faker.random.number(),
 });
 
+export const getFakeReportItem = () => ({
+    text: faker.commerce.productName(),
+    value: faker.random.number(),
+});
+
 export const getFakeQuantityReportData = (): QuantityReport =>
     generateRandomArray<QuantityReportData>(getFakeQuantityReportItem);
 
 export const getFakeMeasuresReportData = (): MeasuresReport =>
     generateRandomArray<MeasuresReportData>(getFakeMeasuresReportItem);
+
+export const getFakeReportData = (): ReportData =>
+    generateRandomArray<ReportItem>(getFakeReportItem);
