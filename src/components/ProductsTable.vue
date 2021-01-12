@@ -11,7 +11,7 @@
                         <div class="left-content">
                             <span>{{ index + 1 }}</span>
                             <span
-                                ><div class="img-wrapper">
+                                ><div class="img-container">
                                     <img :src="icon" /></div
                             ></span>
                         </div>
@@ -86,17 +86,6 @@ export default class ProductsTable extends Vue implements ProductsTableComp {
     margin-top: 20px;
 }
 
-.img-wrapper {
-    width: 60px;
-    height: 60px;
-}
-
-.img-wrapper > img {
-    max-width: 60px;
-    max-height: 60px;
-    filter: none;
-}
-
 .left-content {
     justify-content: space-around;
 }
@@ -104,6 +93,16 @@ export default class ProductsTable extends Vue implements ProductsTableComp {
     align-self: center;
 }
 
+.img-container {
+    width: 60px;
+    height: 60px;
+}
+
+.left-content .img-container > img {
+    max-width: 60px;
+    max-height: 60px;
+    filter: none;
+}
 .left {
     text-align: left;
     margin-left: 1em;
