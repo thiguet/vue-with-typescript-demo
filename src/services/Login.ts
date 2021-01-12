@@ -1,4 +1,4 @@
-import { LoginSubmit, User } from '../store/datatypes/models';
+import { User } from '../store/datatypes/models';
 
 import VueWithTSAPI from './index';
 
@@ -11,14 +11,6 @@ export const setJWT = (jwt: string) => {
 export const clearJWT = () => {
     VueWithTSAPI.defaults.headers.common.Authorization = null;
 };
-
-export async function login(user: LoginSubmit): Promise<User> {
-    return (
-        await VueWithTSAPI.post('/users/login', {
-            user,
-        })
-    ).data as User;
-}
 
 export async function googleService(): Promise<User> {
     return (await VueWithTSAPI.get('/auth/google')).data as User;
