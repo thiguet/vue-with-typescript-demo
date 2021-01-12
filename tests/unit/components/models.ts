@@ -1,4 +1,4 @@
-import { Product } from '@/store/datatypes/models';
+import { Product, ReportData } from '@/store/datatypes/models';
 
 export interface BaseProps {
     id: string;
@@ -47,4 +47,11 @@ export interface CardProps {
 
 export interface ProductsTableProps {
     rows: Array<Product>;
+}
+
+export interface DonutChartProps {
+    data: ReportData;
+}
+export interface LineChartProps {
+    data: ReportData;
 }
