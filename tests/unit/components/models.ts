@@ -55,3 +55,7 @@ export interface DonutChartProps {
 export interface LineChartProps {
     data: ReportData;
 }
+
+export interface ScalerBoxProps {
+    boxTitle: string;
+}
