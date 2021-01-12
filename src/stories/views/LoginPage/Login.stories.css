@@ -1,0 +1,7 @@
+@import url('../../app.css');
+
+div.other-apps-login,
+div.app-login {
+    display: flex;
+    width: 100%;
+}

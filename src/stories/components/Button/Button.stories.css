@@ -1,0 +1,10 @@
+@import url('../../app.css');
+
+.btn {
+    background-color: rgb(204, 52, 49) !important;
+}
+
+.icon {
+    width: 100px;
+    height: 100px;
+}

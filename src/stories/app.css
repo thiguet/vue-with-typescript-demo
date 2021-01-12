@@ -1,0 +1,21 @@
+:root {
+    --bg-color: blue;
+    --border-color: gray;
+    --font-family: 'Open Sans', sans-serif;
+    --second-bg: green;
+    --ternary-bg: #089630;
+    --forth-bg: blue;
+    --font-title-size: 20px;
+    --font-input-size: 16px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+#app {
+    margin: auto;
+}
+body {
+    margin: auto;
+    font-family: var(--font-family);
+    font-size: var(--font-title-size);
+}

@@ -1,0 +1,5 @@
+@import url('../../app.css');
+
+.input {
+    border-bottom: 1px solid var(--border-color) !important;
+}

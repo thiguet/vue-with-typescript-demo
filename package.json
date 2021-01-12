@@ -11,7 +11,9 @@
         "unit:watch": "vue-cli-service test:unit --watch",
         "unit:watchCoverage": "vue-cli-service test:unit --coverage --watch",
         "e2e": "vue-cli-service test:e2e",
-        "lint": "vue-cli-service lint --fix"
+        "lint": "vue-cli-service lint --fix",
+        "storybook": "start-storybook -s ./public -p 6006",
+        "build-storybook": "build-storybook"
     },
     "dependencies": {
         "axios": "^0.21.1",
@@ -24,6 +26,11 @@
         "vuex-smart-module": "^0.4.6"
     },
     "devDependencies": {
+        "@babel/core": "^7.12.10",
+        "@storybook/addon-actions": "^6.1.14",
+        "@storybook/addon-essentials": "^6.1.14",
+        "@storybook/addon-links": "^6.1.14",
+        "@storybook/vue": "^6.1.14",
         "@testing-library/jest-dom": "^5.11.9",
         "@types/faker": "^4.1.12",
         "@types/jest": "^24.0.19",
@@ -41,6 +48,7 @@
         "@vue/eslint-config-airbnb": "^5.3.0",
         "@vue/eslint-config-typescript": "^5.1.0",
         "@vue/test-utils": "^1.1.2",
+        "babel-loader": "^8.2.2",
         "eslint": "^6.7.2",
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-vue": "^6.2.2",
