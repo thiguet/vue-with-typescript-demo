@@ -21,7 +21,10 @@ import {
     deleteProduct,
     getAllProducts,
 } from '@/services/Products';
-import { getFakeProduct } from '../../utils/ProductFactory';
+import {
+    getFakeProduct,
+    getFakeProductArray,
+} from '../../utils/ProductFactory';
 
 jest.mock('@/services/Products');
 
@@ -64,9 +67,7 @@ describe('Products Vuex Module', () => {
         it('gets tableRows from state.products .', () => {
             state = {
                 editMode: faker.random.boolean(),
-                products: Array(20)
-                    .fill(null)
-                    .map(getFakeProduct),
+                products: getFakeProductArray(),
                 selectedProduct: getFakeProduct(),
             };
 
@@ -87,9 +88,7 @@ describe('Products Vuex Module', () => {
         it('sets products to the state', () => {
             const { mutations } = build();
 
-            const products = Array(50)
-                .fill(null)
-                .map(getFakeProduct);
+            const products = getFakeProductArray();
 
             mutations.setProducts(products);
 
