@@ -1,44 +1,19 @@
 <template>
     <div class="wrapper">
-        <div class="login">
-            <form class="form">
-                <InputWrapper label="Login" legend="Login">
-                    <TextInput
-                        id="email"
-                        :value="username"
-                        :setValue="setUsername"
-                    />
-                </InputWrapper>
-                <InputWrapper label="Senha" legend="Password">
-                    <TextInput
-                        id="pass"
-                        type="password"
-                        :value="password"
-                        :setValue="setPassword"
-                    />
-                </InputWrapper>
-                <Button
-                    id="login"
-                    name="login"
-                    label="Login"
-                    :onclick="clickLogin"
-                />
-            </form>
-        </div>
         <div class="other-apps-login">
             <div class="app-login">
-                <a :href="`${baseURL}/auth/facebook`"
-                    ><img id="facebook" src="/assets/icons/facebook.svg"
+                <a id="facebook" :href="`${baseURL}/auth/facebook`"
+                    ><img src="/assets/icons/facebook.svg" alt="facebook icon"
                 /></a>
             </div>
             <div class="app-login">
-                <a :href="`${baseURL}/auth/github`"
-                    ><img id="github" src="/assets/icons/github.svg"
+                <a id="github" :href="`${baseURL}/auth/github`"
+                    ><img src="/assets/icons/github.svg" alt="github icon"
                 /></a>
             </div>
             <div class="app-login">
-                <a :href="`${baseURL}/auth/google`"
-                    ><img id="google" src="/assets/icons/google.svg"
+                <a id="google" :href="`${baseURL}/auth/google`"
+                    ><img src="/assets/icons/google.svg" alt="google icon"
                 /></a>
             </div>
         </div>
@@ -48,115 +23,17 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 
-import InputWrapper from '@/components/InputWrapper.vue';
-import TextInput from '@/components/TextInput.vue';
-import Button from '@/components/Button.vue';
-
-import { namespace } from 'vuex-class';
 import { LoginView } from '@/views/models.d';
-
-import { LoginSubmit, VuexAppModules } from '@/store/datatypes/models';
-
-import {
-    Mutations,
-    MutationTypes,
-    Actions,
-    ActionTypes,
-} from '@/store/modules/login';
 
 import { baseURL } from '@/services/config.json';
 
-const login = namespace(VuexAppModules.login);
-
-const { State, Mutation, Action } = login;
-
-@Component({
-    name: 'Login',
-    components: {
-        InputWrapper,
-        TextInput,
-        Button,
-    },
-    data() {
-        return { baseURL };
-    },
-})
+@Component
 export default class Login extends Vue implements LoginView {
-    @State
-    private username!: string;
-
-    @State
-    private password!: string;
-
-    @Mutation
-    private setUsername!: Mutations[MutationTypes.setUsername];
-
-    @Mutation
-    private setPassword!: Mutations[MutationTypes.setPassword];
-
-    @Action
-    public loginAction!: Actions[ActionTypes.loginAction];
-
-    @Action
-    public facebookLogin!: Actions[ActionTypes.facebookLogin];
-
-    @Action
-    public githubLogin!: Actions[ActionTypes.githubLogin];
-
-    @Action
-    public googleLogin!: Actions[ActionTypes.googleLogin];
-
-    public clickLogin(): Promise<unknown> {
-        const loginData: LoginSubmit = {
-            name: this.username,
-            pass: this.password,
-        };
-
-        return this.loginAction(loginData);
-    }
-
-    public clickFacebookIcon(): Promise<unknown> {
-        return this.facebookLogin();
-    }
-
-    public clickGithubIcon(): Promise<unknown> {
-        return this.githubLogin();
-    }
-
-    public clickGoogleIcon(): Promise<unknown> {
-        return this.googleLogin();
-    }
+    public readonly baseURL = baseURL;
 }
 </script>
 
 <style scoped>
-.form {
-    display: flex;
-    flex-flow: column;
-}
-
-.about {
-    display: flex;
-    flex-flow: row;
-    width: 100vw;
-    align-items: center;
-    justify-content: center;
-}
-
-.form > fieldset {
-    width: 70vw;
-}
-
-.login {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
-    margin-top: 30vh;
-}
-
 .other-apps-login {
     margin-top: 60px;
 }
@@ -177,7 +54,8 @@ export default class Login extends Vue implements LoginView {
 }
 
 .wrapper {
-    flex-direction: column;
+    height: 100vh;
+    align-items: center;
 }
 
 a {
