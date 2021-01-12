@@ -47,6 +47,6 @@ export interface Files {
 }
 
 export interface ReportsView {
-    donutChartData(): ReportData;
-    lineChartData(): ReportData;
+    donutChartData: ReportData;
+    lineChartData: ReportData;
 }
