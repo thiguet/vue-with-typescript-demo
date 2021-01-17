@@ -26,10 +26,15 @@ import { Vue, Component } from 'vue-property-decorator';
 import { LoginView } from '@/views/models.d';
 
 import { baseURL } from '@/services/config.json';
+import { logout } from '@/services/Login';
 
 @Component
 export default class Login extends Vue implements LoginView {
     public readonly baseURL = baseURL;
+
+    public mounted() {
+        logout();
+    }
 }
 </script>
 

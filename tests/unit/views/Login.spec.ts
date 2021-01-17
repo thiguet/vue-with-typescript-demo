@@ -5,9 +5,12 @@ import Vuex from 'vuex';
 import Login from '@/views/Login.vue';
 
 import { baseURL } from '@/services/config.json';
+import { logout } from '@/services/Login';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
+
+jest.mock('@/services/Login');
 
 describe('Login', () => {
     const build = () => {
@@ -34,6 +37,11 @@ describe('Login', () => {
         expect(facebookIcon().exists()).toBe(true);
         expect(githubIcon().exists()).toBe(true);
         expect(googleIcon().exists()).toBe(true);
+    });
+
+    it('cleans the cookies on mounting', () => {
+        build();
+        expect(logout).toBeCalled();
     });
 
     it('must have href equal to facebook login route', async () => {
