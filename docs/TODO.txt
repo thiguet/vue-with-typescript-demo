@@ -1,0 +1,5 @@
+- Add Form Validations.
+- Fix Google's logo accordingly to their docs.
+- Enhance Login and Logout.
+- Enhance App's Design.- Documentation:
+    - README's for repo explaining steps.
